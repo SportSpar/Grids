@@ -1,9 +1,10 @@
 <?php
-namespace Nayjest\Grids\Components\Filters;
+
+namespace SportSpar\Grids\Components\Filters;
 
 use Carbon\Carbon;
-use Nayjest\Grids\Components\Filter;
-use Nayjest\Grids\DataProvider;
+use SportSpar\Grids\Components\Filter;
+use SportSpar\Grids\DataProvider;
 
 /**
  * Class DateRangePicker
@@ -14,7 +15,7 @@ use Nayjest\Grids\DataProvider;
  * This component does not includes javascript & styles required to work with bootstrap-daterangepicker.
  * You need to include it manually to your pages/layout.
  *
- * @package Nayjest\Grids\Components\Filters
+ * @package SportSpar\Grids\Components\Filters
  */
 class DateRangePicker extends Filter
 {

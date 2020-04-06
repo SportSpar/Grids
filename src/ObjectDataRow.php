@@ -1,5 +1,6 @@
 <?php
-namespace Nayjest\Grids;
+
+namespace SportSpar\Grids;
 
 use Exception;
 use RuntimeException;

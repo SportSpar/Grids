@@ -1,15 +1,16 @@
 <?php
-namespace Nayjest\Grids;
+
+namespace SportSpar\Grids;
 
 use Nayjest\Builder\Env;
-use Nayjest\Grids\Build\Setup;
+use SportSpar\Grids\Build\Setup;
 
 /**
  * Class Grids
  *
  * Facade for constructing grids using configurations.
  *
- * @package Nayjest\Grids
+ * @package SportSpar\Grids
  */
 class Grids {
 

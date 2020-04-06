@@ -1,14 +1,15 @@
 <?php
-namespace Nayjest\Grids\Components;
 
-use Nayjest\Grids\Components\Base\RenderableRegistry;
+namespace SportSpar\Grids\Components;
+
+use SportSpar\Grids\Components\Base\RenderableRegistry;
 
 /**
  * Class FiltersRow
  *
  * provides additional render sections for columns: 'filters_row_column_<name>'
  *
- * @package Nayjest\Grids\Components
+ * @package SportSpar\Grids\Components
  */
 class FiltersRow extends RenderableRegistry
 {

@@ -1,14 +1,15 @@
 <?php
-namespace Nayjest\Grids\Components;
 
-use Nayjest\Grids\FieldConfig;
+namespace SportSpar\Grids\Components;
+
+use SportSpar\Grids\FieldConfig;
 
 /**
  * Class ColumnHeader
  *
  * The component for rendering column header
  *
- * @package Nayjest\Grids\Components
+ * @package SportSpar\Grids\Components
  */
 class ColumnHeader extends TableCell
 {

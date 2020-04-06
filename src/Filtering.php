@@ -1,5 +1,6 @@
 <?php
-namespace Nayjest\Grids;
+
+namespace SportSpar\Grids;
 
 use Illuminate\Support\Collection;
 
@@ -8,7 +9,7 @@ use Illuminate\Support\Collection;
  *
  * This class manages data filtering.
  *
- * @package Nayjest\Grids
+ * @package SportSpar\Grids
  */
 class Filtering
 {

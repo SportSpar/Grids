@@ -1,6 +1,6 @@
 <?php
-/** @var Nayjest\Grids\Filter $filter */
-/** @var Nayjest\Grids\SelectFilterConfig $cfg */
+/** @var SportSpar\Grids\Filter $filter */
+/** @var SportSpar\Grids\SelectFilterConfig $cfg */
 $cfg = $filter->getConfig();
 $onchange = '';
 if (method_exists($cfg, 'isSubmittedOnChange') && $cfg->isSubmittedOnChange()) {

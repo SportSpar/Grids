@@ -1,14 +1,15 @@
 <?php
-namespace Nayjest\Grids\Components;
 
-use Nayjest\Grids\Grid;
+namespace SportSpar\Grids\Components;
+
+use SportSpar\Grids\Grid;
 
 /**
  * Class ColumnHeadersRow
  *
  * The component for rendering table row with column headers.
  *
- * @package Nayjest\Grids\Components
+ * @package SportSpar\Grids\Components
  */
 class ColumnHeadersRow extends HtmlTag
 {

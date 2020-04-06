@@ -1,12 +1,13 @@
 <?php
-namespace Nayjest\Grids\Components\Base;
+
+namespace SportSpar\Grids\Components\Base;
 
 /**
  * Interface RegistryInterface
  *
  * Interface of Grid components registry
  *
- * @package Nayjest\Grids\Components\Base
+ * @package SportSpar\Grids\Components\Base
  */
 interface RegistryInterface
 {

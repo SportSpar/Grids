@@ -1,14 +1,15 @@
 <?php
-namespace Nayjest\Grids;
+
+namespace SportSpar\Grids;
 
 use Illuminate\Support\Collection;
-use Nayjest\Grids\Components\Base\RenderableComponentInterface;
-use Nayjest\Grids\Components\Base\TComponent;
-use Nayjest\Grids\Components\Base\TRegistry;
-use Nayjest\Grids\Components\Base\RegistryInterface;
-use Nayjest\Grids\Components\TFoot;
-use Nayjest\Grids\Components\THead;
-use Nayjest\Grids\Components\Tr;
+use SportSpar\Grids\Components\Base\RenderableComponentInterface;
+use SportSpar\Grids\Components\Base\TComponent;
+use SportSpar\Grids\Components\Base\TRegistry;
+use SportSpar\Grids\Components\Base\RegistryInterface;
+use SportSpar\Grids\Components\TFoot;
+use SportSpar\Grids\Components\THead;
+use SportSpar\Grids\Components\Tr;
 
 class GridConfig implements RegistryInterface
 {

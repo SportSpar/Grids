@@ -1,8 +1,8 @@
 <?php
-namespace Nayjest\Grids\Components;
 
+namespace SportSpar\Grids\Components;
 
-use Nayjest\Grids\Components\Base\RenderableComponent;
+use SportSpar\Grids\Components\Base\RenderableComponent;
 
 class Filter extends RenderableComponent
 {

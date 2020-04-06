@@ -1,10 +1,7 @@
 <?php
-namespace Nayjest\Grids;
 
-/**
- * Class DataProvider
- * @package Nayjest\Grids
- */
+namespace SportSpar\Grids;
+
 abstract class DataProvider
 {
     const EVENT_FETCH_ROW = 'grid.dp.fetch_row';

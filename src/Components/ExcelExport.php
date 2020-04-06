@@ -1,6 +1,6 @@
 <?php
 
-namespace Nayjest\Grids\Components;
+namespace SportSpar\Grids\Components;
 
 use Event;
 use Illuminate\Pagination\Paginator;
@@ -8,12 +8,12 @@ use Illuminate\Foundation\Application;
 use Maatwebsite\Excel\Classes\LaravelExcelWorksheet;
 use Maatwebsite\Excel\Excel;
 use Maatwebsite\Excel\Writers\LaravelExcelWriter;
-use Nayjest\Grids\Components\Base\RenderableComponent;
-use Nayjest\Grids\Components\Base\RenderableRegistry;
-use Nayjest\Grids\DataProvider;
-use Nayjest\Grids\DataRow;
-use Nayjest\Grids\FieldConfig;
-use Nayjest\Grids\Grid;
+use SportSpar\Grids\Components\Base\RenderableComponent;
+use SportSpar\Grids\Components\Base\RenderableRegistry;
+use SportSpar\Grids\DataProvider;
+use SportSpar\Grids\DataRow;
+use SportSpar\Grids\FieldConfig;
+use SportSpar\Grids\Grid;
 
 /**
  * Class ExcelExport
@@ -21,7 +21,7 @@ use Nayjest\Grids\Grid;
  * The component provides control for exporting data to excel.
  *
  * @author: Alexander Hofmeister
- * @package Nayjest\Grids\Components
+ * @package SportSpar\Grids\Components
  */
 class ExcelExport extends RenderableComponent
 {

@@ -1,5 +1,6 @@
 <?php
-namespace Nayjest\Grids;
+
+namespace SportSpar\Grids;
 
 use DB;
 use Doctrine\DBAL\Query\QueryBuilder;

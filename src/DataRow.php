@@ -1,13 +1,7 @@
 <?php
-namespace Nayjest\Grids;
 
-/**
- * Class DataRow
- *
- * Abstract class for DataRowInterface implementations
- *
- * @package Nayjest\Grids
- */
+namespace SportSpar\Grids;
+
 abstract class DataRow implements DataRowInterface
 {
 

@@ -1,16 +1,16 @@
 <?php
 
-namespace Nayjest\Grids\Components;
+namespace SportSpar\Grids\Components;
 
 use Event;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Response;
-use Nayjest\Grids\Components\Base\RenderableComponent;
-use Nayjest\Grids\Components\Base\RenderableRegistry;
-use Nayjest\Grids\DataProvider;
-use Nayjest\Grids\DataRow;
-use Nayjest\Grids\Grid;
+use SportSpar\Grids\Components\Base\RenderableComponent;
+use SportSpar\Grids\Components\Base\RenderableRegistry;
+use SportSpar\Grids\DataProvider;
+use SportSpar\Grids\DataRow;
+use SportSpar\Grids\Grid;
 
 /**
  * Class CsvExport
@@ -18,7 +18,7 @@ use Nayjest\Grids\Grid;
  * The component provides control for exporting data to CSV.
  *
  * @author: Vitaliy Ofat <i@vitaliy-ofat.com>
- * @package Nayjest\Grids\Components
+ * @package SportSpar\Grids\Components
  */
 class CsvExport extends RenderableComponent
 {

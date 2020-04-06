@@ -1,14 +1,15 @@
 <?php
-namespace Nayjest\Grids\Components;
 
-use Nayjest\Grids\Components\Base\RenderableComponent;
+namespace SportSpar\Grids\Components;
+
+use SportSpar\Grids\Components\Base\RenderableComponent;
 
 /**
  * Class ShowingRecords
  *
  * Renders text: Showing records $from — $to of $total
  *
- * @package Nayjest\Grids\Components
+ * @package SportSpar\Grids\Components
  */
 class ShowingRecords extends RenderableComponent
 {

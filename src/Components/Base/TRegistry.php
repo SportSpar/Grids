@@ -1,8 +1,9 @@
 <?php
-namespace Nayjest\Grids\Components\Base;
+
+namespace SportSpar\Grids\Components\Base;
 
 use Illuminate\Support\Collection;
-use Nayjest\Grids\Grid;
+use SportSpar\Grids\Grid;
 
 trait TRegistry
 {

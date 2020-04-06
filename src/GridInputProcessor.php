@@ -1,5 +1,6 @@
 <?php
-namespace Nayjest\Grids;
+
+namespace SportSpar\Grids;
 
 use Input;
 use Request;
@@ -10,7 +11,7 @@ use Form;
  *
  * This class manages input processing for grid.
  *
- * @package Nayjest\Grids
+ * @package SportSpar\Grids
  */
 class GridInputProcessor
 {

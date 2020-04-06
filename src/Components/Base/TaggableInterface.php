@@ -1,10 +1,11 @@
 <?php
-namespace Nayjest\Grids\Components\Base;
+
+namespace SportSpar\Grids\Components\Base;
 
 /**
  * Interface TaggableInterface
  * @deprecated
- * @package Nayjest\Grids\Components\Base
+ * @package SportSpar\Grids\Components\Base
  */
 interface TaggableInterface
 {

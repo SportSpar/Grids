@@ -1,5 +1,5 @@
 <?php
-/** @var Nayjest\Grids\Components\Filter $component */
+/** @var SportSpar\Grids\Components\Filter $component */
 ?>
 <?php if($component->getLabel()): ?>
     <span><?= $component->getLabel() ?></span>

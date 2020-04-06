@@ -1,16 +1,17 @@
 <?php
-namespace Nayjest\Grids\Components\Base;
 
-use Nayjest\Grids\Grid;
+namespace SportSpar\Grids\Components\Base;
+
+use SportSpar\Grids\Grid;
 
 /**
  * Class TComponent
  *
  * ComponentInterface interface implementation.
  *
- * @see Nayjest\Grids\Components\Base\ComponentInterface
+ * @see SportSpar\Grids\Components\Base\ComponentInterface
  *
- * @package Nayjest\Grids\Components\Base
+ * @package SportSpar\Grids\Components\Base
  */
 trait TComponent
 {

@@ -1,13 +1,7 @@
 <?php
-namespace Nayjest\Grids;
 
-/**
- * Interface DataRowInterface
- *
- * Interface for row of data received from data provider.
- *
- * @package Nayjest\Grids
- */
+namespace SportSpar\Grids;
+
 interface DataRowInterface
 {
     /**

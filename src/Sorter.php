@@ -1,13 +1,7 @@
 <?php
-namespace Nayjest\Grids;
 
-/**
- * Class Sorter
- *
- * Data sorting manager.
- *
- * @package Nayjest\Grids
- */
+namespace SportSpar\Grids;
+
 class Sorter
 {
     /**
@@ -17,7 +11,7 @@ class Sorter
 
     /**
      * Constructor.
-     * 
+     *
      * @param Grid $grid
      */
     public function __construct(Grid $grid)

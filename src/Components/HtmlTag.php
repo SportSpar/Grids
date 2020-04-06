@@ -1,7 +1,8 @@
 <?php
-namespace Nayjest\Grids\Components;
 
-use Nayjest\Grids\Components\Base\RenderableRegistry;
+namespace SportSpar\Grids\Components;
+
+use SportSpar\Grids\Components\Base\RenderableRegistry;
 
 class HtmlTag extends RenderableRegistry
 {

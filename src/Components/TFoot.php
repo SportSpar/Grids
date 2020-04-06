@@ -1,5 +1,7 @@
 <?php
-namespace Nayjest\Grids\Components;
+
+namespace SportSpar\Grids\Components;
+
 use Illuminate\Foundation\Application;
 
 /**
@@ -7,7 +9,7 @@ use Illuminate\Foundation\Application;
  *
  * The component for rendering TFOOT html tag inside grid.
  *
- * @package Nayjest\Grids\Components
+ * @package SportSpar\Grids\Components
  */
 class TFoot extends HtmlTag
 {
@@ -16,14 +18,14 @@ class TFoot extends HtmlTag
     /**
      * Returns default set of child components.
      *
-     * @return \Nayjest\Grids\Components\Base\ComponentInterface[]
+     * @return \SportSpar\Grids\Components\Base\ComponentInterface[]
      */
     protected function getDefaultComponents()
     {
         if (version_compare(Application::VERSION, '5', '<')) {
-            $pagerClass = 'Nayjest\Grids\Components\Pager';
+            $pagerClass = 'SportSpar\Grids\Components\Pager';
         } else {
-            $pagerClass = 'Nayjest\Grids\Components\Laravel5\Pager';
+            $pagerClass = 'SportSpar\Grids\Components\Laravel5\Pager';
         }
         return [
             (new OneCellRow)

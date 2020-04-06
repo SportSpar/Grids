@@ -1,15 +1,15 @@
 <?php
 
-namespace Nayjest\Grids\Components;
+namespace SportSpar\Grids\Components;
 
-use Nayjest\Grids\FieldConfig;
+use SportSpar\Grids\FieldConfig;
 
 /**
  * Class TableCell
  * 
  * The component for rendering TD html tag inside grid.
  *
- * @package Nayjest\Grids\Components
+ * @package SportSpar\Grids\Components
  */
 class TableCell extends HtmlTag
 {

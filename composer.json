@@ -1,6 +1,6 @@
 {
-    "name": "nayjest/grids",
-    "description": "Grids for Laravel 4 & Laravel 5 frameworks",
+    "name": "sportspar/grids",
+    "description": "Grids for Laravel",
     "keywords": [
         "grid",
         "tables",
@@ -12,18 +12,22 @@
         "laravel-5",
         "laravel5"
     ],
-    "homepage": "https://github.com/Nayjest/Grids",
+    "homepage": "https://github.com/SportSpar/Grids",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
+            "name": "SportSpar GmbH",
+            "role": "Developer"
+        },
+        {
             "name": "Vitalii [Nayjest] Stepanenko",
             "email": "mail@vitaliy.in",
-            "role": "Developer"
+            "role": "Original project founder"
         }
     ],
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=7.0",
         "illuminate/support": ">=4.2",
         "nayjest/builder": "~2"
     },
@@ -33,13 +37,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Nayjest\\Grids\\": "src/"
+            "SportSpar\\Grids\\": "src/"
         }
-    },
-    "support": {
-        "email": "mail@vitaliy.in",
-        "source": "https://github.com/Nayjest/Grids",
-        "issues": "https://github.com/Nayjest/Grids/issues"
     },
     "minimum-stability": "dev"
 }

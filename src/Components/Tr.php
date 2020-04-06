@@ -1,14 +1,15 @@
 <?php
-namespace Nayjest\Grids\Components;
 
-use Nayjest\Grids\DataRowInterface;
+namespace SportSpar\Grids\Components;
+
+use SportSpar\Grids\DataRowInterface;
 
 /**
  * Class Tr
  *
  * The component for rendering TR html tag inside grid.
  *
- * @package Nayjest\Grids\Components
+ * @package SportSpar\Grids\Components
  */
 class Tr extends HtmlTag
 {

@@ -1,5 +1,5 @@
 <?php
-/** @var Nayjest\Grids\Components\Filter $component */
+/** @var SportSpar\Grids\Components\Filter $component */
 $id = uniqid();
 ?>
 <?php if($component->getLabel()): ?>

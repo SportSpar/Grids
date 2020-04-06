@@ -1,12 +1,13 @@
 <?php
-namespace Nayjest\Grids\Components;
+
+namespace SportSpar\Grids\Components;
 
 /**
  * Class THead
  *
  * The component for rendering THEAD html tag inside grid.
  *
- * @package Nayjest\Grids\Components
+ * @package SportSpar\Grids\Components
  */
 class THead extends HtmlTag
 {
@@ -15,7 +16,7 @@ class THead extends HtmlTag
     /**
      * Returns default set of child components.
      *
-     * @return \Nayjest\Grids\Components\Base\ComponentInterface[]
+     * @return \SportSpar\Grids\Components\Base\ComponentInterface[]
      */
     protected function getDefaultComponents()
     {

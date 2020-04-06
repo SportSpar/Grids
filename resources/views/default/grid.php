@@ -1,7 +1,7 @@
 <form>
 <?php
-/** @var Nayjest\Grids\DataProvider $data **/
-/** @var Nayjest\Grids\Grid $grid **/
+/** @var SportSpar\Grids\DataProvider $data **/
+/** @var SportSpar\Grids\Grid $grid **/
 ?>
 <table class="table table-striped" id="<?= $grid->getConfig()->getName() ?>">
 <?= $grid->header() ? $grid->header()->render() : '' ?>

@@ -1,10 +1,11 @@
 <?php
-namespace Nayjest\Grids\Components\Laravel5;
+
+namespace SportSpar\Grids\Components\Laravel5;
 
 use Illuminate\Pagination\Paginator;
 use Input;
-use Nayjest\Grids\Components\Base\RenderableComponent;
-use Nayjest\Grids\Grid;
+use SportSpar\Grids\Components\Base\RenderableComponent;
+use SportSpar\Grids\Grid;
 
 class Pager extends RenderableComponent
 {

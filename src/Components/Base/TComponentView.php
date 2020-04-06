@@ -1,5 +1,6 @@
 <?php
-namespace Nayjest\Grids\Components\Base;
+
+namespace SportSpar\Grids\Components\Base;
 
 trait TComponentView
 {

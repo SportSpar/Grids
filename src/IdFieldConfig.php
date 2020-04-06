@@ -1,12 +1,13 @@
 <?php
-namespace Nayjest\Grids;
+
+namespace SportSpar\Grids;
 
 /**
  * Class IdFieldConfig
  *
  * IdFieldConfig is a column type that will render a row number in table rows.
  *
- * @package Nayjest\Grids
+ * @package SportSpar\Grids
  */
 class IdFieldConfig extends FieldConfig
 {

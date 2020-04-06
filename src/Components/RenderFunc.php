@@ -1,14 +1,15 @@
 <?php
-namespace Nayjest\Grids\Components;
 
-use Nayjest\Grids\Components\Base\RenderableComponent;
+namespace SportSpar\Grids\Components;
+
+use SportSpar\Grids\Components\Base\RenderableComponent;
 
 /**
  * Class RenderFunc
  *
  * The component prints value returned by specified PHP function.
  *
- * @package Nayjest\Grids\Components
+ * @package SportSpar\Grids\Components
  */
 class RenderFunc extends RenderableComponent
 {

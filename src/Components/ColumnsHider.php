@@ -1,14 +1,15 @@
 <?php
-namespace Nayjest\Grids\Components;
 
-use Nayjest\Grids\Components\Base\RenderableComponent;
+namespace SportSpar\Grids\Components;
+
+use SportSpar\Grids\Components\Base\RenderableComponent;
 
 /**
  * Class ColumnsHider
  *
  * The component renders control for showing/hiding columns.
  *
- * @package Nayjest\Grids\Components
+ * @package SportSpar\Grids\Components
  */
 class ColumnsHider extends RenderableComponent
 {

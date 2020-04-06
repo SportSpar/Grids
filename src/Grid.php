@@ -1,10 +1,11 @@
 <?php
-namespace Nayjest\Grids;
+
+namespace SportSpar\Grids;
 
 use Event;
 use Cache;
-use Nayjest\Grids\Components\TFoot;
-use Nayjest\Grids\Components\THead;
+use SportSpar\Grids\Components\TFoot;
+use SportSpar\Grids\Components\THead;
 use View;
 use Illuminate\Foundation\Application;
 

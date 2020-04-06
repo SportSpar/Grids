@@ -1,7 +1,7 @@
 <?php # ========== FILTERS ROW ==========
 /**
- * @var Nayjest\Grids\Components\FiltersRow $component
- * @var Nayjest\Grids\FieldConfig $column
+ * @var SportSpar\Grids\Components\FiltersRow $component
+ * @var SportSpar\Grids\FieldConfig $column
  */
 ?>
 <?php if($grid->getFiltering()->available()): ?>

@@ -1,10 +1,10 @@
 <?php
 
-namespace Nayjest\Grids\Components;
+namespace SportSpar\Grids\Components;
 
-use Nayjest\Grids\Components\Base\RenderableComponent;
-use Nayjest\Grids\Components\Base\RenderableRegistry;
-use Nayjest\Grids\FieldConfig;
+use SportSpar\Grids\Components\Base\RenderableComponent;
+use SportSpar\Grids\Components\Base\RenderableRegistry;
+use SportSpar\Grids\FieldConfig;
 
 /**
  * Class SortingControl
@@ -12,7 +12,7 @@ use Nayjest\Grids\FieldConfig;
  * The component for rendering sorting controls
  * added to column header automatically when field is sortable.
  *
- * @package Nayjest\Grids\Components
+ * @package SportSpar\Grids\Components
  */
 class SortingControl extends RenderableComponent
 {

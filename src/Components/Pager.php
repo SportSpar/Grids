@@ -1,11 +1,12 @@
 <?php
-namespace Nayjest\Grids\Components;
+
+namespace SportSpar\Grids\Components;
 
 use DomainException;
 use Illuminate\Foundation\Application;
 use Illuminate\Pagination\Paginator;
-use Nayjest\Grids\Components\Base\RenderableComponent;
-use Nayjest\Grids\Grid;
+use SportSpar\Grids\Components\Base\RenderableComponent;
+use SportSpar\Grids\Grid;
 
 class Pager extends RenderableComponent
 {

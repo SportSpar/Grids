@@ -1,7 +1,8 @@
 <?php
-namespace Nayjest\Grids\Components\Base;
 
-use Nayjest\Grids\Grid;
+namespace SportSpar\Grids\Components\Base;
+
+use SportSpar\Grids\Grid;
 
 /**
  * Interface ComponentInterface
@@ -11,7 +12,7 @@ use Nayjest\Grids\Grid;
  * Basically, component is an object that can be attached
  * to grid components hierarchy and react to initialize & prepare calls.
  *
- * @package Nayjest\Grids\Components\Base
+ * @package SportSpar\Grids\Components\Base
  */
 interface ComponentInterface extends TaggableInterface
 {

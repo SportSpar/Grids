@@ -1,10 +1,11 @@
 <?php
-namespace Nayjest\Grids;
+
+namespace SportSpar\Grids;
 
 /**
  * @deprecated
  * Class EloquentDataRow
- * @package Nayjest\Grids
+ * @package SportSpar\Grids
  */
 class EloquentDataRow extends ObjectDataRow
 {

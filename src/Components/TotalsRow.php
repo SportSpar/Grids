@@ -1,16 +1,17 @@
 <?php
-namespace Nayjest\Grids\Components;
+
+namespace SportSpar\Grids\Components;
 
 use LogicException;
-use Nayjest\Grids\Components\Base\RenderableComponentInterface;
-use Nayjest\Grids\Components\Base\TComponent;
-use Nayjest\Grids\Components\Base\TComponentView;
-use Nayjest\Grids\ArrayDataRow;
-use Nayjest\Grids\DataProvider;
-use Nayjest\Grids\DataRow;
-use Nayjest\Grids\FieldConfig;
-use Nayjest\Grids\IdFieldConfig;
-use Nayjest\Grids\Grid;
+use SportSpar\Grids\Components\Base\RenderableComponentInterface;
+use SportSpar\Grids\Components\Base\TComponent;
+use SportSpar\Grids\Components\Base\TComponentView;
+use SportSpar\Grids\ArrayDataRow;
+use SportSpar\Grids\DataProvider;
+use SportSpar\Grids\DataRow;
+use SportSpar\Grids\FieldConfig;
+use SportSpar\Grids\IdFieldConfig;
+use SportSpar\Grids\Grid;
 use Illuminate\Support\Facades\Event;
 
 /**
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\Event;
  *
  * The component renders row with totals for current page.
  *
- * @package Nayjest\Grids\Components
+ * @package SportSpar\Grids\Components
  */
 class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
 {

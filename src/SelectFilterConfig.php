@@ -1,6 +1,6 @@
 <?php
 
-namespace Nayjest\Grids;
+namespace SportSpar\Grids;
 
 class SelectFilterConfig extends FilterConfig
 {
