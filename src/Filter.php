@@ -104,22 +104,83 @@ class Filter
      */
     public function apply()
     {
-        $value = $this->getValue();
+        $value = (string)$this->getValue();
+
         if (null === $value || '' === $value) {
             return;
         }
+
+        // If a filtering function is defined - use it
         if ($func = $this->config->getFilteringFunc()) {
             $func($value, $this->grid->getConfig()->getDataProvider());
             return;
         }
+
+        // Check is value contains an operator, set this new operator and strip it from value
+        // If operator is IN then value will be an array
+        $value = $this->processValue($value);
+
         $isLike = $this->config->getOperator() === FilterConfig::OPERATOR_LIKE;
         if ($isLike && strpos($value, '%') === false) {
             $value = "%$value%";
         }
+
         $this->grid->getConfig()->getDataProvider()->filter(
             $this->config->getName(),
             $this->config->getOperator(),
             $value
         );
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return mixed Updated value
+     */
+    private function processValue(string $value)
+    {
+        if (0 === strpos($value, '=')) {
+            $this->config->setOperator(FilterConfig::OPERATOR_EQ);
+
+            return substr($value, 1);
+        }
+
+        if (0 === strpos($value, '!')) {
+            $this->config->setOperator(FilterConfig::OPERATOR_NOT_EQ);
+
+            return substr($value, 1);
+        }
+
+        if (0 === strpos($value, '>')) {
+            $this->config->setOperator(FilterConfig::OPERATOR_GT);
+
+            return substr($value, 1);
+        }
+
+        if (0 === strpos($value, '>=')) {
+            $this->config->setOperator(FilterConfig::OPERATOR_GTE);
+
+            return substr($value, 2);
+        }
+
+        if (0 === strpos($value, '<')) {
+            $this->config->setOperator(FilterConfig::OPERATOR_LS);
+
+            return substr($value, 1);
+        }
+
+        if (0 === strpos($value, '<=')) {
+            $this->config->setOperator(FilterConfig::OPERATOR_LSE);
+
+            return substr($value, 2);
+        }
+
+        if (false !== strpos($value, ',')) {
+            $this->config->setOperator(FilterConfig::OPERATOR_IN);
+
+            return array_filter(explode(',', $value), 'strlen');
+        }
+
+        return $value;
     }
 }
