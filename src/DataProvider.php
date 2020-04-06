@@ -1,11 +1,9 @@
 <?php
 namespace Nayjest\Grids;
 
-/**
- * Class DataProvider
- * @package Nayjest\Grids
- */
-abstract class DataProvider
+use Nayjest\Grids\DataProvider\DataProviderInterface;
+
+abstract class DataProvider implements DataProviderInterface
 {
     const EVENT_FETCH_ROW = 'grid.dp.fetch_row';
 
