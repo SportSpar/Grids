@@ -2,7 +2,9 @@
 
 namespace SportSpar\Grids;
 
-abstract class DataProvider
+use SportSpar\Grids\DataProvider\DataProviderInterface;
+
+abstract class DataProvider implements DataProviderInterface
 {
     const EVENT_FETCH_ROW = 'grid.dp.fetch_row';
 

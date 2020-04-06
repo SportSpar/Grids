@@ -5,6 +5,10 @@ namespace SportSpar\Grids\Build\Instructions;
 use LogicException;
 use Nayjest\Builder\Instructions\Base\Instruction;
 use Nayjest\Builder\Scaffold;
+use SportSpar\Grids\DataProvider\CollectionDataProvider;
+use SportSpar\Grids\DataProvider\DataProviderInterface;
+use SportSpar\Grids\DbalDataProvider;
+use SportSpar\Grids\EloquentDataProvider;
 
 /**
  * Class BuildDataProvider
@@ -30,13 +34,25 @@ class BuildDataProvider extends Instruction
         $class = null;
         $arg = null;
 
+        // If we have a provider, then we're good to go
+        if (is_object($src) && $src instanceof DataProviderInterface) {
+            $scaffold->input['data_provider'] = $src;
+            return;
+        }
+
         if (is_object($src)) {
-            if (is_a($src, '\Illuminate\Database\Eloquent\Builder')) {
-                $class = '\SportSpar\Grids\EloquentDataProvider';
-                $arg = $src;
-            } elseif (is_a($src, '\Doctrine\DBAL\Query\QueryBuilder')) {
-                $class = '\SportSpar\Grids\DbalDataProvider';
-                $arg = $src;
+            $providerClasses = [
+                EloquentDataProvider::class,
+                DbalDataProvider::class,
+                CollectionDataProvider::class
+            ];
+
+            /** @var DataProviderInterface $providerClass */
+            foreach ($providerClasses as $providerClass) {
+                if ($providerClass::canProvideFor($src)) {
+                    $class = $providerClass;
+                    $arg = $src;
+                }
             }
 
         } elseif (is_string($src)) {
@@ -50,6 +66,7 @@ class BuildDataProvider extends Instruction
                 $arg = $model->newQuery();
             }
         }
+
         if ($class !== null && $arg !== null) {
             $provider = new $class($arg);
             $scaffold->input['data_provider'] = $provider;

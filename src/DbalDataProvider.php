@@ -214,4 +214,11 @@ class DbalDataProvider extends DataProvider
         $this->exec_using_laravel = $execUsingLaravel;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public static function canProvideFor($object): bool
+    {
+        return $object instanceof QueryBuilder;
+    }
 }
