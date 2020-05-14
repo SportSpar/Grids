@@ -8,7 +8,7 @@ trait TComponentView
         TRenderable::getTemplate as private getTemplateInternal;
     }
 
-    protected $render_section;
+    protected $renderSection;
 
     /**
      * Returns variables for usage inside view template.
@@ -41,7 +41,7 @@ trait TComponentView
      */
     public function getRenderSection()
     {
-        return $this->render_section;
+        return $this->renderSection;
     }
 
     /**
@@ -53,7 +53,7 @@ trait TComponentView
      */
     public function setRenderSection($sectionName)
     {
-        $this->render_section = $sectionName;
+        $this->renderSection = $sectionName;
         return $this;
     }
 }

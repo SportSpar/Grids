@@ -3,9 +3,9 @@
 namespace SportSpar\Grids\Components;
 
 use Event;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Response;
+use Illuminate\Pagination\Paginator;
 use SportSpar\Grids\Components\Base\RenderableComponent;
 use SportSpar\Grids\Components\Base\RenderableRegistry;
 use SportSpar\Grids\DataProvider;
@@ -28,10 +28,25 @@ class CsvExport extends RenderableComponent
     const CSV_EXT = '.csv';
     const DEFAULT_ROWS_LIMIT = 5000;
 
+    /**
+     * @var string
+     */
     protected $template = '*.components.csv_export';
+
+    /**
+     * @var string
+     */
     protected $name = CsvExport::NAME;
-    protected $render_section = RenderableRegistry::SECTION_END;
-    protected $rows_limit = self::DEFAULT_ROWS_LIMIT;
+
+    /**
+     * @var string
+     */
+    protected $renderSection = RenderableRegistry::SECTION_END;
+
+    /**
+     * @var int
+     */
+    protected $rowsLimit = self::DEFAULT_ROWS_LIMIT;
 
     /**
      * @var string
@@ -62,9 +77,9 @@ class CsvExport extends RenderableComponent
 
     /**
      * @param string $name
-     * @return $this
+     * @return self
      */
-    public function setFileName($name)
+    public function setFileName($name): self
     {
         $this->fileName = $name;
         return $this;
@@ -73,7 +88,7 @@ class CsvExport extends RenderableComponent
     /**
      * @return string
      */
-    public function getFileName()
+    public function getFileName(): string
     {
         return $this->fileName . static::CSV_EXT;
     }
@@ -81,19 +96,19 @@ class CsvExport extends RenderableComponent
     /**
      * @return int
      */
-    public function getRowsLimit()
+    public function getRowsLimit(): int
     {
-        return $this->rows_limit;
+        return $this->rowsLimit;
     }
 
     /**
      * @param int $limit
      *
-     * @return $this
+     * @return self
      */
-    public function setRowsLimit($limit)
+    public function setRowsLimit($limit): self
     {
-        $this->rows_limit = $limit;
+        $this->rowsLimit = $limit;
         return $this;
     }
 
@@ -119,7 +134,9 @@ class CsvExport extends RenderableComponent
 
     protected function renderCsv()
     {
-        $file = fopen('php://output', 'w');
+        // Clean output buffer from the rendered view (whatever there is before the grid)
+        ob_clean();
+        $file = fopen('php://output', 'wb');
 
         header('Content-Type: text/csv');
         header('Content-Disposition: attachment; filename="'. $this->getFileName() .'"');
@@ -127,23 +144,23 @@ class CsvExport extends RenderableComponent
 
         set_time_limit(0);
 
-        /** @var $provider DataProvider */
         $provider = $this->grid->getConfig()->getDataProvider();
 
-        $this->renderHeader($file);
+        $header = $this->renderHeader();
+        fputcsv($file, $header, static::CSV_DELIMITER);
 
         $this->resetPagination($provider);
         $provider->reset();
+
         /** @var DataRow $row */
         while ($row = $provider->getRow()) {
             $output = [];
             foreach ($this->grid->getConfig()->getColumns() as $column) {
                 if (!$column->isHidden()) {
-                    $output[] = $this->escapeString( $column->getValue($row) );
+                    $output[] = $this->escapeString($column->getValue($row));
                 }
             }
             fputcsv($file, $output, static::CSV_DELIMITER);
-
         }
 
         fclose($file);
@@ -152,29 +169,33 @@ class CsvExport extends RenderableComponent
 
     /**
      * @param string $str
+     *
      * @return string
      */
-    protected function escapeString($str)
+    protected function escapeString($str): string
     {
         $str = html_entity_decode($str);
         $str = strip_tags($str);
         $str = str_replace('"', '\'', $str);
         $str = preg_replace('/\s+/', ' ', $str); # remove double spaces
         $str = trim($str);
+
         return $str;
     }
 
     /**
-     * @param resource $file
+     * @return array
      */
-    protected function renderHeader($file)
+    protected function renderHeader(): array
     {
         $output = [];
+
         foreach ($this->grid->getConfig()->getColumns() as $column) {
             if (!$column->isHidden()) {
                 $output[] = $this->escapeString($column->getLabel());
             }
         }
-        fputcsv($file, $output, static::CSV_DELIMITER);
+
+        return $output;
     }
 }
