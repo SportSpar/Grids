@@ -7,11 +7,9 @@ class Sorter
     /**
      * @var Grid
      */
-    protected $grid;
+    private $grid;
 
     /**
-     * Constructor.
-     *
      * @param Grid $grid
      */
     public function __construct(Grid $grid)
@@ -31,6 +29,19 @@ class Sorter
         return (new GridInputProcessor($this->grid))
             ->setSorting($column, $direction)
             ->getUrl();
+    }
+
+    /**
+     * @param string $columnName
+     * @param string $direction   Possible values: asc, desc
+     */
+    public function setDefaultSort(string $columnName, string $direction = 'DESC')
+    {
+        $inputProcessor = $this->grid->getInputProcessor();
+
+        if (empty($inputProcessor->getSorting())) {
+            $inputProcessor->setSorting($this->grid->getConfig()->getColumn($columnName), strtoupper($direction));
+        }
     }
 
     /**

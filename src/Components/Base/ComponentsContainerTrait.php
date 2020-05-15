@@ -5,8 +5,11 @@ namespace SportSpar\Grids\Components\Base;
 use Illuminate\Support\Collection;
 use SportSpar\Grids\Grid;
 
-trait TRegistry
+trait ComponentsContainerTrait
 {
+    /**
+     * @var Collection|ComponentInterface[]
+     */
     protected $components;
 
     /**
@@ -14,9 +17,9 @@ trait TRegistry
      *
      * Override this method.
      *
-     * @return \Illuminate\Support\Collection|ComponentInterface[]|array
+     * @return array
      */
-    protected function getDefaultComponents()
+    protected function getDefaultComponents(): array
     {
         return [];
     }
@@ -26,11 +29,12 @@ trait TRegistry
      *
      * @return Collection|ComponentInterface[]
      */
-    final public function getComponents()
+    final public function getComponents(): Collection
     {
         if ($this->components === null) {
             $this->setComponents($this->getDefaultComponents());
         }
+
         return $this->components;
     }
 
@@ -38,6 +42,7 @@ trait TRegistry
      * Finds child component by name.
      *
      * @param string $name
+     *
      * @return null|ComponentInterface
      */
     public function getComponentByName($name)
@@ -47,6 +52,8 @@ trait TRegistry
                 return $component;
             }
         }
+
+        return null;
     }
 
     /**
@@ -61,7 +68,7 @@ trait TRegistry
             if ($component->getName() === $name) {
                 return $component;
             }
-            if ($component instanceof TRegistry || $component instanceof RegistryInterface) {
+            if ($component instanceof ComponentsContainerTrait || $component instanceof ComponentsContainerInterface) {
                 if ($res = $component->getComponentByNameRecursive($name)) {
                     return $res;
                 }
@@ -72,57 +79,49 @@ trait TRegistry
     }
 
     /**
-     * @param string|string[] $tagNames
-     * @return Collection|ComponentInterface[]
-     */
-    public function getTagged($tagNames)
-    {
-        return $this->getComponents()->filter(
-            function (ComponentInterface $component) use ($tagNames) {
-                return is_array($tagNames) ? $component->hasTags($tagNames) : $component->hasTag($tagNames);
-            }
-        );
-    }
-
-    /**
      * Adds component to the collection of child components.
      *
      * @param ComponentInterface $component
-     * @return $this
+     *
+     * @return self
      */
     public function addComponent(ComponentInterface $component)
     {
         $this->getComponents()->push($component);
-        $component->attachTo($this);
-        return $this;
-    }
+        $component->setParent($this);
 
-    /**
-     * Allows to specify collection of child components.
-     *
-     * @param \Illuminate\Support\Collection|ComponentInterface[]|array $components
-     * @return $this
-     */
-    public function setComponents($components)
-    {
-        $this->components = Collection::make($components);
-        foreach ($components as $component) {
-            $component->attachTo($this);
-        }
         return $this;
     }
 
     /**
      * Adds set of components to the collection of child components.
      *
-     * @param  Collection|\Illuminate\Support\Contracts\ArrayableInterface|array  $components
-     * @return $this
+     * @param  Collection|array  $components
+     * @return self
      */
     public function addComponents($components)
     {
-        $this->setComponents(
-            $this->getComponents()->merge($components)
-        );
+        foreach ($components as $component) {
+            $this->addComponent($component);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Allows to specify collection of child components.
+     *
+     * @param Collection|ComponentInterface[]|array $components
+     *
+     * @return $this
+     */
+    public function setComponents($components)
+    {
+        $this->components = new Collection($components);
+        foreach ($components as $component) {
+            $component->setParent($this);
+        }
+
         return $this;
     }
 
@@ -137,6 +136,7 @@ trait TRegistry
     {
         $component = new $class;
         $this->addComponent($component);
+
         return $component;
     }
 

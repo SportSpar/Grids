@@ -2,21 +2,21 @@
 
 namespace SportSpar\Grids\Components\Base;
 
+use Illuminate\Support\Collection;
+
 /**
- * Interface RegistryInterface
- *
  * Interface of Grid components registry
  *
  * @package SportSpar\Grids\Components\Base
  */
-interface RegistryInterface
+interface ComponentsContainerInterface
 {
     /**
      * Returns collection of attached components.
      *
-     * @return \Illuminate\Support\Collection|ComponentInterface[]|array
+     * @return Collection|ComponentInterface[]
      */
-    public function getComponents();
+    public function getComponents(): Collection;
 
     /**
      * Returns child component
@@ -31,23 +31,25 @@ interface RegistryInterface
      * Adds component to collection.
      *
      * @param ComponentInterface $component
-     * @return $this
+     * @return self
      */
     public function addComponent(ComponentInterface $component);
 
     /**
      * Sets children components collection.
      *
-     * @param \Illuminate\Support\Collection|ComponentInterface[]|array $components
-     * @return $this
+     * @param Collection|ComponentInterface[]|array $components
+     *
+     * @return self
      */
     public function setComponents($components);
 
     /**
      * Adds components to collection.
      *
-     * @param \Illuminate\Support\Collection|ComponentInterface[]|array $components
-     * @return $this
+     * @param Collection|ComponentInterface[]|array $components
+     *
+     * @return self
      */
     public function addComponents($components);
 

@@ -14,20 +14,19 @@ use SportSpar\Grids\Grid;
  *
  * @package SportSpar\Grids\Components\Base
  */
-interface ComponentInterface extends TaggableInterface
+interface ComponentInterface
 {
     /**
      * Attaches component to registry.
      *
-     * @param RegistryInterface $parent
-     * @return null
+     * @param ComponentsContainerInterface $parent
      */
-    public function attachTo(RegistryInterface $parent);
+    public function setParent(ComponentsContainerInterface $parent);
 
     /**
      * Returns parent object.
      *
-     * @return RegistryInterface
+     * @return ComponentsContainerInterface
      */
     public function getParent();
 
