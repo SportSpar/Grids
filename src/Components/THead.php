@@ -20,7 +20,7 @@ class THead extends HtmlTag
      *
      * @return ComponentInterface[]
      */
-    protected function getDefaultComponents()
+    protected function getDefaultComponents(): array
     {
         return [
             new ColumnHeadersRow(),

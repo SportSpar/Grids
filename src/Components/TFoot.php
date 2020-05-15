@@ -21,7 +21,7 @@ class TFoot extends HtmlTag
      *
      * @return ComponentInterface[]
      */
-    protected function getDefaultComponents()
+    protected function getDefaultComponents(): array
     {
         if (version_compare(Application::VERSION, '5', '<')) {
             $pagerClass = 'SportSpar\Grids\Components\Pager';
