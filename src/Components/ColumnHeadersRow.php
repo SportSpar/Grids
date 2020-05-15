@@ -37,7 +37,7 @@ class ColumnHeadersRow extends HtmlTag
         parent::addComponent($component);
 
         if ($this->grid) {
-            $this->initialize($this->grid);
+            $this->createHeaders($this->grid);
         }
 
         return $this;

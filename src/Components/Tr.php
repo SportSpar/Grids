@@ -13,8 +13,10 @@ use SportSpar\Grids\DataRowInterface;
  */
 class Tr extends HtmlTag
 {
-    /** @var DataRowInterface  */
-    protected $data_row;
+    /**
+     * @var DataRowInterface
+     */
+    protected $dataRow;
 
     /**
      * Returns data row.
@@ -23,7 +25,7 @@ class Tr extends HtmlTag
      */
     public function getDataRow()
     {
-        return $this->data_row;
+        return $this->dataRow;
     }
 
     /**
@@ -34,7 +36,7 @@ class Tr extends HtmlTag
      */
     public function setDataRow(DataRowInterface $dataRow)
     {
-        $this->data_row = $dataRow;
+        $this->dataRow = $dataRow;
         return $this;
     }
 

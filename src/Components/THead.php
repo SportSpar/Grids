@@ -2,6 +2,8 @@
 
 namespace SportSpar\Grids\Components;
 
+use SportSpar\Grids\Components\Base\ComponentInterface;
+
 /**
  * Class THead
  *
@@ -16,13 +18,13 @@ class THead extends HtmlTag
     /**
      * Returns default set of child components.
      *
-     * @return \SportSpar\Grids\Components\Base\ComponentInterface[]
+     * @return ComponentInterface[]
      */
     protected function getDefaultComponents()
     {
         return [
-            new ColumnHeadersRow,
-            new FiltersRow
+            new ColumnHeadersRow(),
+            new FiltersRow()
         ];
     }
 }

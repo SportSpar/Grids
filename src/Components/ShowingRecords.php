@@ -13,7 +13,9 @@ use SportSpar\Grids\Components\Base\RenderableComponent;
  */
 class ShowingRecords extends RenderableComponent
 {
-
+    /**
+     * @var string
+     */
     protected $template = '*.components.showing_records';
 
     /**
@@ -22,22 +24,29 @@ class ShowingRecords extends RenderableComponent
      */
     protected function getViewData()
     {
-        $paginator = $this
-            ->grid
-            ->getConfig()
-            ->getDataProvider()
-            ->getPaginator();
-        # Laravel 4
-        if (method_exists($paginator, 'getFrom')) {
-            $from = $paginator->getFrom();
-            $to = $paginator->getTo();
-            $total = $paginator->getTotal();
-        # Laravel 5
-        } else {
-            $from = $paginator->firstItem();
-            $to = $paginator->lastItem();
-            $total = $paginator->total();
+        $from  = 0;
+        $to    = 0;
+        $total = 0;
+
+        if ($this->grid) {
+            $paginator = $this
+                ->grid
+                ->getConfig()
+                ->getDataProvider()
+                ->getPaginator();
+            # Laravel 4
+            if (method_exists($paginator, 'getFrom')) {
+                $from  = $paginator->getFrom();
+                $to    = $paginator->getTo();
+                $total = $paginator->getTotal();
+                # Laravel 5
+            } else {
+                $from  = $paginator->firstItem();
+                $to    = $paginator->lastItem();
+                $total = $paginator->total();
+            }
         }
+
         return parent::getViewData() + compact('from', 'to', 'total');
     }
 }

@@ -243,17 +243,4 @@ class GridConfig implements ComponentsContainerInterface
     {
         return $this->page_size;
     }
-
-    /**
-     * @param string $columnName
-     * @param string $direction   Possible values: asc, desc
-     */
-    public function setDefaultGridSort(string $columnName, string $direction = 'DESC')
-    {
-        $inputProcessor = $this->grid->getInputProcessor();
-
-        if (empty($inputProcessor->getSorting())) {
-            $inputProcessor->setSorting($this->getColumn($columnName), strtoupper($direction));
-        }
-    }
 }

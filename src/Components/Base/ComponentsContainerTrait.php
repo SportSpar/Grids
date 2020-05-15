@@ -88,7 +88,7 @@ trait ComponentsContainerTrait
     public function addComponent(ComponentInterface $component)
     {
         $this->getComponents()->push($component);
-        $component->attachTo($this);
+        $component->setParent($this);
 
         return $this;
     }
@@ -119,7 +119,7 @@ trait ComponentsContainerTrait
     {
         $this->components = new Collection($components);
         foreach ($components as $component) {
-            $component->attachTo($this);
+            $component->setParent($this);
         }
 
         return $this;

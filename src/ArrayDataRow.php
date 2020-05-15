@@ -20,12 +20,12 @@ class ArrayDataRow extends DataRow
                 }
             }
             return $res;
-        } else {
-            if (array_key_exists($fieldName, $this->src)) {
-                return $this->src[$fieldName];
-            } else {
-                return null;
-            }
         }
+
+        if (isset($this->src[$fieldName])) {
+            return $this->src[$fieldName];
+        }
+
+        return null;
     }
 }

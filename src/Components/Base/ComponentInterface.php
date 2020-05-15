@@ -20,10 +20,8 @@ interface ComponentInterface
      * Attaches component to registry.
      *
      * @param ComponentsContainerInterface $parent
-     *
-     * @return null
      */
-    public function attachTo(ComponentsContainerInterface $parent);
+    public function setParent(ComponentsContainerInterface $parent);
 
     /**
      * Returns parent object.

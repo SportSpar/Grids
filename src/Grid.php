@@ -4,6 +4,7 @@ namespace SportSpar\Grids;
 
 use Event;
 use Cache;
+use SportSpar\Grids\Components\Base\ComponentInterface;
 use SportSpar\Grids\Components\TFoot;
 use SportSpar\Grids\Components\THead;
 use View;
@@ -28,7 +29,7 @@ class Grid
     protected $sorter;
 
     /** @var  GridInputProcessor */
-    protected $input_processor;
+    protected $inputProcessor;
 
     protected $filtering;
 
@@ -153,6 +154,7 @@ class Grid
         if (null === $this->sorter) {
             $this->sorter = new Sorter($this);
         }
+
         return $this->sorter;
     }
 
@@ -161,12 +163,13 @@ class Grid
      *
      * @return GridInputProcessor
      */
-    public function getInputProcessor()
+    public function getInputProcessor(): GridInputProcessor
     {
-        if (null === $this->input_processor) {
-            $this->input_processor = new GridInputProcessor($this);
+        if (null === $this->inputProcessor) {
+            $this->inputProcessor = new GridInputProcessor($this);
         }
-        return $this->input_processor;
+
+        return $this->inputProcessor;
     }
 
     /**
@@ -216,7 +219,7 @@ class Grid
     /**
      * Returns footer component.
      *
-     * @return TFoot|null
+     * @return TFoot|ComponentInterface|null
      */
     public function footer()
     {
@@ -226,7 +229,7 @@ class Grid
     /**
      * Returns header component.
      *
-     * @return THead|null
+     * @return THead|ComponentInterface|null
      */
     public function header()
     {

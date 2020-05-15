@@ -27,7 +27,7 @@ trait ComponentTrait
      *
      * @param ComponentsContainerInterface $parent
      */
-    public function attachTo(ComponentsContainerInterface $parent)
+    public function setParent(ComponentsContainerInterface $parent)
     {
         $this->parent = $parent;
     }

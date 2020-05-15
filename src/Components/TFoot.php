@@ -3,6 +3,7 @@
 namespace SportSpar\Grids\Components;
 
 use Illuminate\Foundation\Application;
+use SportSpar\Grids\Components\Base\ComponentInterface;
 
 /**
  * Class TFoot
@@ -18,7 +19,7 @@ class TFoot extends HtmlTag
     /**
      * Returns default set of child components.
      *
-     * @return \SportSpar\Grids\Components\Base\ComponentInterface[]
+     * @return ComponentInterface[]
      */
     protected function getDefaultComponents()
     {
