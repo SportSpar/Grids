@@ -28,22 +28,6 @@ class ColumnHeadersRow extends HtmlTag
     }
 
     /**
-     * @param ComponentInterface $component
-     *
-     * @return ColumnHeadersRow|void
-     */
-    public function addComponent(ComponentInterface $component)
-    {
-        parent::addComponent($component);
-
-        if ($this->grid) {
-            $this->createHeaders($this->grid);
-        }
-
-        return $this;
-    }
-
-    /**
      * Creates children components for rendering column headers.
      *
      * @param Grid $grid
