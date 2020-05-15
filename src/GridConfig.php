@@ -4,17 +4,17 @@ namespace SportSpar\Grids;
 
 use Illuminate\Support\Collection;
 use SportSpar\Grids\Components\Base\RenderableComponentInterface;
-use SportSpar\Grids\Components\Base\TComponent;
-use SportSpar\Grids\Components\Base\TRegistry;
-use SportSpar\Grids\Components\Base\RegistryInterface;
+use SportSpar\Grids\Components\Base\ComponentTrait;
+use SportSpar\Grids\Components\Base\ComponentsContainerTrait;
+use SportSpar\Grids\Components\Base\ComponentsContainerInterface;
 use SportSpar\Grids\Components\TFoot;
 use SportSpar\Grids\Components\THead;
 use SportSpar\Grids\Components\Tr;
 
-class GridConfig implements RegistryInterface
+class GridConfig implements ComponentsContainerInterface
 {
-    use TRegistry;
-    use TComponent;
+    use ComponentsContainerTrait;
+    use ComponentTrait;
 
     const SECTION_DO_NOT_RENDER = 'not_render';
 
@@ -69,14 +69,13 @@ class GridConfig implements RegistryInterface
     /**
      * Returns default child components.
      *
-     *
-     * @return \Illuminate\Support\Collection|Components\Base\ComponentInterface[]|array
+     * @return array
      */
-    protected function getDefaultComponents()
+    protected function getDefaultComponents(): array
     {
         return [
-            new THead,
-            new TFoot
+            new THead(),
+            new TFoot()
         ];
     }
 
@@ -243,5 +242,18 @@ class GridConfig implements RegistryInterface
     public function getPageSize()
     {
         return $this->page_size;
+    }
+
+    /**
+     * @param string $columnName
+     * @param string $direction   Possible values: asc, desc
+     */
+    public function setDefaultGridSort(string $columnName, string $direction = 'DESC')
+    {
+        $inputProcessor = $this->grid->getInputProcessor();
+
+        if (empty($inputProcessor->getSorting())) {
+            $inputProcessor->setSorting($this->getColumn($columnName), strtoupper($direction));
+        }
     }
 }

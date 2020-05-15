@@ -11,6 +11,6 @@ namespace SportSpar\Grids\Components\Base;
  */
 class RenderableComponent implements RenderableComponentInterface
 {
-    use TComponent;
+    use ComponentTrait;
     use TComponentView;
 }

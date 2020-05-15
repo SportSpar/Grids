@@ -2,6 +2,7 @@
 
 namespace SportSpar\Grids\Components;
 
+use SportSpar\Grids\Components\Base\ComponentInterface;
 use SportSpar\Grids\Grid;
 
 /**
@@ -19,12 +20,27 @@ class ColumnHeadersRow extends HtmlTag
      * Initializes component with grid
      *
      * @param Grid $grid
-     * @return null
      */
     public function initialize(Grid $grid)
     {
         $this->createHeaders($grid);
         parent::initialize($grid);
+    }
+
+    /**
+     * @param ComponentInterface $component
+     *
+     * @return ColumnHeadersRow|void
+     */
+    public function addComponent(ComponentInterface $component)
+    {
+        parent::addComponent($component);
+
+        if ($this->grid) {
+            $this->initialize($this->grid);
+        }
+
+        return $this;
     }
 
     /**
@@ -34,6 +50,9 @@ class ColumnHeadersRow extends HtmlTag
      */
     protected function createHeaders(Grid $grid)
     {
+        // Remove all previously existing components
+        $this->setComponents([]);
+
         foreach ($grid->getConfig()->getColumns() as $column) {
             $this->addComponent(new ColumnHeader($column));
         }

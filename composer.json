@@ -29,6 +29,9 @@
     "require": {
         "php": ">=7.0",
         "illuminate/support": ">=4.2",
+        "illuminate/view": ">=4.2",
+        "illuminate/pagination": ">=4.2",
+        "illuminate/events": ">=4.2",
         "nayjest/builder": "~2"
     },
     "suggest": {

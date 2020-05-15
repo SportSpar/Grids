@@ -4,7 +4,7 @@ namespace SportSpar\Grids\Components;
 
 use LogicException;
 use SportSpar\Grids\Components\Base\RenderableComponentInterface;
-use SportSpar\Grids\Components\Base\TComponent;
+use SportSpar\Grids\Components\Base\ComponentTrait;
 use SportSpar\Grids\Components\Base\TComponentView;
 use SportSpar\Grids\ArrayDataRow;
 use SportSpar\Grids\DataProvider;
@@ -23,8 +23,8 @@ use Illuminate\Support\Facades\Event;
  */
 class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
 {
-    use TComponent {
-        TComponent::initialize as protected initializeComponent;
+    use ComponentTrait {
+        ComponentTrait::initialize as protected initializeComponent;
     }
     use TComponentView;
 

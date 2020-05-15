@@ -11,10 +11,10 @@ namespace SportSpar\Grids\Components\Base;
  */
 class RenderableRegistry implements
     RenderableComponentInterface,
-    RegistryInterface
+    ComponentsContainerInterface
 {
-    use TComponent;
-    use TRegistry;
+    use ComponentTrait;
+    use ComponentsContainerTrait;
     use TComponentView {
         TComponentView::render as protected renderTemplate;
     }

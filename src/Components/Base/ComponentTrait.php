@@ -5,18 +5,15 @@ namespace SportSpar\Grids\Components\Base;
 use SportSpar\Grids\Grid;
 
 /**
- * Class TComponent
- *
  * ComponentInterface interface implementation.
  *
  * @see SportSpar\Grids\Components\Base\ComponentInterface
- *
- * @package SportSpar\Grids\Components\Base
  */
-trait TComponent
+trait ComponentTrait
 {
-    use TTaggable;
-
+    /**
+     * @var ComponentsContainerInterface
+     */
     protected $parent;
 
     /** @var Grid */
@@ -28,10 +25,9 @@ trait TComponent
     /**
      * Attaches component to registry.
      *
-     * @param RegistryInterface $parent
-     * @return null
+     * @param ComponentsContainerInterface $parent
      */
-    public function attachTo(RegistryInterface $parent)
+    public function attachTo(ComponentsContainerInterface $parent)
     {
         $this->parent = $parent;
     }
@@ -39,7 +35,7 @@ trait TComponent
     /**
      * Returns parent object.
      *
-     * @return RegistryInterface
+     * @return ComponentsContainerInterface
      */
     public function getParent()
     {
