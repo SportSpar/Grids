@@ -7,8 +7,8 @@ use Nayjest\Builder\Instructions\Base\Instruction;
 use Nayjest\Builder\Scaffold;
 use SportSpar\Grids\DataProvider\CollectionDataProvider;
 use SportSpar\Grids\DataProvider\DataProviderInterface;
-use SportSpar\Grids\DbalDataProvider;
-use SportSpar\Grids\EloquentDataProvider;
+use SportSpar\Grids\DataProvider\DbalDataProvider;
+use SportSpar\Grids\DataProvider\EloquentDataProvider;
 
 /**
  * Class BuildDataProvider
@@ -61,7 +61,7 @@ class BuildDataProvider extends Instruction
                 class_exists($src, true) &&
                 is_subclass_of($src, '\Illuminate\Database\Eloquent\Model')
             ) {
-                $class = '\SportSpar\Grids\EloquentDataProvider';
+                $class = '\SportSpar\Grids\DataProvider\EloquentDataProvider';
                 $model = new $src;
                 $arg = $model->newQuery();
             }

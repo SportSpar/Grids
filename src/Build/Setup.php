@@ -19,7 +19,7 @@ use Nayjest\Builder\Instructions\Mapping\Rename;
 use Nayjest\Builder\Instructions\SimpleValueAsField;
 use Nayjest\Builder\Scaffold;
 use SportSpar\Grids\Build\Instructions\BuildDataProvider;
-use SportSpar\Grids\EloquentDataProvider;
+use SportSpar\Grids\DataProvider\EloquentDataProvider;
 
 /**
  * Class Setup

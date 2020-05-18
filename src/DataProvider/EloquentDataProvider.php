@@ -1,13 +1,14 @@
 <?php
 
-namespace SportSpar\Grids;
+namespace SportSpar\Grids\DataProvider;
 
 use Illuminate\Database\Eloquent\Builder;
 use Event;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
+use SportSpar\Grids\DataProvider;
 
-class EloquentDataProvider extends DataProvider
+class EloquentDataProvider extends DataProvider implements DataProviderInterface
 {
     protected $collection;
 
