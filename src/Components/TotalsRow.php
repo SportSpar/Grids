@@ -6,9 +6,9 @@ use LogicException;
 use SportSpar\Grids\Components\Base\RenderableComponentInterface;
 use SportSpar\Grids\Components\Base\ComponentTrait;
 use SportSpar\Grids\Components\Base\TComponentView;
-use SportSpar\Grids\ArrayDataRow;
-use SportSpar\Grids\DataProvider;
-use SportSpar\Grids\DataRow;
+use SportSpar\Grids\DataProvider\DataRow\ArrayDataRow;
+use SportSpar\Grids\DataProvider\AbstractDataProvider;
+use SportSpar\Grids\DataProvider\DataRow\AbstractDataRow;
 use SportSpar\Grids\FieldConfig;
 use SportSpar\Grids\IdFieldConfig;
 use SportSpar\Grids\Grid;
@@ -71,13 +71,13 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
      *
      * The listener will perform totals calculation.
      *
-     * @param DataProvider $provider
+     * @param AbstractDataProvider $provider
      */
-    protected function listen(DataProvider $provider)
+    protected function listen(AbstractDataProvider $provider)
     {
         Event::listen(
-            DataProvider::EVENT_FETCH_ROW,
-            function (DataRow $row, DataProvider $currentProvider) use ($provider) {
+            AbstractDataProvider::EVENT_FETCH_ROW,
+            function (AbstractDataRow $row, AbstractDataProvider $currentProvider) use ($provider) {
                 if ($currentProvider !== $provider) return;
                 $this->rows_processed++;
                 foreach ($this->fields as $field) {
@@ -86,7 +86,7 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
                     switch($operation) {
 
                         case self::OPERATION_SUM:
-                            $this->src[$name] += $row->getCellValue($field);
+                            $this->src[$name] += $row->getCellValue($field->getName());
                             break;
                         case self::OPERATION_COUNT:
                             $this->src[$name] = $this->rows_processed;
@@ -96,7 +96,7 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
                             if (empty($this->src[$key])) {
                                 $this->src[$key] = 0;
                             }
-                            $this->src[$key] += $row->getCellValue($field);
+                            $this->src[$key] += $row->getCellValue($field->getName());
                             $this->src[$name] = round(
                                 $this->src[$key] / $this->rows_processed,
                                 2
@@ -151,7 +151,7 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
             $field = $this->grid->getConfig()->getColumn($field);
         }
         if (!$field instanceof IdFieldConfig && $this->uses($field)) {
-            return parent::getCellValue($field);
+            return parent::getCellValue($field->getName());
         } else {
             return null;
         }

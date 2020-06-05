@@ -3,7 +3,7 @@
 namespace SportSpar\Grids\DataProvider;
 
 use Illuminate\Support\Collection;
-use InvalidArgumentException;
+use SportSpar\Grids\Exception\DataProvider\UnsupportedDataSource;
 
 class DataProviderFactory
 {
@@ -20,6 +20,8 @@ class DataProviderFactory
      * @param mixed $source
      *
      * @return DataProviderInterface
+     *
+     * @throws UnsupportedDataSource
      */
     public function provideFor($source)
     {
@@ -46,6 +48,6 @@ class DataProviderFactory
             }
         }
 
-        throw new InvalidArgumentException('Unsupported data source');
+        throw new UnsupportedDataSource('Unsupported data source');
     }
 }

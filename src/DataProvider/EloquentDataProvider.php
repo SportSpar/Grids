@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Event;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
-use SportSpar\Grids\DataProvider;
+use SportSpar\Grids\DataProvider\DataRow\ObjectDataRow;
 
-class EloquentDataProvider extends DataProvider implements DataProviderInterface
+class EloquentDataProvider extends AbstractDataProvider
 {
     protected $collection;
 
@@ -92,7 +92,7 @@ class EloquentDataProvider extends DataProvider implements DataProviderInterface
             $this->index++;
             $item = $this->iterator->current();
             $this->iterator->next();
-            $row = new EloquentDataRow($item, $this->getRowId());
+            $row = new ObjectDataRow($item, $this->getRowId());
 
             if (version_compare(Application::VERSION, '5.8', '>=')) {
                 Event::dispatch(self::EVENT_FETCH_ROW, $this);

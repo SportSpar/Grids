@@ -10,6 +10,7 @@ use SportSpar\Grids\Components\Base\ComponentsContainerInterface;
 use SportSpar\Grids\Components\TFoot;
 use SportSpar\Grids\Components\THead;
 use SportSpar\Grids\Components\Tr;
+use SportSpar\Grids\DataProvider\DataProviderInterface;
 
 class GridConfig implements ComponentsContainerInterface
 {
@@ -23,7 +24,7 @@ class GridConfig implements ComponentsContainerInterface
     /** @var FieldConfig[]|Collection */
     protected $columns;
 
-    /** @var  DataProvider $data_provider */
+    /** @var  DataProviderInterface $data_provider */
     protected $data_provider;
 
     protected $page_size = 50;
@@ -128,17 +129,17 @@ class GridConfig implements ComponentsContainerInterface
     }
 
     /**
-     * @param DataProvider $dataProvider
+     * @param DataProviderInterface $dataProvider
      * @return $this
      */
-    public function setDataProvider(DataProvider $dataProvider)
+    public function setDataProvider(DataProviderInterface $dataProvider)
     {
         $this->data_provider = $dataProvider;
         return $this;
     }
 
     /**
-     * @return DataProvider
+     * @return DataProviderInterface
      */
     public function getDataProvider()
     {

@@ -1,6 +1,6 @@
 <form>
 <?php
-/** @var SportSpar\Grids\DataProvider $data **/
+/** @var SportSpar\Grids\DataProvider\AbstractDataProvider $data **/
 /** @var SportSpar\Grids\Grid $grid **/
 ?>
 <table class="table table-striped" id="<?= $grid->getConfig()->getName() ?>">

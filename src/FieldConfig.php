@@ -3,6 +3,7 @@
 namespace SportSpar\Grids;
 
 use Illuminate\Support\Collection;
+use SportSpar\Grids\DataProvider\DataRow\DataRowInterface;
 
 /**
  * Class FieldConfig
@@ -328,9 +329,9 @@ class FieldConfig
     public function getValue(DataRowInterface $row)
     {
         if ($function = $this->getCallback()) {
-            return call_user_func($function, $row->getCellValue($this), $row);
+            return call_user_func($function, $row->getCellValue($this->getName()), $row);
         } else {
-            return $row->getCellValue($this);
+            return $row->getCellValue($this->getName());
         }
     }
 }

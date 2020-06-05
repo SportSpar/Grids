@@ -10,8 +10,7 @@ use Maatwebsite\Excel\Excel;
 use Maatwebsite\Excel\Writers\LaravelExcelWriter;
 use SportSpar\Grids\Components\Base\RenderableComponent;
 use SportSpar\Grids\Components\Base\RenderableRegistry;
-use SportSpar\Grids\DataProvider;
-use SportSpar\Grids\DataRow;
+use SportSpar\Grids\DataProvider\AbstractDataProvider;
 use SportSpar\Grids\FieldConfig;
 use SportSpar\Grids\Grid;
 
@@ -152,7 +151,7 @@ class ExcelExport extends RenderableComponent
         return $this;
     }
 
-    protected function resetPagination(DataProvider $provider)
+    protected function resetPagination(AbstractDataProvider $provider)
     {
         if (version_compare(Application::VERSION, '5.0.0', '<')) {
             $provider->getPaginationFactory()->setPageName('page_unused');
@@ -183,7 +182,7 @@ class ExcelExport extends RenderableComponent
     {
         // Build array
         $exportData = [];
-        /** @var $provider DataProvider */
+        /** @var $provider AbstractDataProvider */
         $provider = $this->grid->getConfig()->getDataProvider();
 
         $exportData[] = $this->getHeaderRow();
@@ -191,7 +190,6 @@ class ExcelExport extends RenderableComponent
         $this->resetPagination($provider);
         $provider->reset();
 
-        /** @var DataRow $row */
         while ($row = $provider->getRow()) {
             $output = [];
             foreach ($this->grid->getConfig()->getColumns() as $column) {

@@ -7,9 +7,9 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use Event;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
-use SportSpar\Grids\DataProvider;
+use SportSpar\Grids\DataProvider\DataRow\ObjectDataRow;
 
-class DbalDataProvider extends DataProvider implements DataProviderInterface
+class DbalDataProvider extends AbstractDataProvider
 {
     protected $collection;
 

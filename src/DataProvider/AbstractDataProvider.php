@@ -1,10 +1,10 @@
 <?php
 
-namespace SportSpar\Grids;
+namespace SportSpar\Grids\DataProvider;
 
-use SportSpar\Grids\DataProvider\DataProviderInterface;
+use SportSpar\Grids\DataProvider\DataRow\DataRowInterface;
 
-abstract class DataProvider implements DataProviderInterface
+abstract class AbstractDataProvider implements DataProviderInterface
 {
     const EVENT_FETCH_ROW = 'grid.dp.fetch_row';
 
@@ -29,7 +29,7 @@ abstract class DataProvider implements DataProviderInterface
     /**
      * Sets the internal pointer first element.
      *
-     * @return $this
+     * @return self
      */
     public function reset()
     {
@@ -41,7 +41,7 @@ abstract class DataProvider implements DataProviderInterface
      * Sets page size.
      *
      * @param int $pageSize
-     * @return $this
+     * @return self
      */
     public function setPageSize($pageSize)
     {
@@ -83,7 +83,7 @@ abstract class DataProvider implements DataProviderInterface
      *
      * @param string $fieldName
      * @param $direction
-     * @return $this
+     * @return self
      */
     abstract public function orderBy($fieldName, $direction);
 
@@ -93,7 +93,7 @@ abstract class DataProvider implements DataProviderInterface
      * @param string $fieldName
      * @param string $operator
      * @param mixed $value
-     * @return $this
+     * @return self
      */
     abstract public function filter($fieldName, $operator, $value);
 
@@ -118,7 +118,7 @@ abstract class DataProvider implements DataProviderInterface
      * Fetches one row and moves internal pointer forward.
      * When last row fetched, returns null
      *
-     * @return DataRow|null
+     * @return DataRowInterface|null
      */
     abstract public function getRow();
 

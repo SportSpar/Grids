@@ -1,6 +1,6 @@
 <?php
 
-namespace SportSpar\Grids;
+namespace SportSpar\Grids\DataProvider\DataRow;
 
 interface DataRowInterface
 {
@@ -14,7 +14,8 @@ interface DataRowInterface
     /**
      * Returns value of specified field.
      *
-     * @param string|FieldConfig $field
+     * @param string $field
+     *
      * @return mixed
      */
     public function getCellValue($field);
