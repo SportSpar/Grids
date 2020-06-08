@@ -28,10 +28,11 @@
     ],
     "require": {
         "php": ">=7.0",
-        "illuminate/support": ">=4.2",
-        "illuminate/view": ">=4.2",
-        "illuminate/pagination": ">=4.2",
-        "illuminate/events": ">=4.2",
+        "illuminate/support": "^5.5",
+        "illuminate/view": "^5.5",
+        "illuminate/pagination": "^5.5",
+        "illuminate/events": "^5.5",
+        "illuminate/http": "^5.5",
         "nayjest/builder": "~2"
     },
     "suggest": {

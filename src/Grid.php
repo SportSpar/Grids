@@ -7,6 +7,8 @@ use Cache;
 use SportSpar\Grids\Components\Base\ComponentInterface;
 use SportSpar\Grids\Components\TFoot;
 use SportSpar\Grids\Components\THead;
+use SportSpar\Grids\InputProvider\InputProviderInterface;
+use SportSpar\Grids\InputProvider\LaravelRequest;
 use View;
 use Illuminate\Foundation\Application;
 
@@ -28,7 +30,9 @@ class Grid
     /** @var  Sorter */
     protected $sorter;
 
-    /** @var  GridInputProcessor */
+    /**
+     * @var  InputProviderInterface
+     */
     protected $inputProcessor;
 
     protected $filtering;
@@ -159,14 +163,14 @@ class Grid
     }
 
     /**
-     * Returns instance of GridInputProcessor.
+     * Returns input provider
      *
-     * @return GridInputProcessor
+     * @return InputProviderInterface
      */
-    public function getInputProcessor(): GridInputProcessor
+    public function getInputProcessor(): InputProviderInterface
     {
         if (null === $this->inputProcessor) {
-            $this->inputProcessor = new GridInputProcessor($this);
+            $this->inputProcessor = new LaravelRequest($this->config->getName());
         }
 
         return $this->inputProcessor;

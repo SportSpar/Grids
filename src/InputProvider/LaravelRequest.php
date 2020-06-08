@@ -1,44 +1,43 @@
 <?php
 
-namespace SportSpar\Grids;
+namespace SportSpar\Grids\InputProvider;
 
-use Input;
-use Request;
-use Form;
+use Illuminate\Http\Request;
+use Request as RequestFacade;
 
-/**
- * Class GridInputProcessor
- *
- * This class manages input processing for grid.
- *
- * @package SportSpar\Grids
- */
-class GridInputProcessor
+class LaravelRequest implements InputProviderInterface
 {
-    /**
-     * @var Grid
-     */
-    protected $grid;
-
     /**
      * @var array
      */
     protected $input;
 
     /**
-     * Constructor.
-     *
-     * @param Grid $grid
+     * @var string
      */
-    public function __construct(Grid $grid)
-    {
-        $this->grid = $grid;
-        $this->loadInput();
-    }
+    private $key;
 
-    protected function loadInput()
+    /**
+     * @var Request;
+     */
+    private $request;
+
+    /**
+     * @param string       $key
+     * @param Request|null $request
+     */
+    public function __construct(string $key, Request $request = null)
     {
-        $this->input = Input::get($this->getKey(), []);
+        $this->key = $key;
+
+        // Use provided request or load via Facade
+        if (null !== $request) {
+            $this->request = $request;
+        } else {
+            $this->request = RequestFacade::instance();
+        }
+
+        $this->input = $this->request->get($this->getKey(), []);
     }
 
     /**
@@ -58,7 +57,7 @@ class GridInputProcessor
      */
     public function getKey()
     {
-        return $this->grid->getConfig()->getName();
+        return $this->key;
     }
 
     /**
@@ -68,9 +67,12 @@ class GridInputProcessor
      */
     public function getSorting()
     {
-        return $_ =& $this->input['sort'];
+        return $this->getValue('sort');
     }
 
+    /**
+     * @return string
+     */
     public function getSortingHiddenInputsHtml()
     {
         $html = '';
@@ -78,7 +80,7 @@ class GridInputProcessor
         $key = $this->getKey();
         if (isset($this->input['sort'])) {
             foreach ($this->input['sort'] as $field => $direction) {
-                $html .= Form::hidden("{$key}[sort][$field]", $direction);
+                $html .= sprintf('<input name="%s[sort][%s]" type="hidden" value="%s">', $key, $field, $direction);
             }
         }
         return $html;
@@ -104,15 +106,14 @@ class GridInputProcessor
     }
 
     /**
-     * @param FieldConfig $column
-     * @param $direction
-     * @return $this
+     * @param string $column
+     * @param string $direction
+     *
+     * @return self
      */
-    public function setSorting(FieldConfig $column, $direction)
+    public function setSorting($column, $direction)
     {
-        $this->input['sort'] = [
-            $column->getName() => $direction
-        ];
+        $this->input['sort'] = [$column => $direction];
         return $this;
     }
 
@@ -126,9 +127,9 @@ class GridInputProcessor
     {
         if (isset($this->input['filters'][$filterName])) {
             return $this->input['filters'][$filterName];
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
@@ -142,60 +143,52 @@ class GridInputProcessor
     {
         if (isset($this->input[$key])) {
             return $this->input[$key];
-        } else {
-            return $default;
         }
-    }
 
-    /**
-     * @param string $key
-     * @param mixed $value
-     * @return $this
-     */
-    public function setValue($key, $value)
-    {
-        $this->input[$key] = $value;
-        return $this;
+        return $default;
     }
 
     /**
      * Returns current query string extended by specified GET parameters.
      *
-     * @param array $new_params
+     * @param array $newParams
+     *
      * @return string
      */
-    public function getQueryString(array $new_params = [])
+    private function getQueryString(array $newParams = [])
     {
-        $params = $_GET;
+        $params = $this->request->input();
         if (!empty($this->input)) {
             $params[$this->getKey()] = $this->input;
         }
-        if (!empty($new_params)) {
+        if (!empty($newParams)) {
             if (empty($params[$this->getKey()])) {
                 $params[$this->getKey()] = [];
             }
-            foreach ($new_params as $key => $value) {
+            foreach ($newParams as $key => $value) {
                 $params[$this->getKey()][$key] = $value;
             }
         }
+
         return http_build_query($params);
     }
 
     /**
      * Returns current URL extended by specified GET parameters.
      *
-     * @param array $new_params
+     * @param array $newParams
+     *
      * @return string
      */
-    public function getUrl(array $new_params = [])
+    public function getUrl(array $newParams = [])
     {
-        if (null !== $query_string = $this->getQueryString($new_params)) {
-            $query_string = '?' . $query_string;
+        if (null !== $queryString = $this->getQueryString($newParams)) {
+            $queryString = '?' . $queryString;
         }
-        $request = Request::instance();
-        return $request->getSchemeAndHttpHost()
-        . $request->getBaseUrl()
-        . $request->getPathInfo()
-        . $query_string;
+
+        return $this->request->getSchemeAndHttpHost()
+            . $this->request->getBaseUrl()
+            . $this->request->getPathInfo()
+            . $queryString;
     }
 }
