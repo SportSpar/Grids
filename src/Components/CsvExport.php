@@ -9,6 +9,7 @@ use Illuminate\Pagination\Paginator;
 use SportSpar\Grids\Components\Base\RenderableComponent;
 use SportSpar\Grids\Components\Base\RenderableRegistry;
 use SportSpar\Grids\DataProvider;
+use SportSpar\Grids\FieldConfig;
 use SportSpar\Grids\Grid;
 
 /**
@@ -25,7 +26,7 @@ class CsvExport extends RenderableComponent
     const INPUT_PARAM = 'csv';
     const CSV_EXT = '.csv';
     const DEFAULT_ROWS_LIMIT = 5000;
-    const UTF8_BOM = 0xEF . 0xBB . 0xBF;
+    const UTF8_BOM = "\xEF\xBB\xBF";
 
     /**
      * @var string
@@ -200,17 +201,9 @@ class CsvExport extends RenderableComponent
         while ($row = $provider->getRow()) {
             $output = [];
             foreach ($this->grid->getConfig()->getColumns() as $column) {
-                // Skip excluded columns
-                if (in_array($column->getName(), $this->excludeColumns, true)) {
-                    continue;
+                if ($this->shouldRenderColumn($column)) {
+                    $output[] = $this->escapeString($column->getValue($row));
                 }
-
-                // Skip hidden columns
-                if ($column->isHidden()) {
-                    continue;
-                }
-
-                $output[] = $this->escapeString($column->getValue($row));
             }
             fputcsv($file, $output, $this->csvDelimiter);
         }
@@ -243,11 +236,30 @@ class CsvExport extends RenderableComponent
         $output = [];
 
         foreach ($this->grid->getConfig()->getColumns() as $column) {
-            if (!$column->isHidden()) {
+            if ($this->shouldRenderColumn($column)) {
                 $output[] = $this->escapeString($column->getLabel());
             }
         }
 
         return $output;
+    }
+
+    /**
+     * @param FieldConfig $column
+     *
+     * @return bool
+     */
+    private function shouldRenderColumn(FieldConfig $column): bool
+    {
+        if (in_array($column->getName(), $this->excludeColumns, true)) {
+            return false;
+        }
+
+        // Skip hidden columns
+        if ($column->isHidden()) {
+            return false;
+        }
+
+        return true;
     }
 }
