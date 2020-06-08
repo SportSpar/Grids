@@ -2,6 +2,7 @@
 
 namespace SportSpar\Grids\Build\Instructions;
 
+use DB;
 use Nayjest\Builder\Instructions\Base\Instruction;
 use Nayjest\Builder\Scaffold;
 use SportSpar\Grids\DataProvider\DataProviderFactory;
