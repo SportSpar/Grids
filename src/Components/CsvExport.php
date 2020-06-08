@@ -9,7 +9,6 @@ use Illuminate\Pagination\Paginator;
 use SportSpar\Grids\Components\Base\RenderableComponent;
 use SportSpar\Grids\Components\Base\RenderableRegistry;
 use SportSpar\Grids\DataProvider;
-use SportSpar\Grids\DataRow;
 use SportSpar\Grids\Grid;
 
 /**
@@ -24,9 +23,9 @@ class CsvExport extends RenderableComponent
 {
     const NAME = 'csv_export';
     const INPUT_PARAM = 'csv';
-    const CSV_DELIMITER = ';';
     const CSV_EXT = '.csv';
     const DEFAULT_ROWS_LIMIT = 5000;
+    const UTF8_BOM = 0xEF . 0xBB . 0xBF;
 
     /**
      * @var string
@@ -44,19 +43,29 @@ class CsvExport extends RenderableComponent
     protected $renderSection = RenderableRegistry::SECTION_END;
 
     /**
+     * @var string
+     */
+    private $csvDelimiter = ';';
+
+    /**
      * @var int
      */
-    protected $rowsLimit = self::DEFAULT_ROWS_LIMIT;
+    private $rowsLimit = self::DEFAULT_ROWS_LIMIT;
 
     /**
      * @var string
      */
-    protected $output;
+    private $fileName;
 
     /**
-     * @var string
+     * @var string[]
      */
-    protected $fileName;
+    private $excludeColumns = [];
+
+    /**
+     * @var bool
+     */
+    private $includeBOM = true;
 
     /**
      * @param Grid $grid
@@ -91,6 +100,38 @@ class CsvExport extends RenderableComponent
     public function getFileName(): string
     {
         return $this->fileName . static::CSV_EXT;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getExcludeColumns(): array
+    {
+        return $this->excludeColumns;
+    }
+
+    /**
+     * @param string[] $excludeColumns
+     */
+    public function setExcludeColumns(array $excludeColumns)
+    {
+        $this->excludeColumns = $excludeColumns;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isIncludeBOM(): bool
+    {
+        return $this->includeBOM;
+    }
+
+    /**
+     * @param bool $includeBOM
+     */
+    public function setIncludeBOM(bool $includeBOM)
+    {
+        $this->includeBOM = $includeBOM;
     }
 
     /**
@@ -146,21 +187,32 @@ class CsvExport extends RenderableComponent
 
         $provider = $this->grid->getConfig()->getDataProvider();
 
+        if ($this->isIncludeBOM()) {
+            fwrite($file, self::UTF8_BOM);
+        }
+
         $header = $this->renderHeader();
-        fputcsv($file, $header, static::CSV_DELIMITER);
+        fputcsv($file, $header, $this->csvDelimiter);
 
         $this->resetPagination($provider);
         $provider->reset();
 
-        /** @var DataRow $row */
         while ($row = $provider->getRow()) {
             $output = [];
             foreach ($this->grid->getConfig()->getColumns() as $column) {
-                if (!$column->isHidden()) {
-                    $output[] = $this->escapeString($column->getValue($row));
+                // Skip excluded columns
+                if (in_array($column->getName(), $this->excludeColumns, true)) {
+                    continue;
                 }
+
+                // Skip hidden columns
+                if ($column->isHidden()) {
+                    continue;
+                }
+
+                $output[] = $this->escapeString($column->getValue($row));
             }
-            fputcsv($file, $output, static::CSV_DELIMITER);
+            fputcsv($file, $output, $this->csvDelimiter);
         }
 
         fclose($file);
