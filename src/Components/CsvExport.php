@@ -11,6 +11,7 @@ use SportSpar\Grids\Components\Base\RenderableRegistry;
 use SportSpar\Grids\DataProvider;
 use SportSpar\Grids\FieldConfig;
 use SportSpar\Grids\Grid;
+use Throwable;
 
 /**
  * Class CsvExport
@@ -176,8 +177,11 @@ class CsvExport extends RenderableComponent
 
     protected function renderCsv()
     {
-        // Clean output buffer from the rendered view (whatever there is before the grid)
-        ob_clean();
+        // Laravel stacks every section with output buffers,
+        // clean every buffer possible before outputting the csv
+        while (ob_get_level()) {
+            ob_end_clean();
+        }
         $file = fopen('php://output', 'wb');
 
         header('Content-Type: text/csv');
