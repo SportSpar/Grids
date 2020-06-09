@@ -9,7 +9,9 @@ use Illuminate\Pagination\Paginator;
 use SportSpar\Grids\Components\Base\RenderableComponent;
 use SportSpar\Grids\Components\Base\RenderableRegistry;
 use SportSpar\Grids\DataProvider\AbstractDataProvider;
+use SportSpar\Grids\FieldConfig;
 use SportSpar\Grids\Grid;
+use Throwable;
 
 /**
  * Class CsvExport
@@ -23,9 +25,9 @@ class CsvExport extends RenderableComponent
 {
     const NAME = 'csv_export';
     const INPUT_PARAM = 'csv';
-    const CSV_DELIMITER = ';';
     const CSV_EXT = '.csv';
     const DEFAULT_ROWS_LIMIT = 5000;
+    const UTF8_BOM = "\xEF\xBB\xBF";
 
     /**
      * @var string
@@ -43,19 +45,29 @@ class CsvExport extends RenderableComponent
     protected $renderSection = RenderableRegistry::SECTION_END;
 
     /**
+     * @var string
+     */
+    private $csvDelimiter = ';';
+
+    /**
      * @var int
      */
-    protected $rowsLimit = self::DEFAULT_ROWS_LIMIT;
+    private $rowsLimit = self::DEFAULT_ROWS_LIMIT;
 
     /**
      * @var string
      */
-    protected $output;
+    private $fileName;
 
     /**
-     * @var string
+     * @var string[]
      */
-    protected $fileName;
+    private $excludeColumns = [];
+
+    /**
+     * @var bool
+     */
+    private $includeBOM = true;
 
     /**
      * @param Grid $grid
@@ -90,6 +102,38 @@ class CsvExport extends RenderableComponent
     public function getFileName(): string
     {
         return $this->fileName . static::CSV_EXT;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getExcludeColumns(): array
+    {
+        return $this->excludeColumns;
+    }
+
+    /**
+     * @param string[] $excludeColumns
+     */
+    public function setExcludeColumns(array $excludeColumns)
+    {
+        $this->excludeColumns = $excludeColumns;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isIncludeBOM(): bool
+    {
+        return $this->includeBOM;
+    }
+
+    /**
+     * @param bool $includeBOM
+     */
+    public function setIncludeBOM(bool $includeBOM)
+    {
+        $this->includeBOM = $includeBOM;
     }
 
     /**
@@ -133,8 +177,11 @@ class CsvExport extends RenderableComponent
 
     protected function renderCsv()
     {
-        // Clean output buffer from the rendered view (whatever there is before the grid)
-        ob_clean();
+        // Laravel stacks every section with output buffers,
+        // clean every buffer possible before outputting the csv
+        while (ob_get_level()) {
+            ob_end_clean();
+        }
         $file = fopen('php://output', 'wb');
 
         header('Content-Type: text/csv');
@@ -145,8 +192,12 @@ class CsvExport extends RenderableComponent
 
         $provider = $this->grid->getConfig()->getDataProvider();
 
+        if ($this->isIncludeBOM()) {
+            fwrite($file, self::UTF8_BOM);
+        }
+
         $header = $this->renderHeader();
-        fputcsv($file, $header, static::CSV_DELIMITER);
+        fputcsv($file, $header, $this->csvDelimiter);
 
         $this->resetPagination($provider);
         $provider->reset();
@@ -154,11 +205,11 @@ class CsvExport extends RenderableComponent
         while ($row = $provider->getRow()) {
             $output = [];
             foreach ($this->grid->getConfig()->getColumns() as $column) {
-                if (!$column->isHidden()) {
+                if ($this->shouldRenderColumn($column)) {
                     $output[] = $this->escapeString($column->getValue($row));
                 }
             }
-            fputcsv($file, $output, static::CSV_DELIMITER);
+            fputcsv($file, $output, $this->csvDelimiter);
         }
 
         fclose($file);
@@ -189,11 +240,30 @@ class CsvExport extends RenderableComponent
         $output = [];
 
         foreach ($this->grid->getConfig()->getColumns() as $column) {
-            if (!$column->isHidden()) {
+            if ($this->shouldRenderColumn($column)) {
                 $output[] = $this->escapeString($column->getLabel());
             }
         }
 
         return $output;
+    }
+
+    /**
+     * @param FieldConfig $column
+     *
+     * @return bool
+     */
+    private function shouldRenderColumn(FieldConfig $column): bool
+    {
+        if (in_array($column->getName(), $this->excludeColumns, true)) {
+            return false;
+        }
+
+        // Skip hidden columns
+        if ($column->isHidden()) {
+            return false;
+        }
+
+        return true;
     }
 }

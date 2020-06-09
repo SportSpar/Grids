@@ -2,6 +2,8 @@
 
 namespace SportSpar\Grids;
 
+use SportSpar\Grids\InputProvider\IlluminateRequest;
+
 class Sorter
 {
     /**
@@ -26,8 +28,8 @@ class Sorter
      */
     public function link(FieldConfig $column, $direction)
     {
-        return (new GridInputProcessor($this->grid))
-            ->setSorting($column, $direction)
+        return (new IlluminateRequest($this->grid->getConfig()->getName()))
+            ->setSorting($column->getName(), $direction)
             ->getUrl();
     }
 
@@ -40,7 +42,7 @@ class Sorter
         $inputProcessor = $this->grid->getInputProcessor();
 
         if (empty($inputProcessor->getSorting())) {
-            $inputProcessor->setSorting($this->grid->getConfig()->getColumn($columnName), strtoupper($direction));
+            $inputProcessor->setSorting($columnName, strtoupper($direction));
         }
     }
 

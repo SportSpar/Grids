@@ -11,6 +11,8 @@ use SportSpar\Grids\Components\TFoot;
 use SportSpar\Grids\Components\THead;
 use SportSpar\Grids\Components\Tr;
 use SportSpar\Grids\DataProvider\DataProviderInterface;
+use SportSpar\Grids\InputProvider\IlluminateRequest;
+use SportSpar\Grids\InputProvider\InputProviderInterface;
 
 class GridConfig implements ComponentsContainerInterface
 {
@@ -26,6 +28,11 @@ class GridConfig implements ComponentsContainerInterface
 
     /** @var  DataProviderInterface $data_provider */
     protected $data_provider;
+
+    /**
+     * @var InputProviderInterface
+     */
+    private $inputProvider;
 
     protected $page_size = 50;
 
@@ -144,6 +151,26 @@ class GridConfig implements ComponentsContainerInterface
     public function getDataProvider()
     {
         return $this->data_provider;
+    }
+
+    /**
+     * @return InputProviderInterface
+     */
+    public function getInputProvider(): InputProviderInterface
+    {
+        if (null === $this->inputProvider) {
+            $this->inputProvider = new IlluminateRequest($this->getName());
+        }
+
+        return $this->inputProvider;
+    }
+
+    /**
+     * @param InputProviderInterface $inputProvider
+     */
+    public function setInputProvider(InputProviderInterface $inputProvider)
+    {
+        $this->inputProvider = $inputProvider;
     }
 
     /**
