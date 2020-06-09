@@ -28,6 +28,7 @@
     ],
     "require": {
         "php": ">=7.0",
+        "ext-json": "*",
         "illuminate/support": "^5.5",
         "illuminate/view": "^5.5",
         "illuminate/pagination": "^5.5",

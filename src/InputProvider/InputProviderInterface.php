@@ -12,7 +12,7 @@ interface InputProviderInterface
     /**
      * @return string
      */
-    public function getKey();
+    public function getKey(): string;
 
     /**
      * @return mixed
@@ -44,4 +44,16 @@ interface InputProviderInterface
      * @return string
      */
     public function getUniqueRequestId();
+
+    /**
+     * @return string
+     */
+    public function getSortingHiddenInputsHtml(): string;
+
+    /**
+     * @param array $newParams
+     *
+     * @return string
+     */
+    public function getUrl(array $newParams = []): string;
 }

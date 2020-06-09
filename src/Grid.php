@@ -8,13 +8,11 @@ use SportSpar\Grids\Components\Base\ComponentInterface;
 use SportSpar\Grids\Components\TFoot;
 use SportSpar\Grids\Components\THead;
 use SportSpar\Grids\InputProvider\InputProviderInterface;
-use SportSpar\Grids\InputProvider\LaravelRequest;
 use View;
 use Illuminate\Foundation\Application;
 
 class Grid
 {
-
     const SORT_ASC = 'ASC';
     const SORT_DESC = 'DESC';
 
@@ -29,11 +27,6 @@ class Grid
 
     /** @var  Sorter */
     protected $sorter;
-
-    /**
-     * @var  InputProviderInterface
-     */
-    protected $inputProcessor;
 
     protected $filtering;
 
@@ -169,11 +162,7 @@ class Grid
      */
     public function getInputProcessor(): InputProviderInterface
     {
-        if (null === $this->inputProcessor) {
-            $this->inputProcessor = new LaravelRequest($this->config->getName());
-        }
-
-        return $this->inputProcessor;
+        return $this->config->getInputProvider();
     }
 
     /**

@@ -5,12 +5,12 @@ namespace SportSpar\Grids\InputProvider;
 use Illuminate\Http\Request;
 use Request as RequestFacade;
 
-class LaravelRequest implements InputProviderInterface
+class IlluminateRequest implements InputProviderInterface
 {
     /**
      * @var array
      */
-    protected $input;
+    private $input;
 
     /**
      * @var string
@@ -55,7 +55,7 @@ class LaravelRequest implements InputProviderInterface
      *
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         return $this->key;
     }
@@ -73,7 +73,7 @@ class LaravelRequest implements InputProviderInterface
     /**
      * @return string
      */
-    public function getSortingHiddenInputsHtml()
+    public function getSortingHiddenInputsHtml(): string
     {
         $html = '';
 
@@ -83,6 +83,7 @@ class LaravelRequest implements InputProviderInterface
                 $html .= sprintf('<input name="%s[sort][%s]" type="hidden" value="%s">', $key, $field, $direction);
             }
         }
+
         return $html;
     }
 
@@ -95,14 +96,15 @@ class LaravelRequest implements InputProviderInterface
      */
     public function getUniqueRequestId()
     {
-        $cookies_str = '';
+        $cookiesStr = '';
+
         foreach ($_COOKIE as $key => $val) {
             if (strpos($key, $this->getKey()) !== false) {
-                $cookies_str .= $key . json_encode($val);
+                $cookiesStr .= $key . json_encode($val);
             }
         }
 
-        return md5($cookies_str . $this->getKey() . json_encode($this->getInput()));
+        return md5($cookiesStr . $this->getKey() . json_encode($this->getInput()));
     }
 
     /**
@@ -114,6 +116,7 @@ class LaravelRequest implements InputProviderInterface
     public function setSorting($column, $direction)
     {
         $this->input['sort'] = [$column => $direction];
+
         return $this;
     }
 
@@ -121,15 +124,12 @@ class LaravelRequest implements InputProviderInterface
      * Returns input value for filter.
      *
      * @param string $filterName
-     * @return mixed
+     *
+     * @return string|null
      */
     public function getFilterValue($filterName)
     {
-        if (isset($this->input['filters'][$filterName])) {
-            return $this->input['filters'][$filterName];
-        }
-
-        return null;
+        return $this->input['filters'][$filterName] ?? null;
     }
 
     /**
@@ -141,11 +141,7 @@ class LaravelRequest implements InputProviderInterface
      */
     public function getValue($key, $default = null)
     {
-        if (isset($this->input[$key])) {
-            return $this->input[$key];
-        }
-
-        return $default;
+        return $this->input[$key] ?? $default;
     }
 
     /**
@@ -155,7 +151,7 @@ class LaravelRequest implements InputProviderInterface
      *
      * @return string
      */
-    private function getQueryString(array $newParams = [])
+    private function getQueryString(array $newParams = []): string
     {
         $params = $this->request->input();
         if (!empty($this->input)) {
@@ -180,7 +176,7 @@ class LaravelRequest implements InputProviderInterface
      *
      * @return string
      */
-    public function getUrl(array $newParams = [])
+    public function getUrl(array $newParams = []): string
     {
         if (null !== $queryString = $this->getQueryString($newParams)) {
             $queryString = '?' . $queryString;

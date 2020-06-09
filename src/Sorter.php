@@ -2,7 +2,7 @@
 
 namespace SportSpar\Grids;
 
-use SportSpar\Grids\InputProvider\LaravelRequest;
+use SportSpar\Grids\InputProvider\IlluminateRequest;
 
 class Sorter
 {
@@ -28,7 +28,7 @@ class Sorter
      */
     public function link(FieldConfig $column, $direction)
     {
-        return (new LaravelRequest($this->grid->getConfig()->getName()))
+        return (new IlluminateRequest($this->grid->getConfig()->getName()))
             ->setSorting($column->getName(), $direction)
             ->getUrl();
     }
