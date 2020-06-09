@@ -3,23 +3,21 @@
 namespace SportSpar\Grids\Build;
 
 use Closure;
-use DB;
 use LogicException;
 use Nayjest\Builder\Blueprint;
 use Nayjest\Builder\BlueprintsCollection;
 use Nayjest\Builder\Builder;
 use Nayjest\Builder\Env;
 use Nayjest\Builder\Instructions\Base\Instruction;
+use Nayjest\Builder\Instructions\CustomInstruction;
 use Nayjest\Builder\Instructions\Mapping\Build;
 use Nayjest\Builder\Instructions\Mapping\BuildChildren;
-use Nayjest\Builder\Instructions\CustomInstruction;
 use Nayjest\Builder\Instructions\Mapping\CallMethodWith;
 use Nayjest\Builder\Instructions\Mapping\CustomMapping;
 use Nayjest\Builder\Instructions\Mapping\Rename;
 use Nayjest\Builder\Instructions\SimpleValueAsField;
 use Nayjest\Builder\Scaffold;
 use SportSpar\Grids\Build\Instructions\BuildDataProvider;
-use SportSpar\Grids\EloquentDataProvider;
 
 /**
  * Class Setup
@@ -56,8 +54,8 @@ class Setup
             ->add($this->makeFilterBlueprint())
             ->add($this->makeFieldBlueprint())
             ->add($this->makeComponentBlueprint())
-            ->add($config_blueprint = $this->makeConfigBlueprint());
-        return new Builder($config_blueprint);
+            ->add($configBlueprint = $this->makeConfigBlueprint());
+        return new Builder($configBlueprint);
     }
 
     /**
@@ -65,10 +63,10 @@ class Setup
      *
      * @return Blueprint
      */
-    protected function makeConfigBlueprint()
+    protected function makeConfigBlueprint(): Blueprint
     {
-        $component_blueprint = $this->blueprints->getFor(self::COMPONENT_CLASS);
-        if (!$component_blueprint) {
+        $componentBlueprint = $this->blueprints->getFor(self::COMPONENT_CLASS);
+        if (!$componentBlueprint) {
             throw new LogicException(
                 'Blueprint for grid components must be created before main blueprint.'
             );
@@ -81,34 +79,12 @@ class Setup
             );
         }
 
-        $b = new Blueprint(self::GRID_CLASS, [
+        return new Blueprint(self::GRID_CLASS, [
             new BuildDataProvider(),
-            new CustomInstruction(function (Scaffold $s) {
-                /** @var EloquentDataProvider $provider */
-                $provider = $s->getInput('data_provider');
-                $is_eloquent = $provider  instanceof EloquentDataProvider;
-
-                if ($is_eloquent && !$s->getInput('columns')) {
-                    $table = $provider->getBuilder()->getModel()->getTable();
-                    $columns = DB
-                        ::connection()
-                        ->getSchemaBuilder()
-                        ->getColumnListing($table);
-                    $s->input['columns'] = $columns;
-
-                }
-            }, Instruction::PHASE_PRE_INST),
-            new BuildChildren(
-                'components',
-                $component_blueprint
-            ),
-            new Build('row_component', $component_blueprint),
-            new BuildChildren(
-                'columns',
-                $column_blueprint
-            ),
+            new BuildChildren('components', $componentBlueprint),
+            new Build('row_component', $componentBlueprint),
+            new BuildChildren('columns', $column_blueprint),
         ]);
-        return $b;
     }
 
     /**

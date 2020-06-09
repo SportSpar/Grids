@@ -2,7 +2,7 @@
 
 namespace SportSpar\Grids\Components;
 
-use SportSpar\Grids\DataRowInterface;
+use SportSpar\Grids\DataProvider\DataRow\DataRowInterface;
 
 /**
  * Class Tr

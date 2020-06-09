@@ -2,6 +2,8 @@
 
 namespace SportSpar\Grids;
 
+use SportSpar\Grids\DataProvider\DataRow\DataRowInterface;
+
 /**
  * Class IdFieldConfig
  *

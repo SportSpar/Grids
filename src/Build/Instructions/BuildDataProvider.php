@@ -2,76 +2,47 @@
 
 namespace SportSpar\Grids\Build\Instructions;
 
-use LogicException;
+use DB;
 use Nayjest\Builder\Instructions\Base\Instruction;
 use Nayjest\Builder\Scaffold;
-use SportSpar\Grids\DataProvider\CollectionDataProvider;
-use SportSpar\Grids\DataProvider\DataProviderInterface;
-use SportSpar\Grids\DbalDataProvider;
-use SportSpar\Grids\EloquentDataProvider;
+use SportSpar\Grids\DataProvider\DataProviderFactory;
+use SportSpar\Grids\DataProvider\EloquentDataProvider;
+use SportSpar\Grids\Exception\DataProvider\UnsupportedDataSource;
 
 /**
- * Class BuildDataProvider
- *
  * This class is a build instruction for nayjest/build package
  * that defines how to setup grids data provider
- *
- * @internal
- * @package SportSpar\Grids\Build\Instructions
  */
 class BuildDataProvider extends Instruction
 {
+    /**
+     * @var int
+     */
     protected $phase = self::PHASE_PRE_INST;
 
     /**
      * @param Scaffold $scaffold
-     * @throws LogicException
+     *
+     * @throws UnsupportedDataSource
      */
     public function apply(Scaffold $scaffold)
     {
         $src = $scaffold->getInput('src');
         $scaffold->excludeInput('src');
-        $class = null;
-        $arg = null;
 
-        // If we have a provider, then we're good to go
-        if (is_object($src) && $src instanceof DataProviderInterface) {
-            $scaffold->input['data_provider'] = $src;
-            return;
-        }
+        $factory  = new DataProviderFactory();
+        $provider = $factory->provideFor($src);
 
-        if (is_object($src)) {
-            $providerClasses = [
-                EloquentDataProvider::class,
-                DbalDataProvider::class,
-                CollectionDataProvider::class
-            ];
+        $scaffold->input['data_provider'] = $provider;
 
-            /** @var DataProviderInterface $providerClass */
-            foreach ($providerClasses as $providerClass) {
-                if ($providerClass::canProvideFor($src)) {
-                    $class = $providerClass;
-                    $arg = $src;
-                }
-            }
-
-        } elseif (is_string($src)) {
-            // model name
-            if (
-                class_exists($src, true) &&
-                is_subclass_of($src, '\Illuminate\Database\Eloquent\Model')
-            ) {
-                $class = '\SportSpar\Grids\EloquentDataProvider';
-                $model = new $src;
-                $arg = $model->newQuery();
-            }
-        }
-
-        if ($class !== null && $arg !== null) {
-            $provider = new $class($arg);
-            $scaffold->input['data_provider'] = $provider;
-        } else {
-            throw new LogicException('Invalid Data Provider Configuration');
+        // This does not belong here, but it's still a tad better, than in builder
+        if ($provider instanceof EloquentDataProvider && !$scaffold->getInput('columns')) {
+            $table = $provider->getBuilder()->getModel()->getTable();
+            $columns = DB
+                ::connection()
+                ->getSchemaBuilder()
+                ->getColumnListing($table);
+            $scaffold->input['columns'] = $columns;
         }
     }
 }

@@ -3,12 +3,12 @@
 namespace SportSpar\Grids\DataProvider;
 
 use ArrayIterator;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
-use SportSpar\Grids\ArrayDataRow;
-use SportSpar\Grids\DataProvider;
+use SportSpar\Grids\DataProvider\DataRow\ArrayDataRow;
 
-class CollectionDataProvider extends DataProvider
+class CollectionDataProvider extends AbstractDataProvider
 {
     /**
      * @var Collection
@@ -26,11 +26,11 @@ class CollectionDataProvider extends DataProvider
     private $iterator;
 
     /**
-     * @param Collection $src
+     * @param Collection|array|Arrayable $src
      */
-    public function __construct(Collection $src)
+    public function __construct($src)
     {
-        parent::__construct($src);
+        parent::__construct(new Collection($src));
     }
 
     /**

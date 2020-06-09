@@ -8,7 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Pagination\Paginator;
 use SportSpar\Grids\Components\Base\RenderableComponent;
 use SportSpar\Grids\Components\Base\RenderableRegistry;
-use SportSpar\Grids\DataProvider;
+use SportSpar\Grids\DataProvider\AbstractDataProvider;
 use SportSpar\Grids\FieldConfig;
 use SportSpar\Grids\Grid;
 use Throwable;
@@ -162,7 +162,7 @@ class CsvExport extends RenderableComponent
         $response->header('Pragma', 'no-cache');
     }
 
-    protected function resetPagination(DataProvider $provider)
+    protected function resetPagination(AbstractDataProvider $provider)
     {
         if (version_compare(Application::VERSION, '5.0.0', '<')) {
             $provider->getPaginationFactory()->setPageName('page_unused');

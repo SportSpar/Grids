@@ -1,14 +1,15 @@
 <?php
 
-namespace SportSpar\Grids;
+namespace SportSpar\Grids\DataProvider;
 
 use DB;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Event;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
+use SportSpar\Grids\DataProvider\DataRow\ObjectDataRow;
 
-class DbalDataProvider extends DataProvider
+class DbalDataProvider extends AbstractDataProvider
 {
     protected $collection;
 

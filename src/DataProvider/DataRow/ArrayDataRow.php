@@ -1,13 +1,13 @@
 <?php
 
-namespace SportSpar\Grids;
+namespace SportSpar\Grids\DataProvider\DataRow;
 
-class ArrayDataRow extends DataRow
+class ArrayDataRow extends AbstractDataRow
 {
     /**
      * {@inheritdoc}
      */
-    protected function extractCellValue($fieldName)
+    public function getCellValue($fieldName)
     {
         if (strpos($fieldName, '.') !== false) {
             $parts = explode('.', $fieldName);

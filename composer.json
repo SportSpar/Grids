@@ -36,6 +36,9 @@
         "illuminate/http": "^5.5",
         "nayjest/builder": "~2"
     },
+    "require-dev": {
+        "illuminate/database": ">=4.2"
+    },
     "suggest": {
         "laravelcollective/html": "Required to work with Laravel 5.X",
         "maatwebsite/excel": "Required to work with Excel export component"

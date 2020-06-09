@@ -4,13 +4,14 @@ namespace SportSpar\Grids\DataProvider;
 
 use Illuminate\Pagination;
 use Illuminate\Support;
+use SportSpar\Grids\DataProvider\DataRow\DataRowInterface;
 
 interface DataProviderInterface
 {
     /**
      * Sets the internal pointer first element.
      *
-     * @return $this
+     * @return self
      */
     public function reset();
 
@@ -19,7 +20,7 @@ interface DataProviderInterface
      *
      * @param int $pageSize
      *
-     * @return $this
+     * @return self
      */
     public function setPageSize($pageSize);
 
@@ -79,7 +80,7 @@ interface DataProviderInterface
      * Fetches one row and moves internal pointer forward.
      * When last row fetched, returns null
      *
-     * @return DataRow|null
+     * @return DataRowInterface|null
      */
     public function getRow();
 
