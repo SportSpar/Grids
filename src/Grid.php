@@ -7,12 +7,12 @@ use Cache;
 use SportSpar\Grids\Components\Base\ComponentInterface;
 use SportSpar\Grids\Components\TFoot;
 use SportSpar\Grids\Components\THead;
+use SportSpar\Grids\InputProvider\InputProviderInterface;
 use View;
 use Illuminate\Foundation\Application;
 
 class Grid
 {
-
     const SORT_ASC = 'ASC';
     const SORT_DESC = 'DESC';
 
@@ -27,9 +27,6 @@ class Grid
 
     /** @var  Sorter */
     protected $sorter;
-
-    /** @var  GridInputProcessor */
-    protected $inputProcessor;
 
     protected $filtering;
 
@@ -159,17 +156,13 @@ class Grid
     }
 
     /**
-     * Returns instance of GridInputProcessor.
+     * Returns input provider
      *
-     * @return GridInputProcessor
+     * @return InputProviderInterface
      */
-    public function getInputProcessor(): GridInputProcessor
+    public function getInputProcessor(): InputProviderInterface
     {
-        if (null === $this->inputProcessor) {
-            $this->inputProcessor = new GridInputProcessor($this);
-        }
-
-        return $this->inputProcessor;
+        return $this->config->getInputProvider();
     }
 
     /**
