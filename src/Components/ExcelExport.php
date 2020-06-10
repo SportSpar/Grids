@@ -2,9 +2,8 @@
 
 namespace SportSpar\Grids\Components;
 
-use Event;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Foundation\Application;
 use Maatwebsite\Excel\Classes\LaravelExcelWorksheet;
 use Maatwebsite\Excel\Excel;
 use Maatwebsite\Excel\Writers\LaravelExcelWriter;
@@ -153,13 +152,10 @@ class ExcelExport extends RenderableComponent
 
     protected function resetPagination(AbstractDataProvider $provider)
     {
-        if (version_compare(Application::VERSION, '5.0.0', '<')) {
-            $provider->getPaginationFactory()->setPageName('page_unused');
-        } else {
-            Paginator::currentPageResolver(function () {
-                return 1;
-            });
-        }
+        Paginator::currentPageResolver(function () {
+            return 1;
+        });
+
         $provider->setPageSize($this->getRowsLimit());
         $provider->setCurrentPage(1);
     }

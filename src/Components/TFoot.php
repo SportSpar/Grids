@@ -2,7 +2,6 @@
 
 namespace SportSpar\Grids\Components;
 
-use Illuminate\Foundation\Application;
 use SportSpar\Grids\Components\Base\ComponentInterface;
 
 /**
@@ -23,14 +22,8 @@ class TFoot extends HtmlTag
      */
     protected function getDefaultComponents(): array
     {
-        if (version_compare(Application::VERSION, '5', '<')) {
-            $pagerClass = 'SportSpar\Grids\Components\Pager';
-        } else {
-            $pagerClass = 'SportSpar\Grids\Components\Laravel5\Pager';
-        }
         return [
-            (new OneCellRow)
-                ->addComponent(new $pagerClass)
+            (new OneCellRow)->addComponent(new Pager())
         ];
     }
 }

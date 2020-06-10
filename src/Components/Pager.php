@@ -2,85 +2,57 @@
 
 namespace SportSpar\Grids\Components;
 
-use DomainException;
-use Illuminate\Foundation\Application;
 use Illuminate\Pagination\Paginator;
+use Request;
 use SportSpar\Grids\Components\Base\RenderableComponent;
 use SportSpar\Grids\Grid;
 
 class Pager extends RenderableComponent
 {
-
-    /**
-     * @var \Illuminate\Pagination\Factory
-     */
-    protected $pagination_factory;
-
     protected $input_key;
 
-    protected $previous_page_name;
+    protected $name = 'pager';
 
-    public function __construct()
-    {
-        if (version_compare(Application::VERSION, '5', '>')) {
-            $className = get_class($this);
-            throw new DomainException(
-                "$className designed for usage only with Laravel 4.X"
-            );
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
-        $result = (string)$this->links();
-        return $result;
+        $this->setupPaginationForLinks();
+
+        return (string)$this->links();
     }
 
     protected function setupPaginationForReading()
     {
-        $this->pagination_factory->setPageName("$this->input_key.page");
+        Paginator::currentPageResolver(function () {
+            return Request::get("$this->input_key.page", 1);
+        });
     }
 
     protected function setupPaginationForLinks()
     {
-        $this->pagination_factory->setPageName("{$this->input_key}[page]");
+        $this->grid->getConfig()
+                   ->getDataProvider()
+                   ->getPaginator()
+                   ->setPageName("{$this->input_key}[page]");
     }
 
-    protected function restorePaginationOptions()
-    {
-        $this->pagination_factory->setPageName($this->previous_page_name);
-    }
-
+    /**
+     * Renders pagination links & returns rendered html.
+     */
     protected function links()
     {
-
-        $this->setupPaginationForReading();
-        /** @var  Paginator $paginator */
         $paginator = $this->grid->getConfig()
-            ->getDataProvider()
-            ->getPaginator();
-
-        $this->setupPaginationForLinks();
+                                ->getDataProvider()
+                                ->getPaginator();
         $input = $this->grid->getInputProcessor()->getInput();
         if (isset($input['page'])) {
             unset($input['page']);
         }
-        $res = (string)$paginator->appends($this->input_key, $input)->links();
-        $this->restorePaginationOptions();
-        return $res;
+        return str_replace('/?', '?',$paginator->appends($this->input_key, $input)->render());
     }
 
     public function initialize(Grid $grid)
     {
         parent::initialize($grid);
-        $this->pagination_factory = $grid
-            ->getConfig()
-            ->getDataProvider()
-            ->getPaginationFactory();
-        $this->previous_page_name = $this->pagination_factory->getPageName();
         $this->input_key = $grid->getInputProcessor()->getKey();
         $this->setupPaginationForReading();
     }

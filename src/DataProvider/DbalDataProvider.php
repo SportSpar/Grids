@@ -2,10 +2,10 @@
 
 namespace SportSpar\Grids\DataProvider;
 
-use DB;
+use App;
+use Illuminate\Support\Facades\DB;
 use Doctrine\DBAL\Query\QueryBuilder;
-use Event;
-use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Collection;
 use SportSpar\Grids\DataProvider\DataRow\ObjectDataRow;
 
@@ -72,23 +72,15 @@ class DbalDataProvider extends AbstractDataProvider
     {
         if (!$this->paginator) {
             $items = $this->getCollection()->toArray();
-            if (version_compare(Application::VERSION, '5.0.0', '<')) {
-                $this->paginator = \Paginator::make(
-                    $items,
-                    $this->getTotalRowsCount(),
-                    $this->page_size
-                );
-            } else {
-                $this->paginator = new \Illuminate\Pagination\LengthAwarePaginator(
-                    $items,
-                    $this->getTotalRowsCount(),
-                    $this->page_size,
-                    $this->getCurrentPage(),
-                    [
-                        'path' => \Illuminate\Pagination\Paginator::resolveCurrentPath()
-                    ]
-                );
-            }
+            $this->paginator = new \Illuminate\Pagination\LengthAwarePaginator(
+                $items,
+                $this->getTotalRowsCount(),
+                $this->page_size,
+                $this->getCurrentPage(),
+                [
+                    'path' => \Illuminate\Pagination\Paginator::resolveCurrentPath()
+                ]
+            );
         }
         return $this->paginator;
     }
@@ -98,7 +90,7 @@ class DbalDataProvider extends AbstractDataProvider
      */
     public function getPaginationFactory()
     {
-        return \App::make('paginator');
+        return App::make('paginator');
     }
 
     protected function getIterator()
@@ -125,11 +117,7 @@ class DbalDataProvider extends AbstractDataProvider
             $this->iterator->next();
             $row = new ObjectDataRow($item, $this->getRowId());
 
-            if (version_compare(Application::VERSION, '5.8', '>=')) {
-                Event::dispatch(self::EVENT_FETCH_ROW, [$row, $this]);
-            } else {
-                Event::fire(self::EVENT_FETCH_ROW, [$row, $this]);
-            }
+            Event::dispatch(self::EVENT_FETCH_ROW, [$row, $this]);
 
             return $row;
         } else {

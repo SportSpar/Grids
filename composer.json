@@ -8,9 +8,7 @@
         "laravel",
         "database",
         "eloquent",
-        "bootstrap",
-        "laravel-5",
-        "laravel5"
+        "bootstrap"
     ],
     "homepage": "https://github.com/SportSpar/Grids",
     "type": "library",
@@ -37,7 +35,8 @@
         "nayjest/builder": "~2"
     },
     "require-dev": {
-        "illuminate/database": ">=4.2"
+        "illuminate/database": "^5.5|^6.0|^7.0",
+        "doctrine/dbal": "^2"
     },
     "suggest": {
         "laravelcollective/html": "Required to work with Laravel 5.X",
