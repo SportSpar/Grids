@@ -11,15 +11,13 @@ use View;
  *
  * @todo Avoid usage of Laravel Facade aliases (?)
  * @todo Absence of getViewData isn't convenient (?)
- *
- * @package SportSpar\Grids\Components\Base
  */
 trait TRenderable
 {
     /**
      * Name of view template.
      *
-     * @var  string
+     * @var string
      */
     protected $template;
 
@@ -34,6 +32,7 @@ trait TRenderable
     public function render()
     {
         $this->is_rendered = true;
+
         return View::make(
             $this->getTemplate(),
             $this->getViewData()
@@ -54,11 +53,13 @@ trait TRenderable
      * Allows to specify view template.
      *
      * @param string $template
+     *
      * @return $this
      */
     public function setTemplate($template)
     {
         $this->template = $template;
+
         return $this;
     }
 

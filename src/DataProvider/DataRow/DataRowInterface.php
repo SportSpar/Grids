@@ -7,7 +7,7 @@ interface DataRowInterface
     /**
      * Returns row ID (row number).
      *
-     * @return integer
+     * @return int
      */
     public function getId();
 

@@ -6,12 +6,8 @@ namespace SportSpar\Grids\Components\Base;
  * Class RenderableRegistry
  *
  * Base class for components that can hold children components and be rendered.
- *
- * @package SportSpar\Grids\Components\Base
  */
-class RenderableRegistry implements
-    RenderableComponentInterface,
-    ComponentsContainerInterface
+class RenderableRegistry implements RenderableComponentInterface, ComponentsContainerInterface
 {
     use ComponentTrait;
     use ComponentsContainerTrait;
@@ -30,6 +26,7 @@ class RenderableRegistry implements
      * By default components without specified section will be rendered.
      *
      * @param string|null $sectionName
+     *
      * @return string
      */
     public function renderComponents($sectionName = null)
@@ -39,6 +36,7 @@ class RenderableRegistry implements
         foreach ($components as $component) {
             $output .= $component->render();
         }
+
         return $output;
     }
 
@@ -46,6 +44,7 @@ class RenderableRegistry implements
      * Returns components filtered by section name.
      *
      * @param string $sectionName
+     *
      * @return \Illuminate\Support\Collection
      */
     public function getSectionComponents($sectionName)
@@ -62,6 +61,7 @@ class RenderableRegistry implements
      * Wraps content with outside components (components that have 'before' or 'after' render_section value).
      *
      * @param string $output
+     *
      * @return string
      */
     protected function wrapWithOutsideComponents($output)
@@ -91,6 +91,7 @@ class RenderableRegistry implements
     public function render()
     {
         $this->is_rendered = true;
+
         return $this->wrapWithOutsideComponents(
             $this->getTemplate()
                 ? $this->renderTemplate()
@@ -98,4 +99,3 @@ class RenderableRegistry implements
         );
     }
 }
-

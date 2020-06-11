@@ -6,16 +6,14 @@ use SportSpar\Grids\FieldConfig;
 
 /**
  * Class TableCell
- * 
- * The component for rendering TD html tag inside grid.
  *
- * @package SportSpar\Grids\Components
+ * The component for rendering TD html tag inside grid.
  */
 class TableCell extends HtmlTag
 {
     protected $tag_name = 'td';
 
-    /** @var  FieldConfig */
+    /** @var FieldConfig */
     protected $column;
 
     /**
@@ -23,8 +21,8 @@ class TableCell extends HtmlTag
      *
      * @param FieldConfig $column
      */
-    public function __construct(FieldConfig $column) {
-
+    public function __construct(FieldConfig $column)
+    {
         $this->setColumn($column);
     }
 
@@ -36,6 +34,7 @@ class TableCell extends HtmlTag
         if ($this->column->isHidden()) {
             $this->attributes['style'] = 'display:none;';
         }
+
         return $this->attributes;
     }
 
@@ -47,7 +46,7 @@ class TableCell extends HtmlTag
      */
     public function getName()
     {
-        return $this->name ? : 'column_' . $this->column->getName();
+        return $this->name ?: 'column_' . $this->column->getName();
     }
 
     /**
@@ -62,12 +61,13 @@ class TableCell extends HtmlTag
 
     /**
      * @param FieldConfig $column
+     *
      * @return $this
      */
     public function setColumn(FieldConfig $column)
     {
         $this->column = $column;
+
         return $this;
     }
 }
-

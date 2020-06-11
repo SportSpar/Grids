@@ -13,6 +13,7 @@ class HtmlTag extends RenderableRegistry
     /**
      * HTML tag attributes.
      * Keys are attribute names and values are attribute values.
+     *
      * @var array
      */
     protected $attributes = [];
@@ -32,11 +33,13 @@ class HtmlTag extends RenderableRegistry
      * Allows to specify HTML tag.
      *
      * @param string $name
+     *
      * @return $this
      */
     public function setTagName($name)
     {
         $this->tag_name = $name;
+
         return $this;
     }
 
@@ -60,6 +63,7 @@ class HtmlTag extends RenderableRegistry
         $class_name = get_class($this);
         $parts = explode('\\', $class_name);
         $base_name = array_pop($parts);
+
         return ($base_name === 'HtmlTag') ? 'div' : strtolower($base_name);
     }
 
@@ -67,11 +71,13 @@ class HtmlTag extends RenderableRegistry
      * Sets content (html inside tag).
      *
      * @param string $content
+     *
      * @return $this
      */
     public function setContent($content)
     {
         $this->content = $content;
+
         return $this;
     }
 
@@ -90,11 +96,13 @@ class HtmlTag extends RenderableRegistry
      * Keys are attribute names and values are attribute values.
      *
      * @param array $attributes
+     *
      * @return $this
      */
     public function setAttributes(array $attributes = [])
     {
         $this->attributes = $attributes;
+
         return $this;
     }
 
@@ -118,6 +126,7 @@ class HtmlTag extends RenderableRegistry
     {
         /** @var \Collective\Html\HtmlBuilder $html */
         $html = app('html');
+
         return '<'
         . $this->getTagName()
         . $html->attributes($this->getAttributes())
@@ -150,7 +159,7 @@ class HtmlTag extends RenderableRegistry
                 . $this->renderComponents(self::SECTION_END)
                 . $this->renderClosingTag();
         }
+
         return $this->wrapWithOutsideComponents($inner);
     }
 }
-

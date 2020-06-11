@@ -8,8 +8,6 @@ use SportSpar\Grids\Components\Base\ComponentInterface;
  * Class TFoot
  *
  * The component for rendering TFOOT html tag inside grid.
- *
- * @package SportSpar\Grids\Components
  */
 class TFoot extends HtmlTag
 {
@@ -23,7 +21,7 @@ class TFoot extends HtmlTag
     protected function getDefaultComponents(): array
     {
         return [
-            (new OneCellRow)->addComponent(new Pager())
+            (new OneCellRow())->addComponent(new Pager())
         ];
     }
 }

@@ -43,7 +43,7 @@ trait ComponentsContainerTrait
      *
      * @param string $name
      *
-     * @return null|ComponentInterface
+     * @return ComponentInterface|null
      */
     public function getComponentByName($name)
     {
@@ -60,7 +60,8 @@ trait ComponentsContainerTrait
      * Finds child component by name recursively.
      *
      * @param string $name
-     * @return null|ComponentInterface
+     *
+     * @return ComponentInterface|null
      */
     public function getComponentByNameRecursive($name)
     {
@@ -73,8 +74,8 @@ trait ComponentsContainerTrait
                     return $res;
                 }
             }
-
         }
+
         return null;
     }
 
@@ -96,7 +97,8 @@ trait ComponentsContainerTrait
     /**
      * Adds set of components to the collection of child components.
      *
-     * @param  Collection|array  $components
+     * @param Collection|array $components
+     *
      * @return self
      */
     public function addComponents($components)
@@ -130,11 +132,12 @@ trait ComponentsContainerTrait
      * adds it to child components collection and returns it.
      *
      * @param string $class
+     *
      * @return ComponentInterface
      */
     public function makeComponent($class)
     {
-        $component = new $class;
+        $component = new $class();
         $this->addComponent($component);
 
         return $component;

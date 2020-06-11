@@ -2,10 +2,11 @@
 
 namespace SportSpar\Grids\DataProvider;
 
-use Illuminate\Support\Facades\DB;
+use ArrayIterator;
 use Doctrine\DBAL\Query\QueryBuilder;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use SportSpar\Grids\DataProvider\DataRow\ObjectDataRow;
 
 class DbalDataProvider extends AbstractDataProvider
@@ -14,12 +15,15 @@ class DbalDataProvider extends AbstractDataProvider
 
     protected $paginator;
 
-    /** @var  $iterator \ArrayIterator */
+    /**
+     * @var ArrayIterator
+     */
     protected $iterator;
 
     /**
      * Set true if Laravel query logging required.
      * Fails when using Connection::PARAM_INT_ARRAY parameters
+     *
      * @var bool
      */
     protected $exec_using_laravel = false;
@@ -40,6 +44,7 @@ class DbalDataProvider extends AbstractDataProvider
     public function reset()
     {
         $this->getIterator()->rewind();
+
         return $this;
     }
 
@@ -48,7 +53,6 @@ class DbalDataProvider extends AbstractDataProvider
      */
     public function getCollection()
     {
-
         if (!$this->collection) {
             $query = clone $this->src;
             $query
@@ -63,9 +67,9 @@ class DbalDataProvider extends AbstractDataProvider
             }
             $this->collection = Collection::make($res);
         }
+
         return $this->collection;
     }
-
 
     public function getPaginator()
     {
@@ -81,6 +85,7 @@ class DbalDataProvider extends AbstractDataProvider
                 ]
             );
         }
+
         return $this->paginator;
     }
 
@@ -89,6 +94,7 @@ class DbalDataProvider extends AbstractDataProvider
         if (!$this->iterator) {
             $this->iterator = $this->getCollection()->getIterator();
         }
+
         return $this->iterator;
     }
 
@@ -111,15 +117,16 @@ class DbalDataProvider extends AbstractDataProvider
             Event::dispatch(self::EVENT_FETCH_ROW, [$row, $this]);
 
             return $row;
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     protected $_count;
 
     /**
      * @deprecated
+     *
      * @return int
      */
     public function count()
@@ -140,31 +147,32 @@ class DbalDataProvider extends AbstractDataProvider
     public function orderBy($fieldName, $direction)
     {
         $this->src->orderBy($fieldName, $direction);
+
         return $this;
     }
 
     public function filter($fieldName, $operator, $value)
     {
-         switch ($operator) {
-            case "eq":
+        switch ($operator) {
+            case 'eq':
                 $operator = '=';
                 break;
-            case "n_eq":
-                $operator = '<>';    
+            case 'n_eq':
+                $operator = '<>';
                 break;
-            case "gt":
-                $operator = '>';    
+            case 'gt':
+                $operator = '>';
                  break;
-            case "lt":
-                $operator = '<';    
+            case 'lt':
+                $operator = '<';
                 break;
-            case "ls_e":
-                $operator = '<=';    
+            case 'ls_e':
+                $operator = '<=';
                 break;
-            case "gt_e":
-                $operator = '>=';    
+            case 'gt_e':
+                $operator = '>=';
                 break;
-            case "in":
+            case 'in':
                 // may be broken, @see https://github.com/Nayjest/Grids/issues/109
                 $operator = 'IN';
                 if (!is_array($value)) {
@@ -172,14 +180,15 @@ class DbalDataProvider extends AbstractDataProvider
                 }
                 break;
         }
-        $parameterName = str_replace(".", "_", $fieldName); // @see https://github.com/Nayjest/Grids/issues/111
+        $parameterName = str_replace('.', '_', $fieldName); // @see https://github.com/Nayjest/Grids/issues/111
         $this->src->andWhere("$fieldName $operator :$parameterName");
         $this->src->setParameter($parameterName, $value);
+
         return $this;
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isExecUsingLaravel()
     {
@@ -187,7 +196,7 @@ class DbalDataProvider extends AbstractDataProvider
     }
 
     /**
-     * @param boolean $execUsingLaravel
+     * @param bool $execUsingLaravel
      */
     public function setExecUsingLaravel($execUsingLaravel)
     {
@@ -195,7 +204,7 @@ class DbalDataProvider extends AbstractDataProvider
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public static function canProvideFor($object): bool
     {

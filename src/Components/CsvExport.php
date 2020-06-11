@@ -2,9 +2,9 @@
 
 namespace SportSpar\Grids\Components;
 
-use Illuminate\Support\Facades\Event;
 use Illuminate\Http\Response;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Event;
 use SportSpar\Grids\Components\Base\RenderableComponent;
 use SportSpar\Grids\Components\Base\RenderableRegistry;
 use SportSpar\Grids\DataProvider\AbstractDataProvider;
@@ -17,7 +17,6 @@ use SportSpar\Grids\Grid;
  * The component provides control for exporting data to CSV.
  *
  * @author: Vitaliy Ofat <i@vitaliy-ofat.com>
- * @package SportSpar\Grids\Components
  */
 class CsvExport extends RenderableComponent
 {
@@ -69,7 +68,8 @@ class CsvExport extends RenderableComponent
 
     /**
      * @param Grid $grid
-     * @return null|void
+     *
+     * @return void|null
      */
     public function initialize(Grid $grid)
     {
@@ -86,11 +86,13 @@ class CsvExport extends RenderableComponent
 
     /**
      * @param string $name
+     *
      * @return self
      */
     public function setFileName($name): self
     {
         $this->fileName = $name;
+
         return $this;
     }
 
@@ -150,6 +152,7 @@ class CsvExport extends RenderableComponent
     public function setRowsLimit($limit): self
     {
         $this->rowsLimit = $limit;
+
         return $this;
     }
 
@@ -180,7 +183,7 @@ class CsvExport extends RenderableComponent
         $file = fopen('php://output', 'wb');
 
         header('Content-Type: text/csv');
-        header('Content-Disposition: attachment; filename="'. $this->getFileName() .'"');
+        header('Content-Disposition: attachment; filename="' . $this->getFileName() . '"');
         header('Pragma: no-cache');
 
         set_time_limit(0);
@@ -221,7 +224,7 @@ class CsvExport extends RenderableComponent
         $str = html_entity_decode($str);
         $str = strip_tags($str);
         $str = str_replace('"', '\'', $str);
-        $str = preg_replace('/\s+/', ' ', $str); # remove double spaces
+        $str = preg_replace('/\s+/', ' ', $str); // remove double spaces
         $str = trim($str);
 
         return $str;

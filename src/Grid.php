@@ -2,8 +2,8 @@
 
 namespace SportSpar\Grids;
 
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\View;
 use SportSpar\Grids\Components\Base\ComponentInterface;
 use SportSpar\Grids\Components\TFoot;
@@ -24,7 +24,7 @@ class Grid
     /** @var bool */
     protected $prepared = false;
 
-    /** @var  Sorter */
+    /** @var Sorter */
     protected $sorter;
 
     protected $filtering;
@@ -48,7 +48,6 @@ class Grid
     {
         return $this->config->getMainTemplate();
     }
-
 
     public function prepare()
     {
@@ -96,9 +95,9 @@ class Grid
         $backtrace = debug_backtrace(null, $bt_len);
         $str = '';
         for ($id = 2; $id < $bt_len; $id++) {
-            $trace = isset($backtrace[$id]) ? $backtrace[$id] : [];
+            $trace = $backtrace[$id] ?? [];
             if (empty($trace['class']) || !$this instanceof $trace['class']) {
-                # may be closure
+                // may be closure
                 if (isset($trace['file'], $trace['line'])) {
                     $str .= $trace['file'] . $trace['line'];
                 }
@@ -119,6 +118,7 @@ class Grid
                 return true;
             }
         }
+
         return false;
     }
 
@@ -185,19 +185,19 @@ class Grid
         $caching_time = $this->config->getCachingTime();
         if ($caching_time && ($output = Cache::get($key))) {
             return $output;
-        } else {
-            $this->prepare();
-            $provider = $this->config->getDataProvider();
-            $provider->reset();
-            $output = View::make(
+        }
+        $this->prepare();
+        $provider = $this->config->getDataProvider();
+        $provider->reset();
+        $output = View::make(
                 $this->getMainTemplate(),
                 $this->getViewData()
             )->render();
-            if ($caching_time) {
-                Cache::put($key, $output, $caching_time);
-            }
-            return $output;
+        if ($caching_time) {
+            Cache::put($key, $output, $caching_time);
         }
+
+        return $output;
     }
 
     /**
@@ -230,6 +230,7 @@ class Grid
         if ($this->filtering === null) {
             $this->filtering = new Filtering($this);
         }
+
         return $this->filtering;
     }
 

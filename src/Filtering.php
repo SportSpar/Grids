@@ -8,8 +8,6 @@ use Illuminate\Support\Collection;
  * Class Filtering
  *
  * This class manages data filtering.
- *
- * @package SportSpar\Grids
  */
 class Filtering
 {
@@ -36,6 +34,7 @@ class Filtering
         if ($this->filters === null) {
             $this->createFilters();
         }
+
         return $this->filters;
     }
 
@@ -83,6 +82,7 @@ class Filtering
      * Returns filter instance.
      *
      * @param $idOrConfig
+     *
      * @return mixed|Filter
      */
     public function getFilter($idOrConfig)
@@ -90,6 +90,7 @@ class Filtering
         if ($idOrConfig instanceof FilterConfig) {
             $idOrConfig = $idOrConfig->getId();
         }
+
         return $this->getFilters()[$idOrConfig];
     }
 
@@ -97,6 +98,7 @@ class Filtering
      * Renders filtering control.
      *
      * @param $filterIdOrConfig
+     *
      * @return string
      */
     public function render($filterIdOrConfig)

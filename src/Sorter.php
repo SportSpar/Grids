@@ -24,6 +24,7 @@ class Sorter
      *
      * @param FieldConfig $column
      * @param $direction
+     *
      * @return string
      */
     public function link(FieldConfig $column, $direction)
@@ -35,7 +36,7 @@ class Sorter
 
     /**
      * @param string $columnName
-     * @param string $direction   Possible values: asc, desc
+     * @param string $direction  Possible values: asc, desc
      */
     public function setDefaultSort(string $columnName, string $direction = 'DESC')
     {
