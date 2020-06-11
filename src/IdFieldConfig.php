@@ -8,12 +8,9 @@ use SportSpar\Grids\DataProvider\DataRow\DataRowInterface;
  * Class IdFieldConfig
  *
  * IdFieldConfig is a column type that will render a row number in table rows.
- *
- * @package SportSpar\Grids
  */
 class IdFieldConfig extends FieldConfig
 {
-
     /**
      * Constructor.
      */
@@ -26,6 +23,7 @@ class IdFieldConfig extends FieldConfig
      * Returns row id (row number).
      *
      * @param DataRowInterface $row
+     *
      * @return int
      */
     public function getValue(DataRowInterface $row)

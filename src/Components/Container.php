@@ -11,6 +11,7 @@ class Container extends RenderableRegistry
     public function setHtmlTags(array $tags)
     {
         $this->html_tags = $tags;
+
         return $this;
     }
 
@@ -18,10 +19,11 @@ class Container extends RenderableRegistry
     {
         $before = '';
         $after = '';
-        foreach($this->html_tags as $tag) {
+        foreach ($this->html_tags as $tag) {
             $before.="<$tag>";
-            $after = "</$tag>".$after;
+            $after = "</$tag>" . $after;
         }
+
         return $before . $this->renderComponents() . $after;
     }
 }

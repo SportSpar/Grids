@@ -2,9 +2,10 @@
 
 namespace SportSpar\Grids\DataProvider;
 
+use ArrayIterator;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Event;
 use SportSpar\Grids\DataProvider\DataRow\ObjectDataRow;
 
 class EloquentDataProvider extends AbstractDataProvider
@@ -13,7 +14,9 @@ class EloquentDataProvider extends AbstractDataProvider
 
     protected $paginator;
 
-    /** @var  $iterator \ArrayIterator */
+    /**
+     * @var ArrayIterator
+     */
     protected $iterator;
 
     /**
@@ -32,6 +35,7 @@ class EloquentDataProvider extends AbstractDataProvider
     public function reset()
     {
         $this->getIterator()->rewind();
+
         return $this;
     }
 
@@ -45,6 +49,7 @@ class EloquentDataProvider extends AbstractDataProvider
                 $this->getPaginator()->items()
             );
         }
+
         return $this->collection;
     }
 
@@ -53,6 +58,7 @@ class EloquentDataProvider extends AbstractDataProvider
         if (!$this->paginator) {
             $this->paginator = $this->src->paginate($this->page_size);
         }
+
         return $this->paginator;
     }
 
@@ -61,6 +67,7 @@ class EloquentDataProvider extends AbstractDataProvider
         if (!$this->iterator) {
             $this->iterator = $this->getCollection()->getIterator();
         }
+
         return $this->iterator;
     }
 
@@ -83,9 +90,9 @@ class EloquentDataProvider extends AbstractDataProvider
             Event::dispatch(self::EVENT_FETCH_ROW, $this);
 
             return $row;
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
@@ -102,6 +109,7 @@ class EloquentDataProvider extends AbstractDataProvider
     public function orderBy($fieldName, $direction)
     {
         $this->src->orderBy($fieldName, $direction);
+
         return $this;
     }
 
@@ -111,38 +119,40 @@ class EloquentDataProvider extends AbstractDataProvider
     public function filter($fieldName, $operator, $value)
     {
         switch ($operator) {
-            case "eq":
+            case 'eq':
                 $operator = '=';
                 break;
-            case "n_eq":
-                $operator = '<>';    
+            case 'n_eq':
+                $operator = '<>';
                 break;
-            case "gt":
-                $operator = '>';    
+            case 'gt':
+                $operator = '>';
                  break;
-            case "lt":
-                $operator = '<';    
+            case 'lt':
+                $operator = '<';
                 break;
-            case "ls_e":
-                $operator = '<=';    
+            case 'ls_e':
+                $operator = '<=';
                 break;
-            case "gt_e":
-                $operator = '>=';    
+            case 'gt_e':
+                $operator = '>=';
                 break;
-            case "in":
+            case 'in':
                 if (!is_array($value)) {
                     $operator = '=';
                     break;
                 }
                 $this->src->whereIn($fieldName, $value);
+
                 return $this;
         }
         $this->src->where($fieldName, $operator, $value);
+
         return $this;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public static function canProvideFor($object): bool
     {

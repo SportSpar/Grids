@@ -60,5 +60,10 @@
             ]
         }
     },
+    "scripts": {
+        "fmt": [
+            "command -v php-cs-fixer && php-cs-fixer fix --using-cache no --config .php_cs src || echo 'Please install php-cs-fixer'"
+        ]
+    },
     "minimum-stability": "dev"
 }

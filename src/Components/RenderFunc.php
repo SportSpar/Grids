@@ -8,21 +8,20 @@ use SportSpar\Grids\Components\Base\RenderableComponent;
  * Class RenderFunc
  *
  * The component prints value returned by specified PHP function.
- *
- * @package SportSpar\Grids\Components
  */
 class RenderFunc extends RenderableComponent
 {
-
-    /** @var  callable */
+    /** @var callable */
     protected $func;
 
     /**
-     * @param null|callable $func
+     * @param callable|null $func
      */
     public function __construct($func = null)
     {
-        if ($func) $this->setFunc($func);
+        if ($func) {
+            $this->setFunc($func);
+        }
     }
 
     /**

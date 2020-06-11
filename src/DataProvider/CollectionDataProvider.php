@@ -34,7 +34,7 @@ class CollectionDataProvider extends AbstractDataProvider
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function orderBy($fieldName, $direction)
     {
@@ -47,16 +47,16 @@ class CollectionDataProvider extends AbstractDataProvider
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function filter($fieldName, $operator, $value)
     {
         // A do-nothing callback
-        $callback = function($item) { return $item; };
+        $callback = function ($item) { return $item; };
 
         switch ($operator) {
-            case "like":
-                $callback = function($item) use ($value, $fieldName) {
+            case 'like':
+                $callback = function ($item) use ($value, $fieldName) {
                     $value = trim($value, '%');
 
                     if (empty($value)) {
@@ -66,30 +66,31 @@ class CollectionDataProvider extends AbstractDataProvider
                     return stripos((string)$item[$fieldName], $value) !== false;
                 };
                 break;
-            case "eq":
-                $callback = function($item) use ($value, $fieldName) { return (string)$item[$fieldName] == $value; };
+            case 'eq':
+                $callback = function ($item) use ($value, $fieldName) { return (string)$item[$fieldName] == $value; };
                 break;
-            case "n_eq":
-                $callback = function($item) use ($value, $fieldName) { return (string)$item[$fieldName] != $value; };
+            case 'n_eq':
+                $callback = function ($item) use ($value, $fieldName) { return (string)$item[$fieldName] != $value; };
                 break;
-            case "gt":
-                $callback = function($item) use ($value, $fieldName) { return (string)$item[$fieldName] > $value; };
+            case 'gt':
+                $callback = function ($item) use ($value, $fieldName) { return (string)$item[$fieldName] > $value; };
                 break;
-            case "lt":
-                $callback = function($item) use ($value, $fieldName) { return (string)$item[$fieldName] < $value; };
+            case 'lt':
+                $callback = function ($item) use ($value, $fieldName) { return (string)$item[$fieldName] < $value; };
                 break;
-            case "ls_e":
-                $callback = function($item) use ($value, $fieldName) { return (string)$item[$fieldName] <= $value; };
+            case 'ls_e':
+                $callback = function ($item) use ($value, $fieldName) { return (string)$item[$fieldName] <= $value; };
                 break;
-            case "gt_e":
-                $callback = function($item) use ($value, $fieldName) { return (string)$item[$fieldName] >= $value; };
+            case 'gt_e':
+                $callback = function ($item) use ($value, $fieldName) { return (string)$item[$fieldName] >= $value; };
                 break;
-            case "in":
+            case 'in':
                 if (!is_array($value)) {
-                    $callback = function($item) use ($value, $fieldName) { return (string)$item[$fieldName] == $value; };
+                    $callback = function ($item) use ($value, $fieldName) { return (string)$item[$fieldName] == $value; };
                     break;
                 }
-                $callback = function($item) use ($value, $fieldName) { return in_array((string)$item[$fieldName], $value); };
+                $callback = function ($item) use ($value, $fieldName) { return in_array((string)$item[$fieldName], $value); };
+
                 return $this;
         }
 
@@ -99,7 +100,7 @@ class CollectionDataProvider extends AbstractDataProvider
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getCollection()
     {
@@ -107,7 +108,7 @@ class CollectionDataProvider extends AbstractDataProvider
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getPaginator()
     {
@@ -125,11 +126,12 @@ class CollectionDataProvider extends AbstractDataProvider
                 ]
             );
         }
+
         return $this->paginator;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getRow()
     {
@@ -155,11 +157,12 @@ class CollectionDataProvider extends AbstractDataProvider
         if (!$this->iterator) {
             $this->iterator = $this->getCollection()->getIterator();
         }
+
         return $this->iterator;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function count()
     {
@@ -167,7 +170,7 @@ class CollectionDataProvider extends AbstractDataProvider
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public static function canProvideFor($object): bool
     {

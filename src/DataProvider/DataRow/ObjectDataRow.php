@@ -11,6 +11,7 @@ class ObjectDataRow extends AbstractDataRow
      * @param string $fieldName
      *
      * @return mixed
+     *
      * @throws Exception
      */
     public function getCellValue($fieldName)
@@ -24,6 +25,7 @@ class ObjectDataRow extends AbstractDataRow
                     return $res;
                 }
             }
+
             return $res;
         }
 

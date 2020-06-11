@@ -2,24 +2,22 @@
 
 namespace SportSpar\Grids\Components;
 
+use Illuminate\Support\Facades\Event;
 use LogicException;
-use SportSpar\Grids\Components\Base\RenderableComponentInterface;
 use SportSpar\Grids\Components\Base\ComponentTrait;
+use SportSpar\Grids\Components\Base\RenderableComponentInterface;
 use SportSpar\Grids\Components\Base\TComponentView;
-use SportSpar\Grids\DataProvider\DataRow\ArrayDataRow;
 use SportSpar\Grids\DataProvider\AbstractDataProvider;
 use SportSpar\Grids\DataProvider\DataRow\AbstractDataRow;
+use SportSpar\Grids\DataProvider\DataRow\ArrayDataRow;
 use SportSpar\Grids\FieldConfig;
-use SportSpar\Grids\IdFieldConfig;
 use SportSpar\Grids\Grid;
-use Illuminate\Support\Facades\Event;
+use SportSpar\Grids\IdFieldConfig;
 
 /**
  * Class TotalsRow
  *
  * The component renders row with totals for current page.
- *
- * @package SportSpar\Grids\Components
  */
 class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
 {
@@ -78,13 +76,14 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
         Event::listen(
             AbstractDataProvider::EVENT_FETCH_ROW,
             function (AbstractDataRow $row, AbstractDataProvider $currentProvider) use ($provider) {
-                if ($currentProvider !== $provider) return;
+                if ($currentProvider !== $provider) {
+                    return;
+                }
                 $this->rows_processed++;
                 foreach ($this->fields as $field) {
                     $name = $field->getName();
                     $operation = $this->getFieldOperation($name);
-                    switch($operation) {
-
+                    switch ($operation) {
                         case self::OPERATION_SUM:
                             $this->src[$name] += $row->getCellValue($field->getName());
                             break;
@@ -103,13 +102,9 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
                             );
                             break;
                         default:
-                            throw new LogicException(
-                                'TotalsRow: Unknown aggregation operation.'
-                            );
+                            throw new LogicException('TotalsRow: Unknown aggregation operation.');
                     }
-
                 }
-
             }
         );
     }
@@ -118,6 +113,7 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
      * Performs component initialization.
      *
      * @param Grid $grid
+     *
      * @return null
      */
     public function initialize(Grid $grid)
@@ -127,6 +123,7 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
         $this->listen(
             $this->grid->getConfig()->getDataProvider()
         );
+
         return null;
     }
 
@@ -134,6 +131,7 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
      * Returns true if the component uses specified column for totals calculation.
      *
      * @param FieldConfig $field
+     *
      * @return bool
      */
     public function uses(FieldConfig $field)
@@ -143,6 +141,7 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
 
     /**
      * @param FieldConfig|string $field
+     *
      * @return mixed|null
      */
     public function getCellValue($field)
@@ -152,9 +151,9 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
         }
         if (!$field instanceof IdFieldConfig && $this->uses($field)) {
             return parent::getCellValue($field->getName());
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
@@ -172,6 +171,7 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
      * which will be used for totals calculation.
      *
      * @param array|string[] $fieldNames
+     *
      * @return $this
      */
     public function setFieldNames(array $fieldNames)
@@ -181,6 +181,7 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
         foreach ($this->field_names as $name) {
             $this->src[$name] = 0;
         }
+
         return $this;
     }
 
@@ -196,11 +197,13 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
 
     /**
      * @param array $fieldOperations
+     *
      * @return $this
      */
     public function setFieldOperations(array $fieldOperations)
     {
         $this->field_operations = $fieldOperations;
+
         return $this;
     }
 
@@ -214,10 +217,11 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
 
     /**
      * @param string $fieldName
+     *
      * @return string
      */
     public function getFieldOperation($fieldName)
     {
-        return isset($this->field_operations[$fieldName])?$this->field_operations[$fieldName]:self::OPERATION_SUM;
+        return isset($this->field_operations[$fieldName]) ? $this->field_operations[$fieldName] : self::OPERATION_SUM;
     }
 }

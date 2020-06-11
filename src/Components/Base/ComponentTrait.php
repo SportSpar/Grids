@@ -46,6 +46,7 @@ trait ComponentTrait
      * Initializes component with grid.
      *
      * @param Grid $grid
+     *
      * @return null
      */
     public function initialize(Grid $grid)
@@ -70,11 +71,13 @@ trait ComponentTrait
      * Sets component name.
      *
      * @param string $name
+     *
      * @return $this
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 

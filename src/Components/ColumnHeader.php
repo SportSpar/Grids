@@ -8,8 +8,6 @@ use SportSpar\Grids\FieldConfig;
  * Class ColumnHeader
  *
  * The component for rendering column header
- *
- * @package SportSpar\Grids\Components
  */
 class ColumnHeader extends TableCell
 {
@@ -17,6 +15,7 @@ class ColumnHeader extends TableCell
 
     /**
      * @param FieldConfig $column
+     *
      * @return $this
      */
     public function setColumn(FieldConfig $column)
@@ -25,6 +24,7 @@ class ColumnHeader extends TableCell
         if ($column->isSortable()) {
             $this->addComponent(new SortingControl($column));
         }
+
         return parent::setColumn($column);
     }
 }

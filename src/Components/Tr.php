@@ -8,8 +8,6 @@ use SportSpar\Grids\DataProvider\DataRow\DataRowInterface;
  * Class Tr
  *
  * The component for rendering TR html tag inside grid.
- *
- * @package SportSpar\Grids\Components
  */
 class Tr extends HtmlTag
 {
@@ -32,11 +30,13 @@ class Tr extends HtmlTag
      * Allows to set data row.
      *
      * @param DataRowInterface $dataRow
+     *
      * @return $this
      */
     public function setDataRow(DataRowInterface $dataRow)
     {
         $this->dataRow = $dataRow;
+
         return $this;
     }
 
@@ -49,19 +49,20 @@ class Tr extends HtmlTag
     {
         $row = $this->getDataRow();
         $out = '';
-        foreach($this->grid->getConfig()->getColumns() as $column) {
+        foreach ($this->grid->getConfig()->getColumns() as $column) {
             $component = new TableCell($column);
             $component->initialize($this->grid);
             $component->setContent($column->getValue($row));
             $out .= $component->render();
         }
+
         return $out;
     }
 
     /**
      * Returns tag content.
      *
-     * @return null|string
+     * @return string|null
      */
     public function getContent()
     {

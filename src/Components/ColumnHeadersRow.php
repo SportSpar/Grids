@@ -2,15 +2,12 @@
 
 namespace SportSpar\Grids\Components;
 
-use SportSpar\Grids\Components\Base\ComponentInterface;
 use SportSpar\Grids\Grid;
 
 /**
  * Class ColumnHeadersRow
  *
  * The component for rendering table row with column headers.
- *
- * @package SportSpar\Grids\Components
  */
 class ColumnHeadersRow extends HtmlTag
 {

@@ -8,8 +8,6 @@ use SportSpar\Grids\Components\Base\RenderableComponent;
  * Class ShowingRecords
  *
  * Renders text: Showing records $from — $to of $total
- *
- * @package SportSpar\Grids\Components
  */
 class ShowingRecords extends RenderableComponent
 {
@@ -20,6 +18,7 @@ class ShowingRecords extends RenderableComponent
 
     /**
      * Passing $from, $to, $total to view
+     *
      * @return mixed
      */
     protected function getViewData()
@@ -34,12 +33,12 @@ class ShowingRecords extends RenderableComponent
                 ->getConfig()
                 ->getDataProvider()
                 ->getPaginator();
-            # Laravel 4
+            // Laravel 4
             if (method_exists($paginator, 'getFrom')) {
                 $from  = $paginator->getFrom();
                 $to    = $paginator->getTo();
                 $total = $paginator->getTotal();
-                # Laravel 5
+            // Laravel 5
             } else {
                 $from  = $paginator->firstItem();
                 $to    = $paginator->lastItem();

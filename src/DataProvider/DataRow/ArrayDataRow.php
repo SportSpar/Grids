@@ -19,6 +19,7 @@ class ArrayDataRow extends AbstractDataRow
                     return $res;
                 }
             }
+
             return $res;
         }
 

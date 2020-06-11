@@ -16,6 +16,7 @@ class OneCellRow extends RenderableRegistry
         $colspan = $this->grid->getConfig()->getColumns()->count();
         $opening = "<tr><td colspan=\"$colspan\">";
         $closing = '</td></tr>';
+
         return $this->wrapWithOutsideComponents(
             $opening . $this->renderInnerComponents() . $closing
         );

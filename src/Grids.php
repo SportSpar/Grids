@@ -2,6 +2,7 @@
 
 namespace SportSpar\Grids;
 
+use Nayjest\Builder\Builder;
 use Nayjest\Builder\Env;
 use SportSpar\Grids\Build\Setup;
 
@@ -9,17 +10,15 @@ use SportSpar\Grids\Build\Setup;
  * Class Grids
  *
  * Facade for constructing grids using configurations.
- *
- * @package SportSpar\Grids
  */
-class Grids {
-
+class Grids
+{
     protected static $builder;
 
     /**
      * Returns builder instance.
      *
-     * @return \Nayjest\Builder\Builder
+     * @return Builder
      */
     protected static function getBuilder()
     {
@@ -27,6 +26,7 @@ class Grids {
             $setup = new Setup();
             self::$builder = $setup->run();
         }
+
         return self::$builder;
     }
 
@@ -34,14 +34,15 @@ class Grids {
      * Creates grid using configuration.
      *
      * @param array $config
+     *
      * @return Grid
      */
     public static function make(array $config)
     {
         $builder = self::getBuilder();
         $configObject = $builder->build($config);
-        $grid = new Grid($configObject);
-        return $grid;
+
+        return new Grid($configObject);
     }
 
     /**
@@ -53,6 +54,7 @@ class Grids {
     public static function blueprints()
     {
         self::getBuilder();
+
         return Env::instance()->blueprints();
     }
 }

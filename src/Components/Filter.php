@@ -34,17 +34,20 @@ class Filter extends RenderableComponent
      * as second argument.
      *
      * @param callable $func
+     *
      * @return $this
      */
     public function setFilteringFunc($func)
     {
         $this->filtering_func = $func;
+
         return $this;
     }
 
     public function getInputName()
     {
         $key = $this->grid->getInputProcessor()->getKey();
+
         return "{$key}[filters][{$this->name}]";
     }
 
@@ -62,11 +65,13 @@ class Filter extends RenderableComponent
      * Sets text label for filtering control.
      *
      * @param string|null $label
+     *
      * @return $this
      */
     public function setLabel($label)
     {
         $this->label = $label;
+
         return $this;
     }
 
@@ -84,11 +89,13 @@ class Filter extends RenderableComponent
      * Sets default filter value.
      *
      * @param $value
+     *
      * @return $this
      */
     public function setDefaultValue($value)
     {
         $this->default_value = $value;
+
         return $this;
     }
 
@@ -105,9 +112,9 @@ class Filter extends RenderableComponent
             ->getFilterValue($this->name);
         if ($from_input === null) {
             return $this->getDefaultValue();
-        } else {
-            return $from_input;
         }
+
+        return $from_input;
     }
 
     /**
@@ -131,6 +138,7 @@ class Filter extends RenderableComponent
         $value = $this->getValue();
         if ($func = $this->getFilteringFunc()) {
             $func($value, $this->grid->getConfig()->getDataProvider());
+
             return;
         }
     }
