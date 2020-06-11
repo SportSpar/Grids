@@ -131,14 +131,6 @@ class CollectionDataProvider extends AbstractDataProvider
     /**
      * @inheritDoc
      */
-    public function getPaginationFactory()
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function getRow()
     {
         $iterator = $this->getIterator();

@@ -3,8 +3,7 @@
 namespace SportSpar\Grids\DataProvider;
 
 use Illuminate\Database\Eloquent\Builder;
-use Event;
-use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Collection;
 use SportSpar\Grids\DataProvider\DataRow\ObjectDataRow;
 
@@ -42,14 +41,9 @@ class EloquentDataProvider extends AbstractDataProvider
     public function getCollection()
     {
         if (!$this->collection) {
-            $paginator = $this->getPaginator();
-            if (version_compare(Application::VERSION, '5', '<')) {
-                $this->collection = $paginator->getCollection();
-            } else {
-                $this->collection = Collection::make(
-                    $this->getPaginator()->items()
-                );
-            }
+            $this->collection = Collection::make(
+                $this->getPaginator()->items()
+            );
         }
         return $this->collection;
     }
@@ -60,14 +54,6 @@ class EloquentDataProvider extends AbstractDataProvider
             $this->paginator = $this->src->paginate($this->page_size);
         }
         return $this->paginator;
-    }
-
-    /**
-     * @return \Illuminate\Pagination\Factory
-     */
-    public function getPaginationFactory()
-    {
-        return $this->src->getQuery()->getConnection()->getPaginator();
     }
 
     protected function getIterator()
@@ -94,11 +80,7 @@ class EloquentDataProvider extends AbstractDataProvider
             $this->iterator->next();
             $row = new ObjectDataRow($item, $this->getRowId());
 
-            if (version_compare(Application::VERSION, '5.8', '>=')) {
-                Event::dispatch(self::EVENT_FETCH_ROW, $this);
-            } else {
-                Event::fire(self::EVENT_FETCH_ROW, $this);
-            }
+            Event::dispatch(self::EVENT_FETCH_ROW, $this);
 
             return $row;
         } else {

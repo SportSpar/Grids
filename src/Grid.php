@@ -2,14 +2,13 @@
 
 namespace SportSpar\Grids;
 
-use Event;
-use Cache;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\View;
 use SportSpar\Grids\Components\Base\ComponentInterface;
 use SportSpar\Grids\Components\TFoot;
 use SportSpar\Grids\Components\THead;
 use SportSpar\Grids\InputProvider\InputProviderInterface;
-use View;
-use Illuminate\Foundation\Application;
 
 class Grid
 {
@@ -39,11 +38,7 @@ class Grid
 
         $this->initializeComponents();
 
-        if (version_compare(Application::VERSION, '5.8', '>=')) {
-            Event::dispatch(self::EVENT_CREATE, $this);
-        } else {
-            Event::fire(self::EVENT_CREATE, $this);
-        }
+        Event::dispatch(self::EVENT_CREATE, $this);
     }
 
     /**
@@ -73,11 +68,7 @@ class Grid
         $this->prepareColumns();
         $this->getSorter()->apply();
 
-        if (version_compare(Application::VERSION, '5.8', '>=')) {
-            Event::dispatch(self::EVENT_PREPARE, $this);
-        } else {
-            Event::fire(self::EVENT_PREPARE, $this);
-        }
+        Event::dispatch(self::EVENT_PREPARE, $this);
 
         $this->prepared = true;
     }

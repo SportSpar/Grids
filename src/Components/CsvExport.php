@@ -2,8 +2,7 @@
 
 namespace SportSpar\Grids\Components;
 
-use Event;
-use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Http\Response;
 use Illuminate\Pagination\Paginator;
 use SportSpar\Grids\Components\Base\RenderableComponent;
@@ -11,7 +10,6 @@ use SportSpar\Grids\Components\Base\RenderableRegistry;
 use SportSpar\Grids\DataProvider\AbstractDataProvider;
 use SportSpar\Grids\FieldConfig;
 use SportSpar\Grids\Grid;
-use Throwable;
 
 /**
  * Class CsvExport
@@ -164,13 +162,10 @@ class CsvExport extends RenderableComponent
 
     protected function resetPagination(AbstractDataProvider $provider)
     {
-        if (version_compare(Application::VERSION, '5.0.0', '<')) {
-            $provider->getPaginationFactory()->setPageName('page_unused');
-        } else {
-            Paginator::currentPageResolver(function () {
-                return 1;
-            });
-        }
+        Paginator::currentPageResolver(function () {
+            return 1;
+        });
+
         $provider->setPageSize($this->getRowsLimit());
         $provider->setCurrentPage(1);
     }

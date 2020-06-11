@@ -72,11 +72,6 @@ interface DataProviderInterface
     public function getPaginator();
 
     /**
-     * @return Pagination\Factory
-     */
-    public function getPaginationFactory();
-
-    /**
      * Fetches one row and moves internal pointer forward.
      * When last row fetched, returns null
      *
