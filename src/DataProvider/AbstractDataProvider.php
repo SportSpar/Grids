@@ -110,11 +110,6 @@ abstract class AbstractDataProvider implements DataProviderInterface
     abstract public function getPaginator();
 
     /**
-     * @return \Illuminate\Pagination\Factory
-     */
-    abstract public function getPaginationFactory();
-
-    /**
      * Fetches one row and moves internal pointer forward.
      * When last row fetched, returns null
      *

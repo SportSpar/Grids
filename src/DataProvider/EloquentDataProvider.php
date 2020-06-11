@@ -56,14 +56,6 @@ class EloquentDataProvider extends AbstractDataProvider
         return $this->paginator;
     }
 
-    /**
-     * @return \Illuminate\Pagination\Factory
-     */
-    public function getPaginationFactory()
-    {
-        return $this->src->getQuery()->getConnection()->getPaginator();
-    }
-
     protected function getIterator()
     {
         if (!$this->iterator) {

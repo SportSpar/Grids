@@ -2,7 +2,6 @@
 
 namespace SportSpar\Grids\DataProvider;
 
-use App;
 use Illuminate\Support\Facades\DB;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Illuminate\Support\Facades\Event;
@@ -83,14 +82,6 @@ class DbalDataProvider extends AbstractDataProvider
             );
         }
         return $this->paginator;
-    }
-
-    /**
-     * @return \Illuminate\Pagination\Factory
-     */
-    public function getPaginationFactory()
-    {
-        return App::make('paginator');
     }
 
     protected function getIterator()
