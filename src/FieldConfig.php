@@ -4,6 +4,7 @@ namespace SportSpar\Grids;
 
 use Illuminate\Support\Collection;
 use SportSpar\Grids\DataProvider\DataRow\DataRowInterface;
+use SportSpar\Grids\Formatter\FormatterInterface;
 
 /**
  * Class FieldConfig
@@ -17,34 +18,49 @@ class FieldConfig
      *
      * @var string
      */
-    protected $name;
+    private $name;
 
     /**
      * Text label that will be rendered in table header.
      *
      * @var string
      */
-    protected $label;
+    private $label;
 
     /**
      * @var int
      */
-    protected $order = 0;
+    private $order = 0;
 
     /**
      * @var bool
      */
-    protected $is_sortable = false;
+    private $isSortable = false;
 
-    protected $sorting;
+    /**
+     * @var string|null
+     */
+    private $sorting;
 
-    /** @var Collection|FilterConfig[] */
-    protected $filters;
+    /**
+     * @var Collection|FilterConfig[]
+     */
+    private $filters;
 
-    /** @var callable */
-    protected $callback;
+    /**
+     * @var callable
+     */
+    private $callback;
 
-    protected $is_hidden = false;
+    /**
+     * @var bool
+     */
+    private $isHidden = false;
+
+    /**
+     * @var FormatterInterface|null
+     */
+    private $formatter;
 
     /**
      * Constructor.
@@ -121,7 +137,7 @@ class FieldConfig
      */
     public function isHidden()
     {
-        return $this->is_hidden;
+        return $this->isHidden;
     }
 
     /**
@@ -131,7 +147,7 @@ class FieldConfig
      */
     public function hide()
     {
-        $this->is_hidden = true;
+        $this->isHidden = true;
 
         return $this;
     }
@@ -143,7 +159,7 @@ class FieldConfig
      */
     public function show()
     {
-        $this->is_hidden = false;
+        $this->isHidden = false;
 
         return $this;
     }
@@ -179,7 +195,7 @@ class FieldConfig
      */
     public function isSortable()
     {
-        return $this->is_sortable;
+        return $this->isSortable;
     }
 
     /**
@@ -191,7 +207,7 @@ class FieldConfig
      */
     public function setSortable($isSortable)
     {
-        $this->is_sortable = $isSortable;
+        $this->isSortable = $isSortable;
 
         return $this;
     }
@@ -340,18 +356,40 @@ class FieldConfig
     }
 
     /**
-     * @todo move to Field instance
-     *
+     * @return FormatterInterface|null
+     */
+    public function getFormatter(): FormatterInterface
+    {
+        return $this->formatter;
+    }
+
+    /**
+     * @param FormatterInterface|null $formatter
+     */
+    public function setFormatter(FormatterInterface $formatter)
+    {
+        $this->formatter = $formatter;
+    }
+
+    /**
      * @param DataRowInterface $row
      *
      * @return mixed
+     * @todo move to Field instance
+     *
      */
     public function getValue(DataRowInterface $row)
     {
         if ($function = $this->getCallback()) {
-            return call_user_func($function, $row->getCellValue($this->getName()), $row);
+            $value = call_user_func($function, $row->getCellValue($this->getName()), $row);
+        } else {
+            $value = $row->getCellValue($this->getName());
         }
 
-        return $row->getCellValue($this->getName());
+        if ($this->formatter) {
+            return $this->formatter->format($value);
+        }
+
+        return $value;
     }
 }
