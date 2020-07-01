@@ -46,4 +46,3 @@ class BuildDataProvider extends Instruction
         }
     }
 }
-

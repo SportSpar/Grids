@@ -6,8 +6,6 @@ namespace SportSpar\Grids\Components\Base;
  * Interface RenderableInterface
  *
  * Interface for objects that can be rendered.
- *
- * @package SportSpar\Grids\Components\Base
  */
 interface RenderableInterface
 {
@@ -29,6 +27,7 @@ interface RenderableInterface
      * Sets template.
      *
      * @param string $template
+     *
      * @return $this
      */
     public function setTemplate($template);
@@ -43,7 +42,7 @@ interface RenderableInterface
     /**
      * Returns true if object was rendered.
      *
-     * @return boolean
+     * @return bool
      */
     public function isRendered();
 }

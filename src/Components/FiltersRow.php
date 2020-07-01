@@ -8,8 +8,6 @@ use SportSpar\Grids\Components\Base\RenderableRegistry;
  * Class FiltersRow
  *
  * provides additional render sections for columns: 'filters_row_column_<name>'
- *
- * @package SportSpar\Grids\Components
  */
 class FiltersRow extends RenderableRegistry
 {

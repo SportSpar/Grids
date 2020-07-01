@@ -11,8 +11,6 @@ use SportSpar\Grids\Grid;
  *
  * Basically, component is an object that can be attached
  * to grid components hierarchy and react to initialize & prepare calls.
- *
- * @package SportSpar\Grids\Components\Base
  */
 interface ComponentInterface
 {
@@ -34,6 +32,7 @@ interface ComponentInterface
      * Initializes component with grid.
      *
      * @param Grid $grid
+     *
      * @return null
      */
     public function initialize(Grid $grid);
@@ -56,6 +55,7 @@ interface ComponentInterface
      * Sets component name.
      *
      * @param string $name
+     *
      * @return $this
      */
     public function setName($name);

@@ -6,8 +6,6 @@ use Illuminate\Support\Collection;
 
 /**
  * Interface of Grid components registry
- *
- * @package SportSpar\Grids\Components\Base
  */
 interface ComponentsContainerInterface
 {
@@ -23,6 +21,7 @@ interface ComponentsContainerInterface
      * with specified name or null if component not found.
      *
      * @param string $name
+     *
      * @return ComponentInterface|null
      */
     public function getComponentByName($name);
@@ -31,6 +30,7 @@ interface ComponentsContainerInterface
      * Adds component to collection.
      *
      * @param ComponentInterface $component
+     *
      * @return self
      */
     public function addComponent(ComponentInterface $component);
@@ -59,6 +59,7 @@ interface ComponentsContainerInterface
      * and returns this component as result.
      *
      * @param string $class
+     *
      * @return ComponentInterface
      */
     public function makeComponent($class);

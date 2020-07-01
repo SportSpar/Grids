@@ -137,6 +137,7 @@ class IlluminateRequest implements InputProviderInterface
      *
      * @param string $key
      * @param $default
+     *
      * @return mixed
      */
     public function getValue($key, $default = null)

@@ -3,10 +3,10 @@
 namespace SportSpar\Grids;
 
 use Illuminate\Support\Collection;
-use SportSpar\Grids\Components\Base\RenderableComponentInterface;
-use SportSpar\Grids\Components\Base\ComponentTrait;
-use SportSpar\Grids\Components\Base\ComponentsContainerTrait;
 use SportSpar\Grids\Components\Base\ComponentsContainerInterface;
+use SportSpar\Grids\Components\Base\ComponentsContainerTrait;
+use SportSpar\Grids\Components\Base\ComponentTrait;
+use SportSpar\Grids\Components\Base\RenderableComponentInterface;
 use SportSpar\Grids\Components\TFoot;
 use SportSpar\Grids\Components\THead;
 use SportSpar\Grids\Components\Tr;
@@ -26,7 +26,9 @@ class GridConfig implements ComponentsContainerInterface
     /** @var FieldConfig[]|Collection */
     protected $columns;
 
-    /** @var  DataProviderInterface $data_provider */
+    /**
+     * @var DataProviderInterface
+     */
     protected $data_provider;
 
     /**
@@ -36,7 +38,9 @@ class GridConfig implements ComponentsContainerInterface
 
     protected $page_size = 50;
 
-    /** @var Collection|FilterConfig[] $filters */
+    /**
+     * @var Collection|FilterConfig[]
+     */
     protected $filters;
 
     /** @var int */
@@ -52,18 +56,20 @@ class GridConfig implements ComponentsContainerInterface
     public function getRowComponent()
     {
         if (!$this->row_component) {
-            $this->row_component = (new Tr)
+            $this->row_component = (new Tr())
                 ->setRenderSection(self::SECTION_DO_NOT_RENDER);
             if ($this->grid) {
                 $this->row_component->initialize($this->grid);
             }
             $this->addComponent($this->row_component);
         }
+
         return $this->row_component;
     }
 
     /**
      * @param RenderableComponentInterface $rowComponent
+     *
      * @return $this
      */
     public function setRowComponent(RenderableComponentInterface $rowComponent)
@@ -71,6 +77,7 @@ class GridConfig implements ComponentsContainerInterface
         $this->row_component = $rowComponent;
         $this->addComponent($rowComponent);
         $rowComponent->setRenderSection(self::SECTION_DO_NOT_RENDER);
+
         return $this;
     }
 
@@ -89,17 +96,20 @@ class GridConfig implements ComponentsContainerInterface
 
     /**
      * @param string $template
+     *
      * @return $this
      */
     public function setTemplate($template)
     {
         $this->template = $template;
+
         return $this;
     }
 
     public function setMainTemplate($template)
     {
         $this->main_template = $template;
+
         return $this;
     }
 
@@ -108,14 +118,15 @@ class GridConfig implements ComponentsContainerInterface
         return str_replace('*.', "$this->template.", $this->main_template);
     }
 
-
     /**
      * @param Collection|FilterConfig[] $filters
+     *
      * @return $this
      */
     public function setFilters($filters)
     {
         $this->filters = Collection::make($filters);
+
         return $this;
     }
 
@@ -124,6 +135,7 @@ class GridConfig implements ComponentsContainerInterface
         if (null === $this->filters) {
             $this->filters = new Collection();
         }
+
         return $this->filters;
     }
 
@@ -137,11 +149,13 @@ class GridConfig implements ComponentsContainerInterface
 
     /**
      * @param DataProviderInterface $dataProvider
+     *
      * @return $this
      */
     public function setDataProvider(DataProviderInterface $dataProvider)
     {
         $this->data_provider = $dataProvider;
+
         return $this;
     }
 
@@ -175,11 +189,13 @@ class GridConfig implements ComponentsContainerInterface
 
     /**
      * @param FieldConfig[]|Collection $columns
+     *
      * @return $this
      */
     public function setColumns($columns)
     {
         $this->columns = Collection::make($columns);
+
         return $this;
     }
 
@@ -191,8 +207,9 @@ class GridConfig implements ComponentsContainerInterface
     public function getColumns()
     {
         if (null === $this->columns) {
-            $this->columns = new Collection;
+            $this->columns = new Collection();
         }
+
         return $this->columns;
     }
 
@@ -200,7 +217,8 @@ class GridConfig implements ComponentsContainerInterface
      * Returns column by name.
      *
      * @param string $name
-     * @return null|FieldConfig
+     *
+     * @return FieldConfig|null
      */
     public function getColumn($name)
     {
@@ -209,7 +227,6 @@ class GridConfig implements ComponentsContainerInterface
                 return $column;
             }
         }
-
     }
 
     /**
@@ -232,6 +249,7 @@ class GridConfig implements ComponentsContainerInterface
     public function setCachingTime($minutes)
     {
         $this->caching_time = $minutes;
+
         return $this;
     }
 
@@ -239,6 +257,7 @@ class GridConfig implements ComponentsContainerInterface
      * Adds column to grid.
      *
      * @param FieldConfig $column
+     *
      * @return $this
      */
     public function addColumn(FieldConfig $column)
@@ -247,6 +266,7 @@ class GridConfig implements ComponentsContainerInterface
             $this->setColumns([]);
         }
         $this->columns->push($column);
+
         return $this;
     }
 
@@ -254,11 +274,13 @@ class GridConfig implements ComponentsContainerInterface
      * Sets maximal quantity of rows per page.
      *
      * @param int $pageSize
+     *
      * @return $this
      */
     public function setPageSize($pageSize)
     {
         $this->page_size = (int)$pageSize;
+
         return $this;
     }
 

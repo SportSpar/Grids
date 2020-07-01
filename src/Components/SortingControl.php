@@ -11,8 +11,6 @@ use SportSpar\Grids\FieldConfig;
  *
  * The component for rendering sorting controls
  * added to column header automatically when field is sortable.
- *
- * @package SportSpar\Grids\Components
  */
 class SortingControl extends RenderableComponent
 {

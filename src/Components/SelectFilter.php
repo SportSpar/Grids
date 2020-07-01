@@ -16,6 +16,7 @@ class SelectFilter extends Filter
     public function setVariants(array $variants)
     {
         $this->variants = $variants;
+
         return $this;
     }
 }

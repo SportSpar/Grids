@@ -8,12 +8,9 @@ use SportSpar\Grids\Components\Base\RenderableComponent;
  * Class ColumnsHider
  *
  * The component renders control for showing/hiding columns.
- *
- * @package SportSpar\Grids\Components
  */
 class ColumnsHider extends RenderableComponent
 {
-
     protected $template = '*.components.columns_hider';
 
     protected $name = 'columns_hider';
@@ -24,11 +21,13 @@ class ColumnsHider extends RenderableComponent
 
     /**
      * @param array|string[] $columnNames
+     *
      * @return $this
      */
     public function setHiddenByDefault(array $columnNames)
     {
         $this->hidden_by_default = $columnNames;
+
         return $this;
     }
 
@@ -55,16 +54,18 @@ class ColumnsHider extends RenderableComponent
         foreach ($this->grid->getConfig()->getColumns() as $column) {
             $name = $column->getName();
             if (isset($from_cookie[$name])) {
-                $res[$name] = (boolean)$from_cookie[$name];
+                $res[$name] = (bool)$from_cookie[$name];
             } else {
                 $res[$name] = !in_array($name, $this->getHiddenByDefault());
             }
         }
+
         return $res;
     }
 
     /**
      * @param $name
+     *
      * @return string
      */
     public function getId($name)
@@ -73,6 +74,7 @@ class ColumnsHider extends RenderableComponent
             $name = "-$name";
         }
         $grid_name = $this->grid->getConfig()->getName();
+
         return "{$grid_name}-columns_hider{$name}";
     }
 
@@ -86,11 +88,13 @@ class ColumnsHider extends RenderableComponent
 
     /**
      * @param $title
+     *
      * @return $this
      */
     public function setTitle($title)
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -98,7 +102,7 @@ class ColumnsHider extends RenderableComponent
     {
         parent::prepare();
         $visible = $this->getColumnsVisibility();
-        foreach($this->grid->getConfig()->getColumns() as $column) {
+        foreach ($this->grid->getConfig()->getColumns() as $column) {
             if (!$visible[$column->getName()]) {
                 $column->hide();
             }

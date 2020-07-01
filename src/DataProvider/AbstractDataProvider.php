@@ -2,6 +2,8 @@
 
 namespace SportSpar\Grids\DataProvider;
 
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
 use SportSpar\Grids\DataProvider\DataRow\DataRowInterface;
 
 abstract class AbstractDataProvider implements DataProviderInterface
@@ -34,6 +36,7 @@ abstract class AbstractDataProvider implements DataProviderInterface
     public function reset()
     {
         reset($this->src);
+
         return $this;
     }
 
@@ -41,11 +44,13 @@ abstract class AbstractDataProvider implements DataProviderInterface
      * Sets page size.
      *
      * @param int $pageSize
+     *
      * @return self
      */
     public function setPageSize($pageSize)
     {
         $this->page_size = $pageSize;
+
         return $this;
     }
 
@@ -70,11 +75,12 @@ abstract class AbstractDataProvider implements DataProviderInterface
     }
 
     /**
-     * @return int row id starting from 1, considering pagination.
+     * @return int row id starting from 1, considering pagination
      */
     protected function getRowId()
     {
         $offset = ($this->getCurrentPage() - 1) * $this->page_size;
+
         return $offset + $this->index;
     }
 
@@ -83,6 +89,7 @@ abstract class AbstractDataProvider implements DataProviderInterface
      *
      * @param string $fieldName
      * @param $direction
+     *
      * @return self
      */
     abstract public function orderBy($fieldName, $direction);
@@ -92,7 +99,8 @@ abstract class AbstractDataProvider implements DataProviderInterface
      *
      * @param string $fieldName
      * @param string $operator
-     * @param mixed $value
+     * @param mixed  $value
+     *
      * @return self
      */
     abstract public function filter($fieldName, $operator, $value);
@@ -100,12 +108,12 @@ abstract class AbstractDataProvider implements DataProviderInterface
     /**
      * Returns collection of raw data items.
      *
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     abstract public function getCollection();
 
     /**
-     * @return \Illuminate\Pagination\Paginator
+     * @return Paginator
      */
     abstract public function getPaginator();
 
@@ -121,7 +129,9 @@ abstract class AbstractDataProvider implements DataProviderInterface
      * Returns count of records on current page.
      *
      * @todo rename to something like recordsOnPage
+     *
      * @deprecated
+     *
      * @return int
      */
     abstract public function count();

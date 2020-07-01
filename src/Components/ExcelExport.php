@@ -2,8 +2,8 @@
 
 namespace SportSpar\Grids\Components;
 
-use Illuminate\Support\Facades\Event;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Event;
 use Maatwebsite\Excel\Classes\LaravelExcelWorksheet;
 use Maatwebsite\Excel\Excel;
 use Maatwebsite\Excel\Writers\LaravelExcelWriter;
@@ -19,7 +19,6 @@ use SportSpar\Grids\Grid;
  * The component provides control for exporting data to excel.
  *
  * @author: Alexander Hofmeister
- * @package SportSpar\Grids\Components
  */
 class ExcelExport extends RenderableComponent
 {
@@ -58,7 +57,8 @@ class ExcelExport extends RenderableComponent
 
     /**
      * @param Grid $grid
-     * @return null|void
+     *
+     * @return void|null
      */
     public function initialize(Grid $grid)
     {
@@ -75,19 +75,21 @@ class ExcelExport extends RenderableComponent
 
     /**
      * Sets name of exported file.
-     * 
+     *
      * @param string $name
+     *
      * @return $this
      */
     public function setFileName($name)
     {
         $this->fileName = $name;
+
         return $this;
     }
 
     /**
      * Returns name of exported file.
-     * 
+     *
      * @return string
      */
     public function getFileName()
@@ -97,11 +99,13 @@ class ExcelExport extends RenderableComponent
 
     /**
      * @param string $name
+     *
      * @return $this
      */
     public function setSheetName($name)
     {
         $this->sheetName = $name;
+
         return $this;
     }
 
@@ -115,11 +119,13 @@ class ExcelExport extends RenderableComponent
 
     /**
      * @param string $name
+     *
      * @return $this
      */
     public function setExtension($name)
     {
         $this->extension = $name;
+
         return $this;
     }
 
@@ -147,6 +153,7 @@ class ExcelExport extends RenderableComponent
     public function setRowsLimit($limit)
     {
         $this->rows_limit = $limit;
+
         return $this;
     }
 
@@ -162,6 +169,7 @@ class ExcelExport extends RenderableComponent
 
     /**
      * @param FieldConfig $column
+     *
      * @return bool
      */
     protected function isColumnExported(FieldConfig $column)
@@ -172,6 +180,7 @@ class ExcelExport extends RenderableComponent
 
     /**
      * @internal
+     *
      * @return array
      */
     public function getData()
@@ -221,6 +230,7 @@ class ExcelExport extends RenderableComponent
                 $output[] = $this->escapeString($column->getLabel());
             }
         }
+
         return $output;
     }
 
@@ -234,16 +244,18 @@ class ExcelExport extends RenderableComponent
 
     /**
      * @param string[] $ignoredColumns
+     *
      * @return $this
      */
     public function setIgnoredColumns(array $ignoredColumns)
     {
         $this->ignored_columns = $ignoredColumns;
+
         return $this;
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isHiddenColumnsExported()
     {
@@ -252,11 +264,13 @@ class ExcelExport extends RenderableComponent
 
     /**
      * @param bool $isHiddenColumnsExported
+     *
      * @return $this
      */
     public function setHiddenColumnsExported($isHiddenColumnsExported)
     {
         $this->is_hidden_columns_exported = $isHiddenColumnsExported;
+
         return $this;
     }
 
@@ -270,6 +284,7 @@ class ExcelExport extends RenderableComponent
                 $excel->sheet($this->getSheetName(), $this->getOnSheetCreate());
             };
         }
+
         return $this->on_file_create;
     }
 
@@ -281,6 +296,7 @@ class ExcelExport extends RenderableComponent
     public function setOnFileCreate($onFileCreate)
     {
         $this->on_file_create = $onFileCreate;
+
         return $this;
     }
 
@@ -294,6 +310,7 @@ class ExcelExport extends RenderableComponent
                 $sheet->fromArray($this->getData(), null, 'A1', false, false);
             };
         }
+
         return $this->on_sheet_create;
     }
 
@@ -305,6 +322,7 @@ class ExcelExport extends RenderableComponent
     public function setOnSheetCreate($onSheetCreate)
     {
         $this->on_sheet_create = $onSheetCreate;
+
         return $this;
     }
 }

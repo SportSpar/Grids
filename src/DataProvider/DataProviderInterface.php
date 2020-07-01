@@ -83,7 +83,9 @@ interface DataProviderInterface
      * Returns count of records on current page.
      *
      * @return int
+     *
      * @deprecated
+     *
      * @todo rename to something like recordsOnPage
      */
     public function count();

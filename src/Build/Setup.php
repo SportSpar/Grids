@@ -28,7 +28,6 @@ use SportSpar\Grids\Build\Instructions\BuildDataProvider;
  * @See \Grids::make
  *
  * @internal
- * @package SportSpar\Grids\Build
  */
 class Setup
 {
@@ -55,6 +54,7 @@ class Setup
             ->add($this->makeFieldBlueprint())
             ->add($this->makeComponentBlueprint())
             ->add($configBlueprint = $this->makeConfigBlueprint());
+
         return new Builder($configBlueprint);
     }
 
@@ -67,16 +67,12 @@ class Setup
     {
         $componentBlueprint = $this->blueprints->getFor(self::COMPONENT_CLASS);
         if (!$componentBlueprint) {
-            throw new LogicException(
-                'Blueprint for grid components must be created before main blueprint.'
-            );
+            throw new LogicException('Blueprint for grid components must be created before main blueprint.');
         }
 
         $column_blueprint = $this->blueprints->getFor(self::COLUMN_CLASS);
         if (!$column_blueprint) {
-            throw new LogicException(
-                'Blueprint for grid columns must be created before main blueprint.'
-            );
+            throw new LogicException('Blueprint for grid columns must be created before main blueprint.');
         }
 
         return new Blueprint(self::GRID_CLASS, [
@@ -95,7 +91,6 @@ class Setup
     protected function makeComponentBlueprint()
     {
         $blueprint = new Blueprint(self::COMPONENT_CLASS, [
-
             new CustomInstruction(function (Scaffold $s) {
                 if ($s->input instanceof Closure) {
                     $s->class = 'SportSpar\Grids\Components\RenderFunc';
@@ -117,7 +112,7 @@ class Setup
                     $s->class = 'SportSpar\Grids\Components\\' . str_replace(
                             ' ',
                             '',
-                            ucwords(str_replace(array('-', '_'), ' ', $type))
+                            ucwords(str_replace(['-', '_'], ' ', $type))
                         );
                 }
             }, null, Instruction::PHASE_PRE_INST)
@@ -126,7 +121,7 @@ class Setup
 
         $blueprint->add(new Rename('component', 'add_component'));
         $blueprint->add(new Build('add_component', $blueprint));
-        $blueprint->add(new CallMethodWith('add_component','addComponent'));
+        $blueprint->add(new CallMethodWith('add_component', 'addComponent'));
 
         return $blueprint;
     }
@@ -141,7 +136,7 @@ class Setup
         return new Blueprint(self::FILTER_CLASS, [
             new SimpleValueAsField('name'),
             new CustomMapping('type', function ($type, Scaffold $s) {
-                switch($type) {
+                switch ($type) {
                     case 'select':
                         $s->class = 'SportSpar\Grids\SelectFilterConfig';
                         break;
@@ -149,8 +144,8 @@ class Setup
                         break;
                 }
             }, null, Instruction::PHASE_PRE_INST),
-            new Rename(0,'name'),
-            new Rename(1,'operator'),
+            new Rename(0, 'name'),
+            new Rename(1, 'operator'),
         ]);
     }
 
@@ -163,18 +158,17 @@ class Setup
     {
         $filter_blueprint = $this->blueprints->getFor(self::FILTER_CLASS);
         if (!$filter_blueprint) {
-            throw new LogicException(
-                'Blueprint for grid filters must be created before grid columns blueprint.'
-            );
+            throw new LogicException('Blueprint for grid filters must be created before grid columns blueprint.');
         }
+
         return new Blueprint(self::COLUMN_CLASS, [
             new SimpleValueAsField('name'),
-            new Rename(0,'name'),
+            new Rename(0, 'name'),
             new BuildChildren('filters', $filter_blueprint),
 
             new Rename('filter', 'add_filter'),
             new Build('add_filter', $filter_blueprint),
-            new CallMethodWith('add_filter','addFilter'),
+            new CallMethodWith('add_filter', 'addFilter'),
         ]);
     }
 }

@@ -9,12 +9,9 @@ use SportSpar\Grids\Components\Base\RenderableComponent;
  *
  * The component renders control
  * for switching count of records displayed per page.
- *
- * @package SportSpar\Grids\Components
  */
 class RecordsPerPage extends RenderableComponent
 {
-
     protected $name = 'records_per_page';
 
     protected $variants = [
@@ -33,18 +30,20 @@ class RecordsPerPage extends RenderableComponent
      */
     public function getVariants()
     {
-        return array_combine(array_values($this->variants),array_values($this->variants));
+        return array_combine(array_values($this->variants), array_values($this->variants));
     }
 
     /**
      * Sets variants.
      *
      * @param array|int[] $variants
+     *
      * @return $this
      */
     public function setVariants(array $variants)
     {
         $this->variants = $variants;
+
         return $this;
     }
 
@@ -56,6 +55,7 @@ class RecordsPerPage extends RenderableComponent
     public function getInputName()
     {
         $key = $this->grid->getInputProcessor()->getKey();
+
         return "{$key}[filters][records_per_page]";
     }
 
@@ -73,9 +73,9 @@ class RecordsPerPage extends RenderableComponent
             ->getFilterValue('records_per_page');
         if ($from_input === null) {
             return $this->grid->getConfig()->getPageSize();
-        } else {
-            return (int) $from_input;
         }
+
+        return (int) $from_input;
     }
 
     /**
@@ -84,7 +84,9 @@ class RecordsPerPage extends RenderableComponent
     public function prepare()
     {
         $value = $this->getValue();
-        if (!$value || !is_numeric($value)) return;
+        if (!$value || !is_numeric($value)) {
+            return;
+        }
         $this->grid->getConfig()->getDataProvider()->setPageSize($value);
     }
 }

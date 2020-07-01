@@ -30,7 +30,8 @@ trait TComponentView
     public function getTemplate()
     {
         $grid_tpl = $this->grid->getConfig()->getTemplate();
-        return str_replace('*.',"$grid_tpl.", $this->template);
+
+        return str_replace('*.', "$grid_tpl.", $this->template);
     }
 
     /**
@@ -49,11 +50,13 @@ trait TComponentView
      * where this component must be rendered.
      *
      * @param string|null $sectionName
+     *
      * @return $this
      */
     public function setRenderSection($sectionName)
     {
         $this->renderSection = $sectionName;
+
         return $this;
     }
 }

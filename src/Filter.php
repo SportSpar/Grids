@@ -6,25 +6,28 @@ use View;
 
 class Filter
 {
-    /** @var FilterConfig */
+    /**
+     * @var FilterConfig
+     */
     protected $config;
 
-    /** @var FieldConfig */
+    /**
+     * @var FieldConfig
+     */
     protected $column;
 
     /**
      * Constructor.
      *
      * @param FilterConfig $config
-     * @param FieldConfig $column
-     * @param Grid $grid
+     * @param FieldConfig  $column
+     * @param Grid         $grid
      */
     public function __construct(
         FilterConfig $config,
         FieldConfig $column,
         Grid $grid
-    )
-    {
+    ) {
         $this->config = $config;
         $this->column = $column;
         $this->grid = $grid;
@@ -39,6 +42,7 @@ class Filter
     {
         $key = $this->grid->getInputProcessor()->getKey();
         $name = $this->config->getId();
+
         return "{$key}[filters][{$name}]";
     }
 
@@ -65,9 +69,9 @@ class Filter
             ->getFilterValue($this->config->getId());
         if ($from_input === null) {
             return $this->config->getDefaultValue();
-        } else {
-            return $from_input;
         }
+
+        return $from_input;
     }
 
     /**
@@ -81,6 +85,7 @@ class Filter
         $data['column'] = $this->column;
         $data['filter'] = $this;
         $data['label'] = $this->config->getLabel();
+
         return View::make(
             $this->getTemplate(),
             $data
@@ -96,6 +101,7 @@ class Filter
     {
         $filter_tpl = $this->config->getTemplate();
         $grid_tpl = $this->grid->getConfig()->getTemplate();
+
         return str_replace('*.', "$grid_tpl.filters.", $filter_tpl);
     }
 
@@ -113,6 +119,7 @@ class Filter
         // If a filtering function is defined - use it
         if ($func = $this->config->getFilteringFunc()) {
             $func($value, $this->grid->getConfig()->getDataProvider());
+
             return;
         }
 
