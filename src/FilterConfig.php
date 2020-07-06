@@ -4,53 +4,98 @@ namespace SportSpar\Grids;
 
 class FilterConfig
 {
-    const OPERATOR_LIKE = 'like';
-    const OPERATOR_EQ = 'eq';
+    const OPERATOR_LIKE   = 'like';
+    const OPERATOR_EQ     = 'eq';
     const OPERATOR_NOT_EQ = 'n_eq';
-    const OPERATOR_GT = 'gt';
-    const OPERATOR_LS = 'lt';
-    const OPERATOR_LSE = 'ls_e';
-    const OPERATOR_GTE = 'gt_e';
-    const OPERATOR_IN = 'in';
+    const OPERATOR_GT     = 'gt';
+    const OPERATOR_LS     = 'lt';
+    const OPERATOR_LSE    = 'ls_e';
+    const OPERATOR_GTE    = 'gt_e';
+    const OPERATOR_IN     = 'in';
 
-    /** @var FieldConfig */
+    /**
+     * @var FieldConfig
+     */
     protected $column;
 
+    /**
+     * @var string
+     */
     protected $operator = FilterConfig::OPERATOR_EQ;
 
+    /**
+     * @var string
+     */
     protected $template = '*.input';
 
-    protected $default_value;
+    /**
+     * @var mixed
+     */
+    protected $defaultValue;
 
+    /**
+     * @var string
+     */
     protected $name;
 
+    /**
+     * @var string
+     */
     protected $label;
 
-    /** @var callable */
-    protected $filtering_func;
+    /**
+     * @var callable
+     */
+    private $filteringFunc;
 
-    public function getOperator()
+    /**
+     * Defines whether operators (<, >, !, ...) in the filter value will be processed
+     *
+     * @var bool
+     */
+    private $useRawValue = false;
+
+    /**
+     * @return string
+     */
+    public function getOperator(): string
     {
         return $this->operator;
     }
 
-    public function setOperator($operator)
+    /**
+     * @param string $operator
+     *
+     * @return static
+     */
+    public function setOperator(string $operator)
     {
         $this->operator = $operator;
 
         return $this;
     }
 
-    public function getColumn()
+    /**
+     * @return FieldConfig
+     */
+    public function getColumn(): FieldConfig
     {
         return $this->column;
     }
 
+    /**
+     * @return string|null
+     */
     public function getLabel()
     {
         return $this->label;
     }
 
+    /**
+     * @param string $label
+     *
+     * @return static
+     */
     public function setLabel($label)
     {
         $this->label = $label;
@@ -59,26 +104,31 @@ class FilterConfig
     }
 
     /**
-     * @return callable
+     * @return callable|null
      */
     public function getFilteringFunc()
     {
-        return $this->filtering_func;
+        return $this->filteringFunc;
     }
 
     /**
-     * @param callable $func ($value, $data_provider)
+     * @param callable|null $func ($name, $operator, $value, $dataProvider)
      *
-     * @return $this
+     * @return static
      */
     public function setFilteringFunc($func)
     {
-        $this->filtering_func = $func;
+        $this->filteringFunc = $func;
 
         return $this;
     }
 
-    public function setTemplate($template)
+    /**
+     * @param string $template
+     *
+     * @return static
+     */
+    public function setTemplate(string $template)
     {
         $this->template = $template;
 
@@ -88,24 +138,39 @@ class FilterConfig
     /**
      * @return string
      */
-    public function getTemplate()
+    public function getTemplate(): string
     {
         return $this->template;
     }
 
+    /**
+     * Returns default filter value.
+     *
+     * @return mixed
+     */
     public function getDefaultValue()
     {
-        return $this->default_value;
+        return $this->defaultValue;
     }
 
+    /**
+     * Sets default filter value.
+     *
+     * @param $value
+     *
+     * @return static
+     */
     public function setDefaultValue($value)
     {
-        $this->default_value = $value;
+        $this->defaultValue = $value;
 
         return $this;
     }
 
-    public function getName()
+    /**
+     * @return string
+     */
+    public function getName(): string
     {
         if (null === $this->name && $this->column) {
             $this->name = $this->column->getName();
@@ -114,20 +179,47 @@ class FilterConfig
         return $this->name;
     }
 
-    public function setName($name)
+    /**
+     * @param string $name
+     *
+     * @return static
+     */
+    public function setName(string $name)
     {
         $this->name = $name;
 
         return $this;
     }
 
+    /**
+     * @param FieldConfig $column
+     */
     public function attach(FieldConfig $column)
     {
         $this->column = $column;
     }
 
+    /**
+     * @return string
+     */
     public function getId()
     {
         return $this->getName();
+    }
+
+    /**
+     * @param bool $useRawValue
+     */
+    public function setUseRawValue(bool $useRawValue)
+    {
+        $this->useRawValue = $useRawValue;
+    }
+
+    /**
+     * @return bool
+     */
+    public function useRawValue(): bool
+    {
+        return $this->useRawValue;
     }
 }
