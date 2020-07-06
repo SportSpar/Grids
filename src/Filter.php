@@ -63,15 +63,16 @@ class Filter
      */
     public function getValue()
     {
-        $from_input = $this
+        $inputValue = $this
             ->grid
             ->getInputProcessor()
             ->getFilterValue($this->config->getId());
-        if ($from_input === null) {
+
+        if ($inputValue === null) {
             return $this->config->getDefaultValue();
         }
 
-        return $from_input;
+        return $inputValue;
     }
 
     /**
@@ -99,10 +100,10 @@ class Filter
      */
     protected function getTemplate()
     {
-        $filter_tpl = $this->config->getTemplate();
-        $grid_tpl = $this->grid->getConfig()->getTemplate();
+        $filterTemplate = $this->config->getTemplate();
+        $gridTemplate   = $this->grid->getConfig()->getTemplate();
 
-        return str_replace('*.', "$grid_tpl.filters.", $filter_tpl);
+        return str_replace('*.', "$gridTemplate.filters.", $filterTemplate);
     }
 
     /**
@@ -116,26 +117,24 @@ class Filter
             return;
         }
 
-        // If a filtering function is defined - use it
-        if ($func = $this->config->getFilteringFunc()) {
-            $func($value, $this->grid->getConfig()->getDataProvider());
-
-            return;
-        }
-
-        // Check is value contains an operator, set this new operator and strip it from value
+        // Check if value contains an operator, set this new operator and strip it from value
         // If operator is IN then value will be an array
-        $value = $this->processValue($value);
-
-        $isLike = $this->config->getOperator() === FilterConfig::OPERATOR_LIKE;
-        if ($isLike && strpos($value, '%') === false) {
-            $value = "%$value%";
+        if (!$this->config->useRawValue()) {
+            $value = $this->processOperators($value);
         }
 
-        $this->grid->getConfig()->getDataProvider()->filter(
+        $filteringFunc = $this->config->getFilteringFunc();
+        if (null === $filteringFunc) {
+            $filteringFunc = function(...$params) {
+                $this->grid->getConfig()->getDataProvider()->filter(...$params);
+            };
+        }
+
+        $filteringFunc(
             $this->config->getName(),
             $this->config->getOperator(),
-            $value
+            $value,
+            $this->grid->getConfig()->getDataProvider()
         );
     }
 
@@ -144,7 +143,7 @@ class Filter
      *
      * @return mixed Updated value
      */
-    private function processValue(string $value)
+    private function processOperators(string $value)
     {
         if (0 === strpos($value, '=')) {
             $this->config->setOperator(FilterConfig::OPERATOR_EQ);
