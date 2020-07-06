@@ -23,7 +23,7 @@ class Pager extends RenderableComponent
     protected function setupPaginationForReading()
     {
         Paginator::currentPageResolver(function () {
-            return Request::get("$this->input_key.page", 1);
+            return $this->grid->getInputProcessor()->getValue('page', 1);
         });
     }
 
