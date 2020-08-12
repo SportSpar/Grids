@@ -365,10 +365,14 @@ class FieldConfig
 
     /**
      * @param FormatterInterface|null $formatter
+     *
+     * @return $this
      */
     public function setFormatter(FormatterInterface $formatter)
     {
         $this->formatter = $formatter;
+
+        return $this;
     }
 
     /**
