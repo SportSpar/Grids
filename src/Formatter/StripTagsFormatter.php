@@ -2,7 +2,6 @@
 
 namespace SportSpar\Grids\Formatter;
 
-
 class StripTagsFormatter implements FormatterInterface
 {
 
