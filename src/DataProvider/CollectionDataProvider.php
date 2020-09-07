@@ -6,6 +6,7 @@ use ArrayIterator;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Event;
 use SportSpar\Grids\DataProvider\DataRow\ArrayDataRow;
 
 class CollectionDataProvider extends AbstractDataProvider
@@ -146,7 +147,11 @@ class CollectionDataProvider extends AbstractDataProvider
 
         $iterator->next();
 
-        return new ArrayDataRow($current, $key);
+        $row = new ArrayDataRow($current, $key);
+
+        Event::dispatch(self::EVENT_FETCH_ROW, [$row, $this]);
+
+        return $row;
     }
 
     /**

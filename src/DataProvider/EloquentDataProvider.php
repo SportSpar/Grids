@@ -92,7 +92,7 @@ class EloquentDataProvider extends AbstractDataProvider
             $this->iterator->next();
             $row = new ObjectDataRow($item, $this->getRowId());
 
-            Event::dispatch(self::EVENT_FETCH_ROW, $this);
+            Event::dispatch(self::EVENT_FETCH_ROW, [$row, $this]);
 
             return $row;
         }
