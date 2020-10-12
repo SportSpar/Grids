@@ -27,6 +27,11 @@ class CollectionDataProvider extends AbstractDataProvider
     private $iterator;
 
     /**
+     * @var int[]
+     */
+    private $sortFlags = [];
+
+    /**
      * @param Collection|array|Arrayable $src
      */
     public function __construct($src)
@@ -35,12 +40,22 @@ class CollectionDataProvider extends AbstractDataProvider
     }
 
     /**
+     * @param string $fieldName
+     * @param int    $flags
+     */
+    public function setSortFlags(string $fieldName, int $flags)
+    {
+        $this->sortFlags[$fieldName] = $flags;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function orderBy($fieldName, $direction)
     {
         $descending = (strcasecmp($direction, 'desc') === 0);
-        $options = SORT_REGULAR;
+
+        $options = $this->sortFlags[$fieldName] ?? SORT_REGULAR;
 
         $this->src = $this->src->sortBy($fieldName, $options, $descending);
 
