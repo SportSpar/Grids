@@ -3,6 +3,7 @@
 namespace SportSpar\Grids\DataProvider;
 
 use ArrayIterator;
+use Generator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
@@ -98,6 +99,21 @@ class EloquentDataProvider extends AbstractDataProvider
         }
 
         return null;
+    }
+
+    /**
+     * @return Generator
+     */
+    public function getAllRows(): Generator
+    {
+        // Reset pagination settings
+        $query = $this->src->getQuery()->cloneWithout(['limit', 'offset']);
+
+        foreach ($query->get()->collect() as $key => $item) {
+            yield $row = new ObjectDataRow($item, $key);
+
+            Event::dispatch(self::EVENT_FETCH_ROW, [$row, $this]);
+        }
     }
 
     /**

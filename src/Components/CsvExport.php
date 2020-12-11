@@ -3,11 +3,9 @@
 namespace SportSpar\Grids\Components;
 
 use Illuminate\Http\Response;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Event;
 use SportSpar\Grids\Components\Base\RenderableComponent;
 use SportSpar\Grids\Components\Base\RenderableRegistry;
-use SportSpar\Grids\DataProvider\AbstractDataProvider;
 use SportSpar\Grids\FieldConfig;
 use SportSpar\Grids\Grid;
 
@@ -23,7 +21,6 @@ class CsvExport extends RenderableComponent
     const NAME = 'csv_export';
     const INPUT_PARAM = 'csv';
     const CSV_EXT = '.csv';
-    const DEFAULT_ROWS_LIMIT = 5000;
     const UTF8_BOM = "\xEF\xBB\xBF";
 
     /**
@@ -45,11 +42,6 @@ class CsvExport extends RenderableComponent
      * @var string
      */
     private $csvDelimiter = ';';
-
-    /**
-     * @var int
-     */
-    private $rowsLimit = self::DEFAULT_ROWS_LIMIT;
 
     /**
      * @var string
@@ -136,41 +128,11 @@ class CsvExport extends RenderableComponent
         $this->includeBOM = $includeBOM;
     }
 
-    /**
-     * @return int
-     */
-    public function getRowsLimit(): int
-    {
-        return $this->rowsLimit;
-    }
-
-    /**
-     * @param int $limit
-     *
-     * @return self
-     */
-    public function setRowsLimit($limit): self
-    {
-        $this->rowsLimit = $limit;
-
-        return $this;
-    }
-
     protected function setCsvHeaders(Response $response)
     {
         $response->header('Content-Type', 'application/csv');
         $response->header('Content-Disposition', 'attachment; filename=' . $this->getFileName());
         $response->header('Pragma', 'no-cache');
-    }
-
-    protected function resetPagination(AbstractDataProvider $provider)
-    {
-        Paginator::currentPageResolver(function () {
-            return 1;
-        });
-
-        $provider->setPageSize($this->getRowsLimit());
-        $provider->setCurrentPage(1);
     }
 
     protected function renderCsv()
@@ -197,10 +159,7 @@ class CsvExport extends RenderableComponent
         $header = $this->renderHeader();
         fputcsv($file, $header, $this->csvDelimiter);
 
-        $this->resetPagination($provider);
-        $provider->reset();
-
-        while ($row = $provider->getRow()) {
+        foreach ($provider->getAllRows() as $row) {
             $output = [];
             foreach ($this->grid->getConfig()->getColumns() as $column) {
                 if ($this->shouldRenderColumn($column)) {
