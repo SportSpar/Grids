@@ -3,6 +3,7 @@
 namespace SportSpar\Grids\DataProvider;
 
 use ArrayIterator;
+use Generator;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
@@ -167,6 +168,18 @@ class CollectionDataProvider extends AbstractDataProvider
         Event::dispatch(self::EVENT_FETCH_ROW, [$row, $this]);
 
         return $row;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAllRows(): Generator
+    {
+        foreach ($this->src as $key => $item) {
+            yield $row = new ArrayDataRow($item, $key);
+
+            Event::dispatch(self::EVENT_FETCH_ROW, [$row, $this]);
+        }
     }
 
     /**

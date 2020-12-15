@@ -4,9 +4,11 @@ namespace SportSpar\Grids\DataProvider;
 
 use ArrayIterator;
 use Doctrine\DBAL\Query\QueryBuilder;
+use Generator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
+use PDO;
 use SportSpar\Grids\DataProvider\DataRow\ObjectDataRow;
 
 class DbalDataProvider extends AbstractDataProvider
@@ -63,7 +65,7 @@ class DbalDataProvider extends AbstractDataProvider
             if ($this->isExecUsingLaravel()) {
                 $res = DB::select($query, $query->getParameters());
             } else {
-                $res = $query->execute()->fetchAll(\PDO::FETCH_OBJ);
+                $res = $query->execute()->fetchAll(PDO::FETCH_OBJ);
             }
             $this->collection = Collection::make($res);
         }
@@ -98,14 +100,6 @@ class DbalDataProvider extends AbstractDataProvider
         return $this->iterator;
     }
 
-    /**
-     * @return QueryBuilder
-     */
-    public function getBuilder()
-    {
-        return $this->src;
-    }
-
     public function getRow()
     {
         if ($this->index < $this->getCurrentPageRowsCount()) {
@@ -122,7 +116,22 @@ class DbalDataProvider extends AbstractDataProvider
         return null;
     }
 
-    protected $_count;
+    /**
+     * @return Generator
+     */
+    public function getAllRows(): Generator
+    {
+        /** @var QueryBuilder $query */
+        $query = clone $this->src;
+        $query->setMaxResults(null);
+        $query->setFirstResult(null);
+
+        foreach ($query->execute()->fetchAll(PDO::FETCH_OBJ) as $key => $item) {
+            yield $row = new ObjectDataRow($item, $key);
+
+            Event::dispatch(self::EVENT_FETCH_ROW, [$row, $this]);
+        }
+    }
 
     /**
      * @deprecated

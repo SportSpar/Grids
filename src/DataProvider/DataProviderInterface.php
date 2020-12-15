@@ -2,6 +2,7 @@
 
 namespace SportSpar\Grids\DataProvider;
 
+use Generator;
 use Illuminate\Pagination;
 use Illuminate\Support;
 use SportSpar\Grids\DataProvider\DataRow\DataRowInterface;
@@ -78,6 +79,14 @@ interface DataProviderInterface
      * @return DataRowInterface|null
      */
     public function getRow();
+
+    /**
+     * Returns an iterator of every row without pagination
+     * Useful for exports
+     *
+     * @return Generator
+     */
+    public function getAllRows(): Generator;
 
     /**
      * Returns count of records on current page.
