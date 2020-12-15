@@ -107,7 +107,7 @@ class EloquentDataProvider extends AbstractDataProvider
     public function getAllRows(): Generator
     {
         // Reset pagination settings
-        $query = $this->src->getQuery()->cloneWithout(['limit', 'offset']);
+        $query = $this->src->cloneWithout(['limit', 'offset']);
 
         foreach ($query->get()->collect() as $key => $item) {
             yield $row = new ObjectDataRow($item, $key);
