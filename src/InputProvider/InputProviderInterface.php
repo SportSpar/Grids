@@ -26,6 +26,12 @@ interface InputProviderInterface
     public function setSorting($column, $direction);
 
     /**
+     * @param string $column
+     * @param string $value
+     */
+    public function setFiltering($column, $value);
+
+    /**
      * @param string $filterName
      *
      * @return mixed

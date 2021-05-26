@@ -121,6 +121,19 @@ class IlluminateRequest implements InputProviderInterface
     }
 
     /**
+     * @param string $column
+     * @param string $value
+     *
+     * @return self
+     */
+    public function setFiltering($column, $value)
+    {
+        $this->input['filters'][$filterName] = $value;
+
+        return $this;
+    }
+
+    /**
      * Returns input value for filter.
      *
      * @param string $filterName
