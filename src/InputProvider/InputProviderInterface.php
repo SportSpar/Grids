@@ -27,6 +27,12 @@ interface InputProviderInterface
 
     /**
      * @param string $filterName
+     * @param string $value
+     */
+    public function setFilterValue($filterName, $value);
+
+    /**
+     * @param string $filterName
      *
      * @return mixed
      */
