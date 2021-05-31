@@ -3,6 +3,7 @@
 namespace SportSpar\Grids;
 
 use Illuminate\Support\Collection;
+use SportSpar\Grids\Components\Base\ComponentInterface;
 use SportSpar\Grids\Components\Base\ComponentsContainerInterface;
 use SportSpar\Grids\Components\Base\ComponentsContainerTrait;
 use SportSpar\Grids\Components\Base\ComponentTrait;
@@ -271,6 +272,49 @@ class GridConfig implements ComponentsContainerInterface
     }
 
     /**
+     * @param string     $columnName
+     * @param string     $label
+     *
+     * @return FieldConfig
+     */
+    public function createColumn($columnName, $label)
+    {
+        $fieldConfig = (new FieldConfig($columnName))
+            ->setLabel($label)
+            ->setSortable(true);
+
+        $this->addColumn($fieldConfig);
+
+        return $fieldConfig;
+    }
+
+    /**
+     * @param string $columnName
+     * @param string $direction  Possible values: asc, desc
+     */
+    public function setDefaultSort(string $columnName, string $direction)
+    {
+        $inputProcessor = $this->grid->getInputProcessor();
+        if (empty($inputProcessor->getSorting())) {
+            $inputProcessor->setSorting($columnName, strtoupper($direction));
+        }
+    }
+
+    /**
+     * When you modify columns after builder, you need to re-run initialization
+     *
+     * @param Grid $grid
+     */
+    public function reinitializeHeader(Grid $grid)
+    {
+        $header = $this->header();
+        if ($header) {
+            $header->getComponents()[0]->setComponents([]);
+            $header->initialize($grid);
+        }
+    }
+
+    /**
      * Sets maximal quantity of rows per page.
      *
      * @param int $pageSize
@@ -292,5 +336,25 @@ class GridConfig implements ComponentsContainerInterface
     public function getPageSize()
     {
         return $this->page_size;
+    }
+
+    /**
+     * Returns footer component.
+     *
+     * @return TFoot|ComponentInterface|null
+     */
+    public function footer()
+    {
+        return $this->getComponentByName(TFoot::NAME);
+    }
+
+    /**
+     * Returns header component.
+     *
+     * @return THead|ComponentInterface|null
+     */
+    public function header()
+    {
+        return $this->getComponentByName(THead::NAME);
     }
 }

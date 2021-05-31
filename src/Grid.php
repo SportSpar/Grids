@@ -207,7 +207,7 @@ class Grid
      */
     public function footer()
     {
-        return $this->getConfig()->getComponentByName('tfoot');
+        return $this->getConfig()->footer();
     }
 
     /**
@@ -217,7 +217,7 @@ class Grid
      */
     public function header()
     {
-        return $this->getConfig()->getComponentByName('thead');
+        return $this->getConfig()->header();
     }
 
     /**
