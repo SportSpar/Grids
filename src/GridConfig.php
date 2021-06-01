@@ -261,7 +261,7 @@ class GridConfig implements ComponentsContainerInterface
      *
      * @return $this
      */
-    public function addColumn(FieldConfig $column)
+    public function addColumn(FieldConfig $column): GridConfig
     {
         if ($this->columns === null) {
             $this->setColumns([]);
@@ -272,12 +272,12 @@ class GridConfig implements ComponentsContainerInterface
     }
 
     /**
-     * @param string     $columnName
-     * @param string     $label
+     * @param string $columnName
+     * @param string $label
      *
      * @return FieldConfig
      */
-    public function createColumn($columnName, $label)
+    public function createColumn(string $columnName, string $label): FieldConfig
     {
         $fieldConfig = (new FieldConfig($columnName))
             ->setLabel($label)
@@ -286,18 +286,6 @@ class GridConfig implements ComponentsContainerInterface
         $this->addColumn($fieldConfig);
 
         return $fieldConfig;
-    }
-
-    /**
-     * @param string $columnName
-     * @param string $direction  Possible values: asc, desc
-     */
-    public function setDefaultSort(string $columnName, string $direction)
-    {
-        $inputProcessor = $this->grid->getInputProcessor();
-        if (empty($inputProcessor->getSorting())) {
-            $inputProcessor->setSorting($columnName, strtoupper($direction));
-        }
     }
 
     /**
@@ -321,9 +309,9 @@ class GridConfig implements ComponentsContainerInterface
      *
      * @return $this
      */
-    public function setPageSize($pageSize)
+    public function setPageSize(int $pageSize)
     {
-        $this->page_size = (int)$pageSize;
+        $this->page_size = $pageSize;
 
         return $this;
     }

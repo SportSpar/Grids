@@ -2,8 +2,6 @@
 
 namespace SportSpar\Grids;
 
-use SportSpar\Grids\InputProvider\IlluminateRequest;
-
 class Sorter
 {
     /**
@@ -19,19 +17,25 @@ class Sorter
         $this->grid = $grid;
     }
 
+    private function getInputProvider(): InputProvider\InputProviderInterface
+    {
+        return $this->grid->getInputProcessor();
+    }
+
     /**
      * Returns URL for sorting control.
      *
      * @param FieldConfig $column
-     * @param $direction
+     * @param string      $direction
      *
      * @return string
      */
-    public function link(FieldConfig $column, $direction)
+    public function link(FieldConfig $column, string $direction): string
     {
-        return (new IlluminateRequest($this->grid->getConfig()->getName()))
-            ->setSorting($column->getName(), $direction)
-            ->getUrl();
+        $inputProvider = clone $this->getInputProvider();
+        $inputProvider->setSorting($column->getName(), $direction);
+
+        return $inputProvider->getUrl();
     }
 
     /**
@@ -40,10 +44,10 @@ class Sorter
      */
     public function setDefaultSort(string $columnName, string $direction = 'DESC')
     {
-        $inputProcessor = $this->grid->getInputProcessor();
+        $inputProvider = $this->getInputProvider();
 
-        if (empty($inputProcessor->getSorting())) {
-            $inputProcessor->setSorting($columnName, strtoupper($direction));
+        if (empty($inputProvider->getSorting())) {
+            $inputProvider->setSorting($columnName, strtoupper($direction));
         }
     }
 
@@ -52,15 +56,20 @@ class Sorter
      */
     public function apply()
     {
-        $input = $this->grid->getInputProcessor()->getInput();
+        $config = $this->grid->getConfig();
+
+        $input = $this->getInputProvider()->getInput();
         $sort = null;
+
+        // Sort just by one column
         if (isset($input['sort'])) {
             foreach ($input['sort'] as $field => $direction) {
                 $sort = [$field, $direction];
                 break;
             }
         }
-        foreach ($this->grid->getConfig()->getColumns() as $column) {
+
+        foreach ($config->getColumns() as $column) {
             if ($sort) {
                 if ($column->getName() === $sort[0]) {
                     $column->setSorting($sort[1]);
@@ -73,12 +82,9 @@ class Sorter
                 }
             }
         }
+
         if ($sort) {
-            $this
-                ->grid
-                ->getConfig()
-                ->getDataProvider()
-                ->orderBy($sort[0], $sort[1]);
+            $config->getDataProvider()->orderBy($sort[0], $sort[1]);
         }
     }
 }
