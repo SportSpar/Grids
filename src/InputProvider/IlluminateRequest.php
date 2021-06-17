@@ -142,7 +142,18 @@ class IlluminateRequest implements InputProviderInterface
      */
     public function getFilterValue($filterName)
     {
-        return $this->input['filters'][$filterName] ?? null;
+        if (!isset($this->input['filters']) || !array_key_exists($filterName, $this->input['filters'])) {
+            // No query pamameters for filter found at all
+            return null;
+        }
+
+        // Query parameter found, but have to differentiate 2 cases
+        // - Initial page load, filter parameters are NULL
+        // - Filter page request, a field may be ""
+        //   Need to return "" in this case to detect later, if an default filter have to be applied
+        //   - ""   = no default, serach for this
+        //   - NULL = Apply default filter
+        return !is_null($this->input['filters'][$filterName]) ? $this->input['filters'][$filterName] : '';
     }
 
     /**
