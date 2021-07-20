@@ -34,3 +34,6 @@ jobs:
 
     - name: Run test suite
       run: composer run-script test
+
+    - name: Run code style
+      run: composer run-script fmt-check
