@@ -18,20 +18,26 @@ class DateFormatter implements FormatterInterface
     private $onInvalidDate;
 
     /**
-     * @param string $format
-     * @param string $onInvalidDate
+     * @var string
      */
-    public function __construct($format = 'Y-m-d H:i:s', $onInvalidDate = '-')
+    private $onEmptyDate;
+
+    public function __construct(string $format = 'Y-m-d H:i:s', string $onInvalidDate = '-', $onEmptyDate = '')
     {
         $this->format        = $format;
         $this->onInvalidDate = $onInvalidDate;
+        $this->onEmptyDate   = $onEmptyDate;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function format($value)
     {
+        if (empty($value)) {
+            return $this->onEmptyDate;
+        }
+
         try {
             $date = new DateTime($value);
         } catch (Throwable $e) {
