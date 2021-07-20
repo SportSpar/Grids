@@ -30,7 +30,8 @@ class DateFormatter implements FormatterInterface
     /**
      * {@inheritDoc}
      */
-    public function format($value) {
+    public function format($value)
+    {
         try {
             $date = new DateTime($value);
         } catch (Throwable $e) {
