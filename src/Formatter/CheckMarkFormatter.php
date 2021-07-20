@@ -25,7 +25,7 @@ class CheckMarkFormatter implements FormatterInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function format($value)
     {
