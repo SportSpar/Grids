@@ -3,7 +3,6 @@
 namespace SportSpar\Grids\Components;
 
 use Illuminate\Pagination\Paginator;
-use Request;
 use SportSpar\Grids\Components\Base\RenderableComponent;
 use SportSpar\Grids\Grid;
 

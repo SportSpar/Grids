@@ -125,7 +125,7 @@ class Filter
 
         $filteringFunc = $this->config->getFilteringFunc();
         if (null === $filteringFunc) {
-            $filteringFunc = function(...$params) {
+            $filteringFunc = function (...$params) {
                 $this->grid->getConfig()->getDataProvider()->filter(...$params);
             };
         }

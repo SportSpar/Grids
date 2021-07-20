@@ -222,6 +222,6 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
      */
     public function getFieldOperation($fieldName)
     {
-        return isset($this->field_operations[$fieldName]) ? $this->field_operations[$fieldName] : self::OPERATION_SUM;
+        return $this->field_operations[$fieldName] ?? self::OPERATION_SUM;
     }
 }

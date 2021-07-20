@@ -379,8 +379,8 @@ class FieldConfig
      * @param DataRowInterface $row
      *
      * @return mixed
-     * @todo move to Field instance
      *
+     * @todo move to Field instance
      */
     public function getValue(DataRowInterface $row)
     {
