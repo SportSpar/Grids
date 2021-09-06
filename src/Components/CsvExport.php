@@ -159,7 +159,7 @@ class CsvExport extends RenderableComponent
         $header = $this->renderHeader();
         fputcsv($file, $header, $this->csvDelimiter);
 
-        foreach ($provider->getAllRows() as $row) {
+        while ($row = $provider->getRow()) {
             $output = [];
             foreach ($this->grid->getConfig()->getColumns() as $column) {
                 if ($this->shouldRenderColumn($column)) {
