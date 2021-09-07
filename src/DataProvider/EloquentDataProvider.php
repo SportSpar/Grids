@@ -11,7 +11,7 @@ use SportSpar\Grids\DataProvider\DataRow\ObjectDataRow;
 
 class EloquentDataProvider extends AbstractDataProvider
 {
-    public const LAZY_CHUNK_SIZE = 1000;
+    public static $LAZY_CHUNK_SIZE = 1000;
 
     protected $collection;
 
@@ -111,7 +111,7 @@ class EloquentDataProvider extends AbstractDataProvider
         // Reset pagination settings
         $query = $this->src->cloneWithout(['limit', 'offset']);
 
-        foreach ($query->lazy(self::LAZY_CHUNK_SIZE) as $key => $item) {
+        foreach ($query->lazy(self::$LAZY_CHUNK_SIZE) as $key => $item) {
             yield $row = new ObjectDataRow($item, $key);
 
             Event::dispatch(self::EVENT_FETCH_ROW, [$row, $this]);
