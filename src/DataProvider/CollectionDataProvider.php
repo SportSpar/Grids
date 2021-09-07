@@ -69,9 +69,7 @@ class CollectionDataProvider extends AbstractDataProvider
     public function filter($fieldName, $operator, $value)
     {
         // A do-nothing callback
-        $callback = function ($item) {
-            return $item;
-        };
+        $callback = function ($item) { return $item; };
 
         switch ($operator) {
             case 'like':
@@ -86,45 +84,29 @@ class CollectionDataProvider extends AbstractDataProvider
                 };
                 break;
             case 'eq':
-                $callback = function ($item) use ($value, $fieldName) {
-                    return (string)$item[$fieldName] == $value;
-                };
+                $callback = function ($item) use ($value, $fieldName) { return (string)$item[$fieldName] == $value; };
                 break;
             case 'n_eq':
-                $callback = function ($item) use ($value, $fieldName) {
-                    return (string)$item[$fieldName] != $value;
-                };
+                $callback = function ($item) use ($value, $fieldName) { return (string)$item[$fieldName] != $value; };
                 break;
             case 'gt':
-                $callback = function ($item) use ($value, $fieldName) {
-                    return (string)$item[$fieldName] > $value;
-                };
+                $callback = function ($item) use ($value, $fieldName) { return (string)$item[$fieldName] > $value; };
                 break;
             case 'lt':
-                $callback = function ($item) use ($value, $fieldName) {
-                    return (string)$item[$fieldName] < $value;
-                };
+                $callback = function ($item) use ($value, $fieldName) { return (string)$item[$fieldName] < $value; };
                 break;
             case 'ls_e':
-                $callback = function ($item) use ($value, $fieldName) {
-                    return (string)$item[$fieldName] <= $value;
-                };
+                $callback = function ($item) use ($value, $fieldName) { return (string)$item[$fieldName] <= $value; };
                 break;
             case 'gt_e':
-                $callback = function ($item) use ($value, $fieldName) {
-                    return (string)$item[$fieldName] >= $value;
-                };
+                $callback = function ($item) use ($value, $fieldName) { return (string)$item[$fieldName] >= $value; };
                 break;
             case 'in':
                 if (!is_array($value)) {
-                    $callback = function ($item) use ($value, $fieldName) {
-                        return (string)$item[$fieldName] == $value;
-                    };
+                    $callback = function ($item) use ($value, $fieldName) { return (string)$item[$fieldName] == $value; };
                     break;
                 }
-                $callback = function ($item) use ($value, $fieldName) {
-                    return in_array((string)$item[$fieldName], $value);
-                };
+                $callback = function ($item) use ($value, $fieldName) { return in_array((string)$item[$fieldName], $value); };
 
                 return $this;
         }
@@ -193,13 +175,11 @@ class CollectionDataProvider extends AbstractDataProvider
      */
     public function getAllRows(): Generator
     {
-        $this->src->chunk(100, function ($rows) {
-            foreach ($rows as $key => $item) {
-                yield $row = new ArrayDataRow($item, $key);
+        foreach ($this->src as $key => $item) {
+            yield $row = new ArrayDataRow($item, $key);
 
-                Event::dispatch(self::EVENT_FETCH_ROW, [$row, $this]);
-            }
-        });
+            Event::dispatch(self::EVENT_FETCH_ROW, [$row, $this]);
+        }
     }
 
     /**
