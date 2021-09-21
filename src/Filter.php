@@ -2,6 +2,7 @@
 
 namespace SportSpar\Grids;
 
+use SportSpar\Grids\Filter\Style;
 use View;
 
 class Filter
@@ -17,12 +18,15 @@ class Filter
     protected $column;
 
     /**
-     * Constructor.
-     *
-     * @param FilterConfig $config
-     * @param FieldConfig  $column
-     * @param Grid         $grid
+     * @var Style
      */
+    private $style;
+
+    /**
+     * @var Grid
+     */
+    private $grid;
+
     public function __construct(
         FilterConfig $config,
         FieldConfig $column,
@@ -31,6 +35,19 @@ class Filter
         $this->config = $config;
         $this->column = $column;
         $this->grid = $grid;
+
+        // Instantiate here for backwards compatibility
+        $this->style = new Style();
+    }
+
+    public function getStyle(): Style
+    {
+        return $this->style;
+    }
+
+    public function setStyle(Style $style)
+    {
+        $this->style = $style;
     }
 
     /**

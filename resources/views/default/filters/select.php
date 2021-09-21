@@ -1,17 +1,26 @@
 <?php
 /** @var SportSpar\Grids\Filter $filter */
-/** @var SportSpar\Grids\SelectFilterConfig $cfg */
+
 $cfg = $filter->getConfig();
+$style = $filter->getStyle();
 $onchange = '';
 if (method_exists($cfg, 'isSubmittedOnChange') && $cfg->isSubmittedOnChange()) {
     $onchange = 'onchange="this.form.submit()"';
 }
+
+$onFocusOut = '';
+if (method_exists($cfg, 'isSubmitOnFocusOut') && $cfg->isSubmitOnFocusOut()) {
+    $onFocusOut = 'onfocusout="this.form.submit()"';
+}
+
 ?>
+
 <select
-    class="form-control input-sm"
+    class="<?= implode(', ', $style->getCssClasses()) ?>"
     name="<?= $filter->getInputName() ?><?= $cfg->isMultipleMode() ? '[]' : '' ?>"
     <?= $onchange ?>
-    <?= ($size = $cfg->getSize()) ? 'size="'.$size.'"' : '' ?>
+    <?= $onFocusOut ?>
+    <?= ($size = $cfg->getSize()) ? 'size="' . $size . '"' : '' ?>
     <?= ($cfg->isMultipleMode()) ? 'multiple="multiple"' : '' ?>
     >
     <?= (!$cfg->isMultipleMode()) ? '<option value="">--//--</option>' : '' ?>
