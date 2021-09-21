@@ -1,7 +1,7 @@
 <?php
 /** @var SportSpar\Grids\Filter $filter */
 
-$style = $filter->getStyle();
+$style = $filter->getConfig()->getStyle();
 ?>
 
 <input
