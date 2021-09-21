@@ -5,7 +5,7 @@ $style = $filter->getConfig()->getStyle();
 ?>
 
 <input
-    class="<?= implode(', ', $style->getCssClasses()) ?>"
+    class="<?= implode(' ', $style->getCssClasses()) ?>"
     name="<?= $filter->getInputName() ?>"
     value="<?= $filter->getValue() ?>"
     />

@@ -16,7 +16,7 @@ if (method_exists($cfg, 'isSubmitOnFocusOut') && $cfg->isSubmitOnFocusOut()) {
 ?>
 
 <select
-    class="<?= implode(', ', $style->getCssClasses()) ?>"
+    class="<?= implode(' ', $style->getCssClasses()) ?>"
     name="<?= $filter->getInputName() ?><?= $cfg->isMultipleMode() ? '[]' : '' ?>"
     <?= $onchange ?>
     <?= $onFocusOut ?>
