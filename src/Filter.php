@@ -2,7 +2,6 @@
 
 namespace SportSpar\Grids;
 
-use SportSpar\Grids\Filter\Style;
 use View;
 
 class Filter
@@ -18,11 +17,6 @@ class Filter
     protected $column;
 
     /**
-     * @var Style
-     */
-    private $style;
-
-    /**
      * @var Grid
      */
     private $grid;
@@ -34,20 +28,7 @@ class Filter
     ) {
         $this->config = $config;
         $this->column = $column;
-        $this->grid = $grid;
-
-        // Instantiate here for backwards compatibility
-        $this->style = new Style();
-    }
-
-    public function getStyle(): Style
-    {
-        return $this->style;
-    }
-
-    public function setStyle(Style $style)
-    {
-        $this->style = $style;
+        $this->grid   = $grid;
     }
 
     /**
@@ -57,7 +38,7 @@ class Filter
      */
     public function getInputName()
     {
-        $key = $this->grid->getInputProcessor()->getKey();
+        $key  = $this->grid->getInputProcessor()->getKey();
         $name = $this->config->getId();
 
         return "{$key}[filters][{$name}]";
@@ -99,10 +80,10 @@ class Filter
      */
     public function render()
     {
-        $data = $this->grid->getViewData();
+        $data           = $this->grid->getViewData();
         $data['column'] = $this->column;
         $data['filter'] = $this;
-        $data['label'] = $this->config->getLabel();
+        $data['label']  = $this->config->getLabel();
 
         return View::make(
             $this->getTemplate(),

@@ -2,6 +2,8 @@
 
 namespace SportSpar\Grids;
 
+use SportSpar\Grids\Filter\Style;
+
 class FilterConfig
 {
     const OPERATOR_LIKE   = 'like';
@@ -54,6 +56,26 @@ class FilterConfig
      * @var bool
      */
     private $useRawValue = false;
+
+    /**
+     * @var Style
+     */
+    private $style;
+
+    public function __construct()
+    {
+        $this->style = new Style();
+    }
+
+    public function getStyle(): Style
+    {
+        return $this->style;
+    }
+
+    public function setStyle(Style $style)
+    {
+        $this->style = $style;
+    }
 
     /**
      * @return string

@@ -2,7 +2,7 @@
 /** @var SportSpar\Grids\Filter $filter */
 
 $cfg = $filter->getConfig();
-$style = $filter->getStyle();
+$style = $cfg->getStyle();
 $onchange = '';
 if (method_exists($cfg, 'isSubmittedOnChange') && $cfg->isSubmittedOnChange()) {
     $onchange = 'onchange="this.form.submit()"';
