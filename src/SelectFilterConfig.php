@@ -2,8 +2,6 @@
 
 namespace SportSpar\Grids;
 
-use SportSpar\Grids\Filter\Select\Style;
-
 class SelectFilterConfig extends FilterConfig
 {
     protected $template = '*.select';
