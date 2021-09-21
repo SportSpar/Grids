@@ -109,7 +109,7 @@ class Filter
      */
     public function apply()
     {
-        $value = (string)$this->getValue();
+        $value = $this->getValue();
 
         if (null === $value || '' === $value) {
             return;
