@@ -1,8 +1,17 @@
 <small class="grid-sorter" style="white-space: nowrap">
-    <a title="Sort ascending" <?php if ($column->isSortedAsc()) : ?> class="text-success" <?php else : ?> href="<?= $grid->getSorter()->link($column, 'ASC') ?>" <?php endif ?>>
-        &#x25B2;
-    </a>
-    <a title="Sort descending" <?php if ($column->isSortedDesc()) : ?> class="text-success" <?php else : ?> href="<?= $grid->getSorter()->link($column, 'DESC') ?>" <?php endif ?>>
-        &#x25BC;
-    </a>
+    <?php if ($column->isSortedAsc()): ?>
+        <span class="text-success">&#x25B2;</span>
+    <?php else: ?>
+        <a title="<?= __('Sort ascending') ?>" href="<?= $grid->getSorter()->link($column, 'ASC') ?>">
+            &#x25B2;
+        </a>
+    <?php endif; ?>
+
+    <?php if ($column->isSortedDesc()): ?>
+        <span class="text-success">&#x25BC;</span>
+    <?php else: ?>
+        <a title="<?= __('Sort descending') ?>" href="<?= $grid->getSorter()->link($column, 'DESC') ?>">
+            &#x25BC;
+        </a>
+    <?php endif; ?>
 </small>

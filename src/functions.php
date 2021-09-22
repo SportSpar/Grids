@@ -14,6 +14,23 @@ if (!function_exists('__')) {
             return $container->get('translator')->get($key, $replace, $locale);
         }
 
-        return $key;
+        // A function from Laravel translator to replace placeholders
+        $makeReplacements = static function ($line, array $replace) {
+            if (empty($replace)) {
+                return $line;
+            }
+
+            foreach ($replace as $key => $value) {
+                $line = str_replace(
+                    [':' . $key, ':' . strtoupper($key), ':' . ucfirst($key)],
+                    [$value, strtoupper($value), ucfirst($value)],
+                    $line
+                );
+            }
+
+            return $line;
+        };
+
+        return $makeReplacements($key, $replace);
     }
 }
