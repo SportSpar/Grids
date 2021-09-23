@@ -46,6 +46,9 @@
         "maatwebsite/excel": "Required to work with Excel export component"
     },
     "autoload": {
+        "files": [
+            "src/functions.php"
+        ],
         "psr-4": {
             "SportSpar\\Grids\\": "src/"
         }

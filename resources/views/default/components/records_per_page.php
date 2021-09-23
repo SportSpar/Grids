@@ -1,6 +1,6 @@
 <?php /** @var SportSpar\Grids\Components\RecordsPerPage $component */ ?>
 <label style="font-weight: normal">
-    Records per page
+    <?= __('Records per page') ?>
     <select class="form-control input-sm grids-control-records-per-page"
             style="display: inline; width: 80px; margin-right: 10px"
             onchange="submit()"
