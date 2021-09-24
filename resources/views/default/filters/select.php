@@ -7,19 +7,12 @@ $onchange = '';
 if (method_exists($cfg, 'isSubmittedOnChange') && $cfg->isSubmittedOnChange()) {
     $onchange = 'onchange="this.form.submit()"';
 }
-
-$onFocusOut = '';
-if (method_exists($cfg, 'isSubmitOnFocusOut') && $cfg->isSubmitOnFocusOut()) {
-    $onFocusOut = 'onfocusout="this.form.submit()"';
-}
-
 ?>
 
 <select
     class="<?= implode(' ', $style->getCssClasses()) ?>"
     name="<?= $filter->getInputName() ?><?= $cfg->isMultipleMode() ? '[]' : '' ?>"
     <?= $onchange ?>
-    <?= $onFocusOut ?>
     <?= ($size = $cfg->getSize()) ? 'size="' . $size . '"' : '' ?>
     <?= ($cfg->isMultipleMode()) ? 'multiple="multiple"' : '' ?>
     >

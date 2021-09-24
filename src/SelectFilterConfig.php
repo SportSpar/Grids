@@ -10,8 +10,6 @@ class SelectFilterConfig extends FilterConfig
 
     protected $submitOnChange = false;
 
-    protected $submitOnFocusOut = false;
-
     protected $size = null;
 
     protected $multipleMode = false;
@@ -87,16 +85,6 @@ class SelectFilterConfig extends FilterConfig
     public function getSize()
     {
         return $this->size;
-    }
-
-    public function isSubmitOnFocusOut(): bool
-    {
-        return $this->submitOnFocusOut;
-    }
-
-    public function setSubmitOnFocusOut(bool $submitOnFocusOut)
-    {
-        $this->submitOnFocusOut = $submitOnFocusOut;
     }
 
     /**
