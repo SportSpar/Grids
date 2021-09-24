@@ -1,9 +1,11 @@
 <?php
 /** @var SportSpar\Grids\Filter $filter */
+
+$style = $filter->getConfig()->getStyle();
 ?>
 
 <input
-    class="form-control input-sm"
+    class="<?= implode(' ', $style->getCssClasses()) ?>"
     name="<?= $filter->getInputName() ?>"
     value="<?= $filter->getValue() ?>"
     />

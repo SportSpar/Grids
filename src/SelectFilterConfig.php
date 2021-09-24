@@ -8,7 +8,7 @@ class SelectFilterConfig extends FilterConfig
 
     protected $options = [];
 
-    protected $is_submitted_on_change = false;
+    protected $submitOnChange = false;
 
     protected $size = null;
 
@@ -19,7 +19,7 @@ class SelectFilterConfig extends FilterConfig
      *
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }
@@ -29,9 +29,9 @@ class SelectFilterConfig extends FilterConfig
      *
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
-    public function setOptions(array $options)
+    public function setOptions(array $options): self
     {
         $this->options = $options;
 
@@ -44,9 +44,9 @@ class SelectFilterConfig extends FilterConfig
      *
      * @return bool
      */
-    public function isSubmittedOnChange()
+    public function isSubmittedOnChange(): bool
     {
-        return $this->is_submitted_on_change;
+        return $this->submitOnChange;
     }
 
     /**
@@ -54,11 +54,11 @@ class SelectFilterConfig extends FilterConfig
      *
      * @param bool $isSubmittedOnChange
      *
-     * @return $this
+     * @return self
      */
-    public function setSubmittedOnChange($isSubmittedOnChange)
+    public function setSubmittedOnChange(bool $isSubmittedOnChange): self
     {
-        $this->is_submitted_on_change = $isSubmittedOnChange;
+        $this->submitOnChange = $isSubmittedOnChange;
 
         return $this;
     }
@@ -68,9 +68,9 @@ class SelectFilterConfig extends FilterConfig
      *
      * @param int $size
      *
-     * @return $this
+     * @return self
      */
-    public function setSize($size)
+    public function setSize(int $size): self
     {
         $this->size = $size;
 
@@ -91,11 +91,11 @@ class SelectFilterConfig extends FilterConfig
      * Enabled multiple mode.
      * This will switch the selected operator to IN, as any other operator does not work with multiple selections.
      *
-     * @param $multipleMode
+     * @param bool $multipleMode
      *
-     * @return $this
+     * @return self
      */
-    public function setMultipleMode($multipleMode)
+    public function setMultipleMode(bool $multipleMode): self
     {
         $this->multipleMode = $multipleMode;
 
@@ -111,7 +111,7 @@ class SelectFilterConfig extends FilterConfig
      *
      * @return bool
      */
-    public function isMultipleMode()
+    public function isMultipleMode(): bool
     {
         return $this->multipleMode;
     }

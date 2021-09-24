@@ -17,12 +17,10 @@ class Filter
     protected $column;
 
     /**
-     * Constructor.
-     *
-     * @param FilterConfig $config
-     * @param FieldConfig  $column
-     * @param Grid         $grid
+     * @var Grid
      */
+    private $grid;
+
     public function __construct(
         FilterConfig $config,
         FieldConfig $column,
@@ -30,7 +28,7 @@ class Filter
     ) {
         $this->config = $config;
         $this->column = $column;
-        $this->grid = $grid;
+        $this->grid   = $grid;
     }
 
     /**
@@ -40,7 +38,7 @@ class Filter
      */
     public function getInputName()
     {
-        $key = $this->grid->getInputProcessor()->getKey();
+        $key  = $this->grid->getInputProcessor()->getKey();
         $name = $this->config->getId();
 
         return "{$key}[filters][{$name}]";
@@ -82,10 +80,10 @@ class Filter
      */
     public function render()
     {
-        $data = $this->grid->getViewData();
+        $data           = $this->grid->getViewData();
         $data['column'] = $this->column;
         $data['filter'] = $this;
-        $data['label'] = $this->config->getLabel();
+        $data['label']  = $this->config->getLabel();
 
         return View::make(
             $this->getTemplate(),
@@ -111,7 +109,7 @@ class Filter
      */
     public function apply()
     {
-        $value = (string)$this->getValue();
+        $value = $this->getValue();
 
         if (null === $value || '' === $value) {
             return;
