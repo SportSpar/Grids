@@ -86,23 +86,31 @@ class Grid
 
     /**
      * Provides unique name for each grid on the page
-     *
-     * @return null
      */
     protected function provideName()
     {
-        $bt_len = 10;
-        $backtrace = debug_backtrace(null, $bt_len);
+        $backtraceLimit = 10;
+
+        $backtrace = debug_backtrace(0, $backtraceLimit);
+
+        // Find everything before vendor, this is where your project is installed
+        // It may so happen, that it is deployed on different servers and has different paths
+        // So we need to drop that prefix, to make it independent from the server path
+        $prefix = strstr($backtrace[0]['file'], '/vendor', true);
+
         $str = '';
-        for ($id = 2; $id < $bt_len; $id++) {
+
+        // Skip first two entries, these are Grids entries and will be same every time
+        for ($id = 2; $id < $backtraceLimit; $id++) {
             $trace = $backtrace[$id] ?? [];
             if (empty($trace['class']) || !$this instanceof $trace['class']) {
                 // may be closure
                 if (isset($trace['file'], $trace['line'])) {
-                    $str .= $trace['file'] . $trace['line'];
+                    $str .= str_replace($prefix, '', $trace['file']) . $trace['line'];
                 }
             }
         }
+
         $this->config->setName(substr(md5($str), 0, 16));
     }
 
