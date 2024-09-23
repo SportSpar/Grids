@@ -25,7 +25,7 @@
         }
     ],
     "require": {
-        "php": ">=7.0",
+        "php": ">=8.0",
         "ext-json": "*",
         "illuminate/events": "^5.5|^6.0|^7.0|^8.0",
         "illuminate/http": "^5.5|^6.0|^7.0|^8.0",
@@ -36,10 +36,10 @@
         "nayjest/builder": "~2"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8",
-        "illuminate/database": "^5.5|^6.0|^7.0|^8.0",
         "doctrine/dbal": "^2",
-        "friendsofphp/php-cs-fixer": "2.18.7"
+        "friendsofphp/php-cs-fixer": "^3",
+        "illuminate/database": "^5.5|^6.0|^7.0|^8.0",
+        "phpunit/phpunit": "^9.5"
     },
     "suggest": {
         "laravelcollective/html": "Required to work with Laravel 5.X",
@@ -67,10 +67,10 @@
     },
     "scripts": {
         "fmt": [
-            "sh -c '$(command -v ./vendor/bin/php-cs-fixer || command -v php-cs-fixer) fix --using-cache=no --config .php_cs src'"
+            "sh -c '$(command -v ./vendor/bin/php-cs-fixer || command -v php-cs-fixer) fix --using-cache=no --config .php-cs-fixer.php src'"
         ],
         "fmt-check": [
-            "sh -c '$(command -v ./vendor/bin/php-cs-fixer || command -v php-cs-fixer) fix --using-cache=no --diff --dry-run --config .php_cs src'"
+            "sh -c '$(command -v ./vendor/bin/php-cs-fixer || command -v php-cs-fixer) fix --using-cache=no --diff --dry-run --config .php-cs-fixer.php src'"
         ],
         "test": [
             "./vendor/bin/phpunit --do-not-cache-result tests"

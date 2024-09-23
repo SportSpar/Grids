@@ -10,7 +10,7 @@ class SelectFilterConfig extends FilterConfig
 
     protected $submitOnChange = false;
 
-    protected $size = null;
+    protected $size;
 
     protected $multipleMode = false;
 

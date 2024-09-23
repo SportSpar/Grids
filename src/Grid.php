@@ -12,11 +12,11 @@ use SportSpar\Grids\InputProvider\InputProviderInterface;
 
 class Grid
 {
-    const SORT_ASC = 'ASC';
-    const SORT_DESC = 'DESC';
+    public const SORT_ASC = 'ASC';
+    public const SORT_DESC = 'DESC';
 
-    const EVENT_PREPARE = 'grid.prepare';
-    const EVENT_CREATE = 'grid.create';
+    public const EVENT_PREPARE = 'grid.prepare';
+    public const EVENT_CREATE = 'grid.create';
 
     /** @var GridConfig */
     protected $config;
@@ -198,9 +198,9 @@ class Grid
         $provider = $this->config->getDataProvider();
         $provider->reset();
         $output = View::make(
-                $this->getMainTemplate(),
-                $this->getViewData()
-            )->render();
+            $this->getMainTemplate(),
+            $this->getViewData()
+        )->render();
         if ($caching_time) {
             Cache::put($key, $output, $caching_time);
         }

@@ -5,15 +5,15 @@ $rules = [
     '@Symfony'                              => true,
 
     // Change Symfony parameters
-    'binary_operator_spaces'                => null,
+    'binary_operator_spaces'                => false,
     'no_superfluous_phpdoc_tags'            => false,
     'concat_space'                          => ['spacing' => 'one'],
     'no_trailing_comma_in_singleline_array' => true,
-    'trailing_comma_in_multiline_array'     => false,
-    'yoda_style'                            => null,
+    'trailing_comma_in_multiline'           => false,
+    'yoda_style'                            => false,
     'phpdoc_summary'                        => false,
     'increment_style'                       => false,
-    'cast_spaces'                           => null,
+    'cast_spaces'                           => false,
     'single_line_throw'                     => false,
 
     // Additional rules

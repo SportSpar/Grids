@@ -6,14 +6,14 @@ use SportSpar\Grids\Filter\Style;
 
 class FilterConfig
 {
-    const OPERATOR_LIKE   = 'like';
-    const OPERATOR_EQ     = 'eq';
-    const OPERATOR_NOT_EQ = 'n_eq';
-    const OPERATOR_GT     = 'gt';
-    const OPERATOR_LS     = 'lt';
-    const OPERATOR_LSE    = 'ls_e';
-    const OPERATOR_GTE    = 'gt_e';
-    const OPERATOR_IN     = 'in';
+    public const OPERATOR_LIKE   = 'like';
+    public const OPERATOR_EQ     = 'eq';
+    public const OPERATOR_NOT_EQ = 'n_eq';
+    public const OPERATOR_GT     = 'gt';
+    public const OPERATOR_LS     = 'lt';
+    public const OPERATOR_LSE    = 'ls_e';
+    public const OPERATOR_GTE    = 'gt_e';
+    public const OPERATOR_IN     = 'in';
 
     /**
      * @var FieldConfig

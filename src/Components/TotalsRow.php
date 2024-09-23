@@ -26,11 +26,11 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
     }
     use TComponentView;
 
-    const OPERATION_SUM = 'sum';
-    const OPERATION_AVG = 'avg';
-    const OPERATION_COUNT = 'count';
-    //const OPERATION_MAX = 'max';
-    //const OPERATION_MIN = 'min';
+    public const OPERATION_SUM = 'sum';
+    public const OPERATION_AVG = 'avg';
+    public const OPERATION_COUNT = 'count';
+    // const OPERATION_MAX = 'max';
+    // const OPERATION_MIN = 'min';
 
     /** @var \Illuminate\Support\Collection|FieldConfig[] */
     protected $fields;

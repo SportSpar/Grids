@@ -18,10 +18,10 @@ use SportSpar\Grids\Grid;
  */
 class CsvExport extends RenderableComponent
 {
-    const NAME = 'csv_export';
-    const INPUT_PARAM = 'csv';
-    const CSV_EXT = '.csv';
-    const UTF8_BOM = "\xEF\xBB\xBF";
+    public const NAME = 'csv_export';
+    public const INPUT_PARAM = 'csv';
+    public const CSV_EXT = '.csv';
+    public const UTF8_BOM = "\xEF\xBB\xBF";
 
     /**
      * @var string

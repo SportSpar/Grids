@@ -11,7 +11,7 @@ use SportSpar\Grids\Components\Base\ComponentInterface;
  */
 class THead extends HtmlTag
 {
-    const NAME = 'thead';
+    public const NAME = 'thead';
 
     /**
      * Returns default set of child components.

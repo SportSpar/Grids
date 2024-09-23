@@ -21,9 +21,9 @@ use SportSpar\Grids\Grid;
  */
 class ExcelExport extends RenderableComponent
 {
-    const NAME = 'excel_export';
-    const INPUT_PARAM = 'xls';
-    const DEFAULT_ROWS_LIMIT = 5000;
+    public const NAME = 'excel_export';
+    public const INPUT_PARAM = 'xls';
+    public const DEFAULT_ROWS_LIMIT = 5000;
 
     protected $template = '*.components.excel_export';
     protected $name = ExcelExport::NAME;

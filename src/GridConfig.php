@@ -20,7 +20,7 @@ class GridConfig implements ComponentsContainerInterface
     use ComponentsContainerTrait;
     use ComponentTrait;
 
-    const SECTION_DO_NOT_RENDER = 'not_render';
+    public const SECTION_DO_NOT_RENDER = 'not_render';
 
     protected $template = 'grids::default';
 

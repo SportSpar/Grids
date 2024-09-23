@@ -139,7 +139,7 @@ class CollectionDataProvider extends AbstractDataProvider
                 $this->page_size,
                 $this->getCurrentPage(),
                 [
-                    'path' => \Illuminate\Pagination\Paginator::resolveCurrentPath()
+                    'path' => Paginator::resolveCurrentPath()
                 ]
             );
         }

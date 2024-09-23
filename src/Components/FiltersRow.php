@@ -11,7 +11,7 @@ use SportSpar\Grids\Components\Base\RenderableRegistry;
  */
 class FiltersRow extends RenderableRegistry
 {
-    const NAME = 'filters_row';
+    public const NAME = 'filters_row';
     protected $template = '*.components.filters_row';
     protected $name = FiltersRow::NAME;
     protected $render_section = self::SECTION_END;

@@ -38,8 +38,7 @@ class BuildDataProvider extends Instruction
         // This does not belong here, but it's still a tad better, than in builder
         if ($provider instanceof EloquentDataProvider && !$scaffold->getInput('columns')) {
             $table = $provider->getBuilder()->getModel()->getTable();
-            $columns = DB
-                ::connection()
+            $columns = DB::connection()
                 ->getSchemaBuilder()
                 ->getColumnListing($table);
             $scaffold->input['columns'] = $columns;
