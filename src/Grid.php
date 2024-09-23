@@ -198,9 +198,9 @@ class Grid
         $provider = $this->config->getDataProvider();
         $provider->reset();
         $output = View::make(
-                $this->getMainTemplate(),
-                $this->getViewData()
-            )->render();
+            $this->getMainTemplate(),
+            $this->getViewData()
+        )->render();
         if ($caching_time) {
             Cache::put($key, $output, $caching_time);
         }

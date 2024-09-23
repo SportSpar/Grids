@@ -88,7 +88,7 @@ abstract class AbstractDataProvider implements DataProviderInterface
      * Sets data sorting.
      *
      * @param string $fieldName
-     * @param $direction
+     * @param        $direction
      *
      * @return self
      */

@@ -110,10 +110,10 @@ class Setup
                     $s->class = $type;
                 } else {
                     $s->class = 'SportSpar\Grids\Components\\' . str_replace(
-                            ' ',
-                            '',
-                            ucwords(str_replace(['-', '_'], ' ', $type))
-                        );
+                        ' ',
+                        '',
+                        ucwords(str_replace(['-', '_'], ' ', $type))
+                    );
                 }
             }, null, Instruction::PHASE_PRE_INST)
         ]);

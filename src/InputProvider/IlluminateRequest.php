@@ -26,7 +26,7 @@ class IlluminateRequest implements InputProviderInterface
      * @param string       $key
      * @param Request|null $request
      */
-    public function __construct(string $key, Request $request = null)
+    public function __construct(string $key, ?Request $request = null)
     {
         $this->key = $key;
 
@@ -160,7 +160,7 @@ class IlluminateRequest implements InputProviderInterface
      * Returns value of input parameter related to grid.
      *
      * @param string $key
-     * @param $default
+     * @param        $default
      *
      * @return mixed
      */

@@ -29,8 +29,8 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
     public const OPERATION_SUM = 'sum';
     public const OPERATION_AVG = 'avg';
     public const OPERATION_COUNT = 'count';
-    //const OPERATION_MAX = 'max';
-    //const OPERATION_MIN = 'min';
+    // const OPERATION_MAX = 'max';
+    // const OPERATION_MIN = 'min';
 
     /** @var \Illuminate\Support\Collection|FieldConfig[] */
     protected $fields;

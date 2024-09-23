@@ -171,7 +171,7 @@ class DbalDataProvider extends AbstractDataProvider
                 break;
             case 'gt':
                 $operator = '>';
-                 break;
+                break;
             case 'lt':
                 $operator = '<';
                 break;
