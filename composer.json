@@ -67,10 +67,10 @@
     },
     "scripts": {
         "fmt": [
-            "sh -c '$(command -v ./vendor/bin/php-cs-fixer || command -v php-cs-fixer) fix --using-cache=no --config .php_cs src'"
+            "sh -c '$(command -v ./vendor/bin/php-cs-fixer || command -v php-cs-fixer) fix --using-cache=no --config .php-cs-fixer.php src'"
         ],
         "fmt-check": [
-            "sh -c '$(command -v ./vendor/bin/php-cs-fixer || command -v php-cs-fixer) fix --using-cache=no --diff --dry-run --config .php_cs src'"
+            "sh -c '$(command -v ./vendor/bin/php-cs-fixer || command -v php-cs-fixer) fix --using-cache=no --diff --dry-run --config .php-cs-fixer.php src'"
         ],
         "test": [
             "./vendor/bin/phpunit --do-not-cache-result tests"

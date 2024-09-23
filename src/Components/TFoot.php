@@ -11,7 +11,7 @@ use SportSpar\Grids\Components\Base\ComponentInterface;
  */
 class TFoot extends HtmlTag
 {
-    const NAME = 'tfoot';
+    public const NAME = 'tfoot';
 
     /**
      * Returns default set of child components.

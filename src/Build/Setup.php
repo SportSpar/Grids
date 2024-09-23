@@ -31,10 +31,10 @@ use SportSpar\Grids\Build\Instructions\BuildDataProvider;
  */
 class Setup
 {
-    const COLUMN_CLASS = 'SportSpar\Grids\FieldConfig';
-    const COMPONENT_CLASS = 'SportSpar\Grids\Components\Base\ComponentInterface';
-    const GRID_CLASS = 'SportSpar\Grids\GridConfig';
-    const FILTER_CLASS = 'SportSpar\Grids\FilterConfig';
+    public const COLUMN_CLASS = 'SportSpar\Grids\FieldConfig';
+    public const COMPONENT_CLASS = 'SportSpar\Grids\Components\Base\ComponentInterface';
+    public const GRID_CLASS = 'SportSpar\Grids\GridConfig';
+    public const FILTER_CLASS = 'SportSpar\Grids\FilterConfig';
 
     /**
      * @var BlueprintsCollection

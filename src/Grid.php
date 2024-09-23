@@ -12,11 +12,11 @@ use SportSpar\Grids\InputProvider\InputProviderInterface;
 
 class Grid
 {
-    const SORT_ASC = 'ASC';
-    const SORT_DESC = 'DESC';
+    public const SORT_ASC = 'ASC';
+    public const SORT_DESC = 'DESC';
 
-    const EVENT_PREPARE = 'grid.prepare';
-    const EVENT_CREATE = 'grid.create';
+    public const EVENT_PREPARE = 'grid.prepare';
+    public const EVENT_CREATE = 'grid.create';
 
     /** @var GridConfig */
     protected $config;

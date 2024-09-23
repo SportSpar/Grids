@@ -15,10 +15,10 @@ class RenderableRegistry implements RenderableComponentInterface, ComponentsCont
         TComponentView::render as protected renderTemplate;
     }
 
-    const SECTION_BEGIN = 'begin';
-    const SECTION_END = 'end';
-    const SECTION_BEFORE = 'before';
-    const SECTION_AFTER = 'after';
+    public const SECTION_BEGIN = 'begin';
+    public const SECTION_END = 'end';
+    public const SECTION_BEFORE = 'before';
+    public const SECTION_AFTER = 'after';
 
     /**
      * Renders components related to specified section.
